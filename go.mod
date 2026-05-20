@@ -1,3 +1,3 @@
-module github.com/yukkuri-heuristics/yukkuri-heuristics
+module github.com/hiromichinomata/yukkuri-heuristics
 
 go 1.22
