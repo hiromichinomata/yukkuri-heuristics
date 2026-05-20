@@ -14,11 +14,11 @@ Repo-local skill for authoring chapters of **ゆっくり霊夢・魔理沙が�
 
 - **「ゆっくり」= ゆっくり霊夢・ゆっくり魔理沙の掛け合い解説**。学習速度の「ゆっくり」ではない。
 - **Languages**: Python and Go — same algorithm in both; keep file names aligned.
-- **Audience**: AHC (AtCoder Heuristic Contest) learners; follow rating bands in `docs/toc.md`.
+- **Audience**: AHC (AtCoder Heuristic Contest) learners; follow rating bands in `docs/00-toc.md`.
 
 ## Before writing
 
-1. Read the chapter outline in [`docs/toc.md`](../../../docs/toc.md).
+1. Read the chapter outline in [`docs/00-toc.md`](../../../docs/00-toc.md).
 2. Read style reference [`docs/00.md`](../../../docs/00.md) (dialogue tone, code density, repo layout).
 3. If updating an existing chapter, read the full `docs/NN.md` first.
 4. Check [`reference.md`](reference.md) for chapter→file mapping and section template.
@@ -134,14 +134,14 @@ Fix compile/runtime errors; do not leave placeholder `...` in committed code fil
 
 **Do**
 
-- Match section list in `docs/toc.md` for the requested chapter
+- Match section list in `docs/00-toc.md` for the requested chapter
 - Link official AHC docs when mentioning rating rules or contest format
 - Keep diffs focused on the requested chapter and its code/data
 
 **Do not**
 
 - Rewrite unrelated chapters
-- Change `docs/toc.md` unless the user asks
+- Change `docs/00-toc.md` unless the user asks
 - Commit unless explicitly requested
 - Edit `README.md` unless asked
 - Use 「ゆっくり」to mean slow-paced learning

@@ -36,7 +36,7 @@
 | `docs/29.md` | 29 | チーム戦・マラソン | Red |
 | `docs/30.md` | 30 | コンテスト後の成長 | Red |
 
-Source of truth for subsection bullets: `docs/toc.md`.
+Source of truth for subsection bullets: `docs/00-toc.md`.
 
 ## Section markdown template
 

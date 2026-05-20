@@ -62,7 +62,7 @@
 
 | パス | 内容 |
 |------|------|
-| `docs/toc.md` | 全体目次 |
+| `docs/00-toc.md` | 全体目次 |
 | `docs/00.md` | 本書の使い方 |
 | `docs/appendix-a.md` 〜 `appendix-f.md` | 本付録群 |
 | `python/templates/` | 共通テンプレート |
