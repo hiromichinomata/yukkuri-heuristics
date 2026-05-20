@@ -335,6 +335,15 @@
 
 ## 付録
 
+| 付録 | ファイル |
+|------|---------|
+| 付録A 台本テンプレート | [appendix-a.md](appendix-a.md) |
+| 付録B Python / Go テンプレート集 | [appendix-b.md](appendix-b.md) |
+| 付録C 典型問題パターン早見表 | [appendix-c.md](appendix-c.md) |
+| 付録D 推奨過去問リスト | [appendix-d.md](appendix-d.md) |
+| 付録E 用語集 | [appendix-e.md](appendix-e.md) |
+| 付録F 参考文献・リンク | [appendix-f.md](appendix-f.md) |
+
 ### 付録A 台本テンプレート
 
 - A.1 掛け合い解説の基本フォーマット
@@ -374,7 +383,11 @@
 
 ### 付録E 用語集
 
+（本文: [appendix-e.md](appendix-e.md)）
+
 ### 付録F 参考文献・リンク
+
+（本文: [appendix-f.md](appendix-f.md)）
 
 - [AtCoder レーティングのしくみ](https://info.atcoder.jp/overview/contest/rating)
 - [AHC Rating System（計算式）](https://img.atcoder.jp/file/AHC_rating_v2_en.pdf)
