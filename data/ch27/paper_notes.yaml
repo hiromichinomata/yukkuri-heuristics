@@ -1,0 +1,43 @@
+# data/ch27/paper_notes.yaml — 論文メモのテンプレート（第27章）
+paper:
+  title: "Iterated Local Search for the Capacitated Vehicle Routing Problem"
+  authors: "Example et al."
+  year: 2019
+  venue: "European Journal of Operational Research"
+  url: "https://example.org/paper/ils-vrp"
+
+problem_class:
+  - VRP
+  - routing
+  - destroy_and_repair
+
+key_ideas:
+  - name: iterated_local_search
+    summary: "初期解を得たあと、破壊→再構築→局所探索を繰り返し、受理基準で多様性を保つ。"
+    ahc_analogy: "AHC の経路・配置問題で、広い近傍（LNS）の外側ループとして使える。"
+  - name: adaptive_penalty
+    summary: "制約違反にペナルティを付け、探索中に係数を動的に調整する。"
+    ahc_analogy: "スコア関数の罰則項をイテレーションごとに強めたり弱めたりする。"
+
+transfer_candidates:
+  - target: "AHC005 風の配送ルート"
+    technique: "ILS + 2-opt"
+    expected_gain: "初期貪欲から +3〜8% 程度（問題依存）"
+    risk: "時間制限内に再構築が終わらない"
+  - target: "AHC011 風のグリッド操作"
+    technique: "破壊率 30% の LNS"
+    expected_gain: "ビームの行き詰まり脱出"
+    risk: "再構築が重いと TLE"
+
+toy_verify:
+  algorithm: two_opt
+  description: "4 点の巡回を 2-opt で短縮できるか確認"
+  points:
+    - [0, 0]
+    - [3, 0]
+    - [0, 2]
+    - [3, 2]
+
+reader_notes: |
+  自分用メモ: 図3の破壊演算は「ランダム k 頂点削除」に相当。
+  実装メモ: 再構築は貪欲で足りるか、それとも LP が要るか。

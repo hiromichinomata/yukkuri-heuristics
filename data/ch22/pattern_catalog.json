@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "patterns": [
+    {
+      "id": "placement",
+      "name": "配置・パッキング",
+      "keywords": ["配置", "パック", "矩形", "衝突", "占有"],
+      "example_contests": ["AHC015", "AHC016"],
+      "typical_moves": ["swap", "rotate", "shift", "LNS 再配置"],
+      "review_questions": [
+        "制約はハードかソフトか？",
+        "評価は面積・周長・距離のどれか？",
+        "初期解はグリッド貪欲で足りるか？"
+      ]
+    },
+    {
+      "id": "path",
+      "name": "経路・巡回",
+      "keywords": ["TSP", "巡回", "経路", "2-opt", "ダイクストラ"],
+      "example_contests": ["AHC001", "AHC005", "AHC003"],
+      "typical_moves": ["2-opt", "LNS destroy/repair", "最短路 + 局所改善"],
+      "review_questions": [
+        "距離はユークリッドかマンハッタンか？",
+        "固定開始点・終点はあるか？",
+        "インタラクティブかオフラインか？"
+      ]
+    },
+    {
+      "id": "scheduling",
+      "name": "スケジューリング",
+      "keywords": ["日程", "割当", "decay", "満足度", "Intro HC"],
+      "example_contests": ["intro-heuristics", "AHC011"],
+      "typical_moves": ["日単位 swap", "焼きなまし", "パイプライン貪欲→SA"],
+      "review_questions": [
+        "スコアは差分更新できるか？",
+        "制約は順序・容量のどちらか？",
+        "貪欲 1 パスで下界はどれくらいか？"
+      ]
+    },
+    {
+      "id": "puzzle",
+      "name": "グリッド操作・パズル",
+      "keywords": ["スライド", "連結", "シミュレーション", "ターン"],
+      "example_contests": ["AHC010", "AHC014"],
+      "typical_moves": ["操作列ビーム", "終盤 DFS", "状態圧縮"],
+      "review_questions": [
+        "状態空間は何ビットで表せるか？",
+        "不可逆操作はあるか？",
+        "ビジュアライザでバグはすぐ見えるか？"
+      ]
+    },
+    {
+      "id": "interactive",
+      "name": "インタラクティブ・オンライン",
+      "keywords": ["クエリ", "フィードバック", "推定", "バンディット"],
+      "example_contests": ["AHC003"],
+      "typical_moves": ["重み更新", "UCB / Thompson", "キャッシュ最短路"],
+      "review_questions": [
+        "1 クエリの情報量は何か？",
+        "推定値の更新式は線形か乗法か？",
+        "クエリ数に対して探索予算は？"
+      ]
+    }
+  ]
+}

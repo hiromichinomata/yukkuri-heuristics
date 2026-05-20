@@ -1,0 +1,64 @@
+{
+  "contest": "AHC042 (simulated team marathon)",
+  "problem": "grid_route_pack",
+  "team": "yukkuri-solvers",
+  "unit": "score",
+  "days": [
+    {
+      "day": 1,
+      "date": "2026-05-14",
+      "owner": "reimu",
+      "score": 412000,
+      "notes": "貪欲初期解 + スコア関数のバグ修正",
+      "commits": 3
+    },
+    {
+      "day": 2,
+      "date": "2026-05-15",
+      "owner": "marisa",
+      "score": 438500,
+      "notes": "2-opt を 1.5s まで回す",
+      "commits": 5
+    },
+    {
+      "day": 3,
+      "date": "2026-05-16",
+      "owner": "reimu",
+      "score": 451200,
+      "notes": "ビジュアライザでデッドエンドを確認、近傍追加",
+      "commits": 4
+    },
+    {
+      "day": 4,
+      "date": "2026-05-17",
+      "owner": "marisa",
+      "score": 449800,
+      "notes": "パラメータ振り（悪化）→ ロールバック",
+      "commits": 7
+    },
+    {
+      "day": 5,
+      "date": "2026-05-18",
+      "owner": "reimu",
+      "score": 463100,
+      "notes": "LNS 破壊率 0.25、再構築を貪欲に",
+      "commits": 6
+    },
+    {
+      "day": 6,
+      "date": "2026-05-19",
+      "owner": "marisa",
+      "score": 471900,
+      "notes": "焼きなましを最後の 0.3s に追加",
+      "commits": 8
+    },
+    {
+      "day": 7,
+      "date": "2026-05-20",
+      "owner": "team",
+      "score": 478250,
+      "notes": "最終提出: ベストを固定、ログ整理",
+      "commits": 2
+    }
+  ]
+}

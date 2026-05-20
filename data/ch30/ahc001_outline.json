@@ -1,0 +1,30 @@
+{
+  "problem_id": "AHC001",
+  "title": "企業の宣伝会場",
+  "difficulty": "Gray",
+  "rating_band": "灰色〜茶色",
+  "grid_size": 20,
+  "solved_score": 485000,
+  "solver_style": "greedy_grow",
+  "time_spent_hours": 4,
+  "key_ideas": [
+    "各企業の中心から矩形を拡大する貪欲",
+    "重なり禁止をシミュレーションで確認",
+    "スコアは面積×距離ペナルティ"
+  ],
+  "pitfalls": [
+    "矩形の更新順で結果が変わる",
+    "端の企業は拡大しづらい"
+  ],
+  "sections": [
+    "問題の言い換え（霊夢向け）",
+    "入力と制約",
+    "スコアの直感",
+    "貪欲拡大の流れ",
+    "改善の余地（焼きなまし・交換）"
+  ],
+  "references": [
+    "https://atcoder.jp/contests/intro-heuristics/tasks/intro_heuristics_a",
+    "python/ch04/ahc001_grow.py"
+  ]
+}
