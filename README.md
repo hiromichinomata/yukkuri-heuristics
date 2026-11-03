@@ -69,13 +69,15 @@ yukkuri-heuristics/
 │   ├── templates/
 │   └── chNN/
 ├── data/chNN/             # サンプル入力
+├── data/common/           # 章をまたいで使う入力（intro_hc_d365.txt: 本番サイズの Intro HC）
 ├── tests/                 # 手元実行用の単体テスト（unittest）
 ├── tools/
 │   ├── check_env.sh       # 環境チェック
 │   ├── local_test.sh      # ソルバ → スコア計算
 │   ├── run.sh             # テンプレート実行（io, timer, rng, heap, sa）
 │   ├── contest_log.sh     # 模擬コンテスト実行とログ保存（第21章）
-│   └── smoke_test.sh      # 全章サンプルの一括動作確認
+│   ├── smoke_test.sh      # 全章サンプルの一括動作確認
+│   └── gen_intro_hc.py    # Intro HC 形式の入力生成（公式と同じ分布）
 └── .cursor/skills/        # 章執筆用 Cursor スキル（任意）
 ```
 

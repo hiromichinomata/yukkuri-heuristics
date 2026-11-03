@@ -48,7 +48,8 @@ func parseInts(line string) []int {
 	return out
 }
 
-func scoreSchedule(p ProblemInput, s ScheduleState) int {
+// rawScore は 10^6 + 最終満足度（0 で切らない値）。SA の中ではこちらを使う（第9章 9.4）
+func rawScore(p ProblemInput, s ScheduleState) int {
 	last := make([]int, 26)
 	satisfaction := 0
 	for day := 1; day <= p.Days; day++ {
@@ -61,11 +62,14 @@ func scoreSchedule(p ProblemInput, s ScheduleState) int {
 		}
 		satisfaction -= decay
 	}
-	score := 1000000 + satisfaction
-	if score < 0 {
-		return 0
+	return 1000000 + satisfaction
+}
+
+func scoreSchedule(p ProblemInput, s ScheduleState) int {
+	if score := rawScore(p, s); score > 0 {
+		return score
 	}
-	return score
+	return 0
 }
 
 func finalSat(p ProblemInput, types []int) int {
@@ -107,7 +111,7 @@ func strategyRandomSA(p ProblemInput, rng *rand.Rand, steps int) ScheduleState {
 		types[i] = 1 + rng.Intn(26)
 	}
 	state := ScheduleState{types}
-	score := scoreSchedule(p, state)
+	score := rawScore(p, state)
 	best := append([]int{}, state.Types...)
 	bestScore := score
 	const t0, t1 = 5000.0, 10.0
@@ -117,7 +121,7 @@ func strategyRandomSA(p ProblemInput, rng *rand.Rand, steps int) ScheduleState {
 		day := rng.Intn(p.Days)
 		trial := append([]int{}, state.Types...)
 		trial[day] = 1 + rng.Intn(26)
-		trialScore := scoreSchedule(p, ScheduleState{trial})
+		trialScore := rawScore(p, ScheduleState{trial})
 		delta := trialScore - score
 		if delta >= 0 || rng.Float64() < math.Exp(float64(delta)/temperature) {
 			state = ScheduleState{trial}
@@ -190,7 +194,7 @@ func main() {
 	}
 	fmt.Fprintf(os.Stderr, "best=%s score=%d total_elapsed=%.3fs\n",
 		best.name, best.score, time.Since(t0).Seconds())
-	fmt.Printf("# winner schedule (%s)\n", best.name)
+	fmt.Fprintf(os.Stderr, "winner schedule (%s) を stdout に出力\n", best.name) // stdout は提出形式（日程だけ）に保つ
 	for _, t := range best.types {
 		fmt.Println(t)
 	}

@@ -78,8 +78,7 @@ run_case() {
 special_cases=(
   "templates/io_template|data/sample.txt||"
   "ch02/sample_solver|data/ch02/input_only.txt||"
-  "ch12/interactive_path|/dev/null|--offline data/ch12/sample.txt|--offline data/ch12/sample.txt"
-  "ch12/query_simulator|/dev/null|data/ch12/sample.txt|"
+  "ch12/local_judge|/dev/null|--seed 1 --queries 100 -- python python/ch12/solver.py|"
   "ch21/mock_contest|/dev/null|data/ch23/sample.txt --fast|data/ch23/sample.txt --fast"
   "ch24/bandit_compare|/dev/null|data/ch24/sample.txt|data/ch24/sample.txt"
   "ch08/simple_vis|data/ch08/sample.txt||-input data/ch08/sample.txt"

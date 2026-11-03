@@ -72,7 +72,7 @@ python python/ch11/pipeline.py < data/ch11/sample.txt
 | 3 | AHC011 Sliding Tree Puzzle | パズル + ビーム（第15章）。重め |
 
 ```bash
-python python/ch12/interactive_path.py --offline data/ch12/sample.txt
+python python/ch12/local_judge.py --seed 1 -- python python/ch12/solver.py
 python python/ch14/loop_toy.py < data/ch14/sample.txt
 ```
 

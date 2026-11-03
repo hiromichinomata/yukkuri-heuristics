@@ -61,16 +61,26 @@ def _final_satisfaction(problem: ProblemInput, state: ScheduleState) -> int:
 
 
 def strategy_greedy(problem: ProblemInput) -> ScheduleState:
+    """各日、その日終了時の満足度が最大になるタイプを選ぶ。
+
+    満足度と各タイプの最終開催日 last を持ち回すので 1 日あたり O(26²)、全体 O(26²·D)。
+    （毎回スケジュール全体を計算し直すと O(26²·D²) になり、D=365 では Python で数秒かかる）
+    """
+    last = [0] * 26
+    satisfaction = 0
     schedule: List[int] = []
     for day in range(1, problem.days + 1):
+        decay_all = sum(problem.decay[i] * (day - last[i]) for i in range(26))
         best_t, best_sat = 1, None
         for t in range(1, 27):
-            trial = ScheduleState(schedule + [t])
-            sat = _final_satisfaction(problem, trial)
+            # タイプ t を開くと、t の減衰だけ 0 になる
+            sat = satisfaction + problem.gain[day - 1][t - 1] - (decay_all - problem.decay[t - 1] * (day - last[t - 1]))
             if best_sat is None or sat > best_sat:
                 best_sat = sat
                 best_t = t
         schedule.append(best_t)
+        satisfaction = best_sat
+        last[best_t - 1] = day
     return ScheduleState(schedule)
 
 
@@ -80,7 +90,7 @@ def strategy_random_sa(
     steps: int = 800,
 ) -> ScheduleState:
     state = ScheduleState([rng.randint(1, 26) for _ in range(problem.days)])
-    score = score_schedule(problem, state)
+    score = 10**6 + _final_satisfaction(problem, state)  # SA の中では 0 で切らない（第9章 9.4）
     best = state.copy()
     best_score = score
     t0, t1 = 5000.0, 10.0
@@ -90,7 +100,7 @@ def strategy_random_sa(
         day = rng.randrange(problem.days)
         trial = state.copy()
         trial.types[day] = rng.randint(1, 26)
-        trial_score = score_schedule(problem, trial)
+        trial_score = 10**6 + _final_satisfaction(problem, trial)
         delta = trial_score - score
         if delta >= 0 or rng.random() < math.exp(delta / temperature):
             state = trial
@@ -143,7 +153,7 @@ def main() -> None:
 
     best = max(results, key=lambda x: x[1])
     print(f"best={best[0]} score={best[1]} total_elapsed={time.perf_counter()-t0:.3f}s", file=sys.stderr)
-    print(f"# winner schedule ({best[0]})")
+    print(f"winner schedule ({best[0]}) を stdout に出力", file=sys.stderr)  # stdout は提出形式（日程だけ）に保つ
     for t in best[3].types:
         print(t)
 
