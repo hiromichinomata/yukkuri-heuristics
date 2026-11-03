@@ -13,10 +13,10 @@ import (
 )
 
 const (
-	totalSec        = 2.0
-	constructRatio  = 0.6
-	t0              = 5000.0
-	alpha           = 0.995
+	totalSec       = 2.0
+	constructRatio = 0.6
+	t0             = 5000.0
+	alpha          = 0.995
 )
 
 type ProblemInput struct {

@@ -124,7 +124,7 @@ func expand(node *MCTSNode, adj [][]int, rng *rand.Rand) *MCTSNode {
 	child := &MCTSNode{
 		Move: move, HasMove: true,
 		State: childState, HasState: true,
-		Parent: node,
+		Parent:   node,
 		Children: map[int]*MCTSNode{},
 		Untried:  append([]int{}, adj[childState.Node]...),
 	}

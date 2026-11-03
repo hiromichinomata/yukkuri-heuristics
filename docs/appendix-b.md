@@ -86,35 +86,39 @@ func scoreSchedule(problem ProblemInput, state ScheduleState) ScoreResult
 
 | ファイル | 用途 |
 |---------|------|
-| `python/templates/sa_template.py` | SA 骨格（T0=100, ALPHA=0.995） |
+| `python/templates/sa_template.py` | SA 骨格（T0=100 → T1=0.1、時間ベース冷却） |
 | `go/templates/sa_template.go` | 同上 |
 | `python/ch08/sa_intro_hc.py` | Intro HC 向け本番例 |
 | `python/ch18/sa_multi_neighborhood.py` | 複数近傍 + 再ヒート |
 
 ```python
 # python/templates/sa_template.py — 定数
-T0 = 100.0
-ALPHA = 0.995
+T0 = 100.0  # 開始温度
+T1 = 0.1    # 終了温度
+
+# 毎ループ: 経過割合で温度を決める
+temperature = T0 * (T1 / T0) ** progress  # progress = elapsed / time_limit_sec
 
 # 受理
-if delta >= 0 or rng.random() < math.exp(delta / T):
+if delta >= 0 or rng.random() < math.exp(delta / temperature):
     state = new_state
     score = new_score
-T *= ALPHA
 ```
 
 ```go
 // go/templates/sa_template.go
 const (
-    T0    = 100.0
-    Alpha = 0.995
+    T0 = 100.0 // 開始温度
+    T1 = 0.1   // 終了温度
 )
+
+T := T0 * math.Pow(T1/T0, progress) // progress = elapsed / limit
 ```
 
 | パラメータ | 触り方 |
 |-----------|--------|
 | T0 | 大きいほど悪化受理が増える |
-| ALPHA | 1に近いほど冷却が遅い |
+| T1 | 小さいほど終盤が山登りに近づく |
 | 近傍 | 問題ごとに差し替え |
 
 ---

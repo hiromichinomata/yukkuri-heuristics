@@ -15,33 +15,23 @@ EOF
 
 run_template() {
   local name="$1"
-  local py="python/templates/${name}_template.py"
-  local go_file="go/templates/${name}_template.go"
+  local base
 
+  # 短縮名 → 実ファイル名（python/templates/ と go/templates/ で共通）
   case "$name" in
-    io|timer|rng|heap|sa)
-      py="python/templates/${name}_template.py"
-      go_file="go/templates/${name}_template.go"
-      ;;
-    io_template|timer_template|rng_template|heap_example|sa_template)
-      py="python/templates/${name}.py"
-      go_file="go/templates/${name}.go"
-      if [[ "$name" == "heap_example" ]]; then
-        py="python/templates/heap_example.py"
-        go_file="go/templates/heap_example.go"
-      fi
-      ;;
+    io|io_template) base="io_template" ;;
+    sa|sa_template) base="sa_template" ;;
+    heap|heap_example) base="heap_example" ;;
+    timer) base="timer" ;;
+    rng) base="rng" ;;
     *)
-      echo "unknown template: $name" >&2
+      echo "unknown template: $name (io, timer, rng, heap, sa)" >&2
       exit 1
       ;;
   esac
 
-  # heap はファイル名が *_example
-  if [[ "$name" == "heap" ]]; then
-    py="python/templates/heap_example.py"
-    go_file="go/templates/heap_example.go"
-  fi
+  local py="python/templates/${base}.py"
+  local go_file="go/templates/${base}.go"
 
   if [[ ! -f "$py" ]]; then
     echo "missing: $py" >&2
@@ -53,14 +43,14 @@ run_template() {
   fi
 
   echo "== Python: $py =="
-  if [[ "$name" == "io" || "$name" == "io_template" ]]; then
+  if [[ "$base" == "io_template" ]]; then
     python "$py" < data/sample.txt
   else
     python "$py"
   fi
 
   echo "== Go: $go_file =="
-  if [[ "$name" == "io" || "$name" == "io_template" ]]; then
+  if [[ "$base" == "io_template" ]]; then
     go run "$go_file" < data/sample.txt
   else
     go run "$go_file"

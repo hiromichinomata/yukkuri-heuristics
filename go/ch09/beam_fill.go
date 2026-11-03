@@ -3,9 +3,9 @@ package main
 
 import (
 	"bufio"
-	"container/heap"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -26,32 +26,6 @@ type beamNode struct {
 	visited  uint64
 	score    int
 	path     string
-	index    int
-}
-
-type beamHeap []*beamNode
-
-func (h beamHeap) Len() int           { return len(h) }
-func (h beamHeap) Less(i, j int) bool { return h[i].priority < h[j].priority }
-func (h beamHeap) Swap(i, j int) {
-	h[i], h[j] = h[j], h[i]
-	h[i].index = i
-	h[j].index = j
-}
-func (h *beamHeap) Push(x interface{}) {
-	n := len(*h)
-	node := x.(*beamNode)
-	node.index = n
-	*h = append(*h, node)
-}
-func (h *beamHeap) Pop() interface{} {
-	old := *h
-	n := len(old)
-	node := old[n-1]
-	old[n-1] = nil
-	node.index = -1
-	*h = old[:n-1]
-	return node
 }
 
 func readGrid(sc *bufio.Scanner) (int, [][]int) {
@@ -135,23 +109,18 @@ func beamSearch(grid [][]int, n, width int) (int, string) {
 		if len(candidates) == 0 {
 			break
 		}
-		h := &beamHeap{}
-		heap.Init(h)
-		limit := width
-		if limit > len(candidates) {
-			limit = len(candidates)
-		}
-		for _, c := range candidates {
-			heap.Push(h, c)
-			if h.Len() > limit {
-				heap.Pop(h)
+		// 評価値の良い順（priority 昇順、同点は depth 昇順・生成順）に並べ、上位 width 個を残す。
+		// Python 版の heapq.nsmallest と同じ順序になる
+		sort.SliceStable(candidates, func(i, j int) bool {
+			if candidates[i].priority != candidates[j].priority {
+				return candidates[i].priority < candidates[j].priority
 			}
+			return candidates[i].depth < candidates[j].depth
+		})
+		if len(candidates) > width {
+			candidates = candidates[:width]
 		}
-		beam = make([]*beamNode, h.Len())
-		for i := len(beam) - 1; i >= 0; i-- {
-			beam[i] = heap.Pop(h).(*beamNode)
-		}
-		_ = step
+		beam = candidates
 	}
 	return bestScore, bestPath
 }

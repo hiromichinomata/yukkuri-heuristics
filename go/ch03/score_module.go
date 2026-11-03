@@ -21,9 +21,9 @@ type ScheduleState struct {
 }
 
 type ScoreResult struct {
-	Daily              []int
-	FinalSatisfaction  int
-	ContestScore       int
+	Daily             []int
+	FinalSatisfaction int
+	ContestScore      int
 }
 
 func readProblemWithSchedule(r io.Reader) (ProblemInput, ScheduleState, error) {

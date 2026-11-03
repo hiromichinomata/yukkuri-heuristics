@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	T0    = 100.0
-	Alpha = 0.995
+	T0 = 100.0 // 開始温度
+	T1 = 0.1   // 終了温度
 )
 
 func logScore(step, score int) {
@@ -31,10 +31,18 @@ func sa(
 	bestScore = score(state)
 	curScore := bestScore
 
-	T := T0
 	step := 0
+	nextLog := 0.1
 
-	for time.Since(start) < limit {
+	for {
+		elapsed := time.Since(start)
+		if elapsed >= limit {
+			break
+		}
+		// 時間ベースの指数冷却: 経過割合 progress に応じて T0 → T1
+		progress := float64(elapsed) / float64(limit)
+		T := T0 * math.Pow(T1/T0, progress)
+
 		newState, ok := neighbor(state, rng)
 		if !ok {
 			continue
@@ -51,9 +59,9 @@ func sa(
 			}
 		}
 
-		T *= Alpha
 		step++
-		if step%1000 == 0 {
+		if progress >= nextLog { // 経過 10% ごとにログ
+			nextLog += 0.1
 			logScore(step, curScore)
 		}
 	}

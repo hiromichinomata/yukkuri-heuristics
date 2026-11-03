@@ -9,9 +9,10 @@ import time
 from dataclasses import dataclass
 from typing import List, Optional, TextIO, Tuple
 
-T0 = 5000.0
-ALPHA = 0.995
+T0 = 5000.0  # 開始温度
+T1 = 10.0  # 終了温度
 TIME_LIMIT_SEC = 1.5
+LOG_EVERY = 0.1  # 制限時間の何割ごとに stderr へログを出すか
 
 
 @dataclass
@@ -73,8 +74,16 @@ def sa(
     best_score = score
     temperature = T0
     step = 0
+    next_log = LOG_EVERY
 
-    while time.perf_counter() - start < time_limit_sec:
+    while True:
+        elapsed = time.perf_counter() - start
+        if elapsed >= time_limit_sec:
+            break
+        # 時間ベースの指数冷却: T0 → T1 を制限時間いっぱいで下げる
+        progress = elapsed / time_limit_sec
+        temperature = T0 * (T1 / T0) ** progress
+
         nxt = random_neighbor(state, rng)
         new_score = score_schedule(problem, nxt)
         delta = new_score - score
@@ -85,9 +94,9 @@ def sa(
                 best_score = score
                 best_state = ScheduleState(list(state.types))
 
-        temperature *= ALPHA
         step += 1
-        if step % 500 == 0:
+        if progress >= next_log:  # 経過 10% ごとにログ
+            next_log += LOG_EVERY
             print(f"sa step={step} score={score} T={temperature:.2f}", file=sys.stderr)
 
     return best_state, best_score

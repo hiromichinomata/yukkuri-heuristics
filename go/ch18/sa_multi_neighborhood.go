@@ -13,12 +13,12 @@ import (
 )
 
 const (
-	t0             = 8000.0
-	alphaFast      = 0.992
-	alphaSlow      = 0.998
-	reheatFactor   = 0.6
-	stagnantLimit  = 800
-	timeLimitSec   = 1.5
+	t0            = 8000.0
+	alphaFast     = 0.992
+	alphaSlow     = 0.998
+	reheatFactor  = 0.6
+	stagnantLimit = 800
+	timeLimitSec  = 1.5
 )
 
 type ProblemInput struct {

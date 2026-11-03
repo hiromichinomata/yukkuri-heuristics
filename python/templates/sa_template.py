@@ -7,8 +7,8 @@ from typing import Callable, Optional, Tuple, TypeVar
 
 T = TypeVar("T")
 
-T0 = 100.0
-ALPHA = 0.995
+T0 = 100.0  # 開始温度
+T1 = 0.1  # 終了温度
 
 
 def log_score(step: int, score: int) -> None:
@@ -34,26 +34,34 @@ def sa(
     best_state = state
     best_score = score = score_fn(state)
 
-    T = T0
+    temperature = T0
     step = 0
+    next_log = 0.1
 
-    while time.perf_counter() - start < time_limit_sec:
+    while True:
+        elapsed = time.perf_counter() - start
+        if elapsed >= time_limit_sec:
+            break
+        # 時間ベースの指数冷却: 経過割合 progress に応じて T0 → T1
+        progress = elapsed / time_limit_sec
+        temperature = T0 * (T1 / T0) ** progress
+
         new_state = neighbor_fn(state)
         if new_state is None:
             continue
         new_score = score_fn(new_state)
         delta = new_score - score
 
-        if delta >= 0 or rng.random() < math.exp(delta / T):
+        if delta >= 0 or rng.random() < math.exp(delta / temperature):
             state = new_state
             score = new_score
             if score > best_score:
                 best_score = score
                 best_state = state
 
-        T *= ALPHA
         step += 1
-        if step % 1000 == 0:
+        if progress >= next_log:  # 経過 10% ごとにログ
+            next_log += 0.1
             log_score(step, score)
 
     return best_state, best_score

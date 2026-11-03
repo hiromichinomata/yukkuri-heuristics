@@ -24,7 +24,7 @@
     "改善の余地（焼きなまし・交換）"
   ],
   "references": [
-    "https://atcoder.jp/contests/intro-heuristics/tasks/intro_heuristics_a",
+    "https://atcoder.jp/contests/ahc001/tasks/ahc001_a",
     "python/ch04/ahc001_grow.py"
   ]
 }

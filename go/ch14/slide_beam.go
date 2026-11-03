@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -102,6 +103,21 @@ type beamNode struct {
 	state    []int
 }
 
+func lessNode(a, b beamNode) bool {
+	if a.f != b.f {
+		return a.f < b.f
+	}
+	if a.depth != b.depth {
+		return a.depth < b.depth
+	}
+	for k := range a.state {
+		if a.state[k] != b.state[k] {
+			return a.state[k] < b.state[k]
+		}
+	}
+	return false
+}
+
 func beamSearch(start []int, n, width, maxDepth int) (bool, int, int) {
 	goal := goalState(n)
 	if stateKey(start) == stateKey(goal) {
@@ -128,14 +144,9 @@ func beamSearch(start []int, n, width, maxDepth int) (bool, int, int) {
 		if len(candidates) == 0 {
 			return false, -1, len(visited)
 		}
+		// Python の heapq.nsmallest と同じく (f, depth, state) の辞書順で並べ、上位 width 個を残す
+		sort.Slice(candidates, func(i, j int) bool { return lessNode(candidates[i], candidates[j]) })
 		if len(candidates) > width {
-			for i := 0; i < len(candidates)-1; i++ {
-				for j := i + 1; j < len(candidates); j++ {
-					if candidates[j].f < candidates[i].f {
-						candidates[i], candidates[j] = candidates[j], candidates[i]
-					}
-				}
-			}
 			candidates = candidates[:width]
 		}
 		beam = candidates
@@ -150,5 +161,9 @@ func main() {
 		os.Exit(1)
 	}
 	solved, depth, explored := beamSearch(start, n, 100, 40)
-	fmt.Printf("n=%d solved=%v depth=%d explored=%d beam_width=100\n", n, solved, depth, explored)
+	solvedS := "False" // Python 版と表記を揃える
+	if solved {
+		solvedS = "True"
+	}
+	fmt.Printf("n=%d solved=%s depth=%d explored=%d beam_width=100\n", n, solvedS, depth, explored)
 }

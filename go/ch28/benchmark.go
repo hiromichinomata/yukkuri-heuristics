@@ -22,8 +22,8 @@ type cell struct {
 type pq []cell
 
 func (h pq) Len() int            { return len(h) }
-func (h pq) Less(i, j int) bool   { return h[i].d < h[j].d }
-func (h pq) Swap(i, j int)        { h[i], h[j] = h[j], h[i] }
+func (h pq) Less(i, j int) bool  { return h[i].d < h[j].d }
+func (h pq) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
 func (h *pq) Push(x interface{}) { *h = append(*h, x.(cell)) }
 func (h *pq) Pop() interface{} {
 	old := *h

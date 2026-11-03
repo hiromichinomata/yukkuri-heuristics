@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	popSize       = 40
-	generations   = 200
-	mutationRate  = 0.15
-	tournamentK   = 3
+	popSize      = 40
+	generations  = 200
+	mutationRate = 0.15
+	tournamentK  = 3
 )
 
 type ProblemInput struct {

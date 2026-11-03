@@ -13,9 +13,10 @@ import (
 )
 
 const (
-	t0             = 5000.0
-	alpha          = 0.995
-	timeLimitSec   = 1.5
+	t0           = 5000.0 // 開始温度
+	t1           = 10.0   // 終了温度
+	timeLimitSec = 1.5
+	logEvery     = 0.1 // 制限時間の何割ごとに stderr へログを出すか
 )
 
 type ProblemInput struct {
@@ -96,8 +97,17 @@ func sa(problem ProblemInput, initial ScheduleState, limit time.Duration, rng *r
 	bestScore := score
 	temperature := t0
 	step := 0
+	nextLog := logEvery
 
-	for time.Since(start) < limit {
+	for {
+		elapsed := time.Since(start)
+		if elapsed >= limit {
+			break
+		}
+		// 時間ベースの指数冷却: t0 → t1 を制限時間いっぱいで下げる
+		progress := float64(elapsed) / float64(limit)
+		temperature = t0 * math.Pow(t1/t0, progress)
+
 		nxt := randomNeighbor(state, rng)
 		newScore := scoreSchedule(problem, nxt)
 		delta := float64(newScore - score)
@@ -109,9 +119,9 @@ func sa(problem ProblemInput, initial ScheduleState, limit time.Duration, rng *r
 				bestState = ScheduleState{append([]int{}, state.Types...)}
 			}
 		}
-		temperature *= alpha
 		step++
-		if step%500 == 0 {
+		if progress >= nextLog { // 経過 10% ごとにログ
+			nextLog += logEvery
 			fmt.Fprintf(os.Stderr, "sa step=%d score=%d T=%.2f\n", step, score, temperature)
 		}
 	}

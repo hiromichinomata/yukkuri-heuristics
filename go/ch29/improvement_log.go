@@ -73,9 +73,10 @@ func summarize(log WeeklyLog) {
 		if prev >= 0 {
 			deltaS = fmt.Sprintf("%+d", d.Score-prev)
 		}
+		// バイトではなく文字（rune）単位で切る。日本語の途中で切ると文字化けする
 		note := d.Notes
-		if len(note) > 28 {
-			note = note[:28]
+		if r := []rune(note); len(r) > 28 {
+			note = string(r[:28])
 		}
 		fmt.Printf("%3d  %-10s  %-8s  %9d  %7s  %s\n",
 			d.Day, d.Date, d.Owner, d.Score, deltaS, note)

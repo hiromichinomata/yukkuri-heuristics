@@ -45,6 +45,9 @@ python python/ch01/score_intro_hc.py < data/ch01/sample.txt
 
 # ローカル評価パイプライン（第2章）
 ./tools/local_test.sh data/ch02/input_only.txt
+
+# 全章のサンプルを Python / Go で一括実行（go vet・構文チェック・出力一致も確認）
+./tools/smoke_test.sh
 ```
 
 ## リポジトリ構成
@@ -66,7 +69,9 @@ yukkuri-heuristics/
 ├── tools/
 │   ├── check_env.sh       # 環境チェック
 │   ├── local_test.sh      # ソルバ → スコア計算
-│   └── run.sh             # テンプレート実行
+│   ├── run.sh             # テンプレート実行（io, timer, rng, heap, sa）
+│   ├── contest_log.sh     # 模擬コンテスト実行とログ保存（第21章）
+│   └── smoke_test.sh      # 全章サンプルの一括動作確認
 └── .cursor/skills/        # 章執筆用 Cursor スキル（任意）
 ```
 
