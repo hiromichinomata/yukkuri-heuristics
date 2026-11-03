@@ -1,4 +1,7 @@
 // go/ch16/sa_multi_neighborhood.go
+// 複数近傍・適応冷却・再ヒート付き SA（Intro HC・第16章）
+// 土台は第9章と同じ「時間ベースの指数冷却 + 差分更新」。その上に
+// 近傍の重み付き選択、温度の倍率 boost による適応冷却と再ヒートを載せる。
 package main
 
 import (
@@ -13,12 +16,17 @@ import (
 )
 
 const (
-	t0            = 8000.0
-	alphaFast     = 0.992
-	alphaSlow     = 0.998
-	reheatFactor  = 0.6
-	stagnantLimit = 800
-	timeLimitSec  = 1.5
+	t0 = 5000.0 // 開始温度（第9章と同じ時間ベース冷却の土台）
+	t1 = 10.0   // 終了温度
+	// 適応的冷却: 温度 = 時間ベースの基準温度 × boost。boost は 1 に向かって減衰する
+	boostDecayFast    = 0.999  // 改善が続いているとき（速く 1 に戻す = 速く冷やす）
+	boostDecaySlow    = 0.9999 // 停滞気味のとき（ゆっくり戻す = 熱いまま粘る）
+	slowAfter         = 2000   // best 更新がこのステップ数ないと「停滞気味」
+	reheatBoost       = 4.0    // 再ヒート時の倍率
+	stagnantLimit     = 20000  // best 更新がこのステップ数ないと再ヒート
+	weightUpdateEvery = 1000
+	timeLimitSec      = 1.5
+	logEvery          = 0.1
 )
 
 type ProblemInput struct {
@@ -62,106 +70,175 @@ func parseInts(line string) []int {
 	return out
 }
 
-func scoreSchedule(problem ProblemInput, state ScheduleState) int {
+// rawScore は 10^6 + 最終満足度（0 で切らない値）。全再計算 O(26·D)
+func rawScore(problem ProblemInput, state ScheduleState) int {
 	last := make([]int, 26)
 	satisfaction := 0
 	for day := 1; day <= problem.Days; day++ {
 		t := state.Types[day-1] - 1
 		satisfaction += problem.Gain[day-1][t]
 		last[t] = day
-		decay := 0
 		for i := 0; i < 26; i++ {
-			decay += problem.Decay[i] * (day - last[i])
+			satisfaction -= problem.Decay[i] * (day - last[i])
 		}
-		satisfaction -= decay
 	}
-	score := 1000000 + satisfaction
-	if score < 0 {
+	return 1000000 + satisfaction
+}
+
+func scoreSchedule(problem ProblemInput, state ScheduleState) int {
+	if s := rawScore(problem, state); s > 0 {
+		return s
+	}
+	return 0
+}
+
+// typePenalty はタイプ t の減衰ペナルティ合計 c_t * Σ L(L-1)/2。O(D)（第9章 9.4）
+func typePenalty(problem ProblemInput, types []int, t int) int {
+	total, prev := 0, 0
+	for i, x := range types {
+		if x == t {
+			gap := i + 1 - prev
+			total += gap * (gap - 1) / 2
+			prev = i + 1
+		}
+	}
+	gap := problem.Days + 1 - prev
+	total += gap * (gap - 1) / 2
+	return problem.Decay[t-1] * total
+}
+
+// deltaChange は types[day] を newType に変えたときの rawScore の変化量。O(D)（第9章 9.4）
+func deltaChange(problem ProblemInput, types []int, day, newType int) int {
+	oldType := types[day]
+	if oldType == newType {
 		return 0
 	}
-	return score
+	before := typePenalty(problem, types, oldType) + typePenalty(problem, types, newType)
+	types[day] = newType
+	after := typePenalty(problem, types, oldType) + typePenalty(problem, types, newType)
+	types[day] = oldType
+	gain := problem.Gain[day][newType-1] - problem.Gain[day][oldType-1]
+	return gain - (after - before)
 }
 
-func neighborChangeDay(state ScheduleState, rng *rand.Rand) ScheduleState {
-	nxt := append([]int{}, state.Types...)
-	day := rng.Intn(len(nxt))
-	nxt[day] = rng.Intn(26) + 1
-	return ScheduleState{nxt}
+// Move は近傍操作。Swap=false なら「X 日目を Y に変える」、true なら「X 日目と Y 日目を入れ替える」
+type Move struct {
+	Swap bool
+	X, Y int
 }
 
-func neighborSwapDays(state ScheduleState, rng *rand.Rand) ScheduleState {
-	nxt := append([]int{}, state.Types...)
-	a := rng.Intn(len(nxt))
-	b := rng.Intn(len(nxt))
-	nxt[a], nxt[b] = nxt[b], nxt[a]
-	return ScheduleState{nxt}
+func neighborChangeDay(state ScheduleState, rng *rand.Rand) Move {
+	return Move{false, rng.Intn(len(state.Types)), rng.Intn(26) + 1}
+}
+
+func neighborSwapDays(state ScheduleState, rng *rand.Rand) Move {
+	n := len(state.Types)
+	a := rng.Intn(n)
+	b := rng.Intn(n - 1)
+	if b >= a {
+		b++
+	}
+	return Move{true, a, b}
+}
+
+func moveDelta(problem ProblemInput, types []int, m Move) int {
+	if !m.Swap {
+		return deltaChange(problem, types, m.X, m.Y)
+	}
+	// swap は「a を b のタイプに変える」→「b を a のタイプに変える」の 2 回の change
+	ta, tb := types[m.X], types[m.Y]
+	if ta == tb {
+		return 0
+	}
+	d1 := deltaChange(problem, types, m.X, tb)
+	types[m.X] = tb
+	d2 := deltaChange(problem, types, m.Y, ta)
+	types[m.X] = ta
+	return d1 + d2
+}
+
+func applyMove(types []int, m Move) {
+	if !m.Swap {
+		types[m.X] = m.Y
+		return
+	}
+	types[m.X], types[m.Y] = types[m.Y], types[m.X]
 }
 
 func saMulti(problem ProblemInput, initial ScheduleState, limit time.Duration, rng *rand.Rand) (ScheduleState, int) {
-	names := []string{"change_day", "swap_days"}
+	neighborhoods := []func(ScheduleState, *rand.Rand) Move{neighborChangeDay, neighborSwapDays}
 	weights := []float64{1, 1}
 	wins := []int{0, 0}
 
 	start := time.Now()
-	state := initial
-	score := scoreSchedule(problem, state)
+	state := ScheduleState{append([]int{}, initial.Types...)}
+	score := rawScore(problem, state)
 	bestState := ScheduleState{append([]int{}, state.Types...)}
 	bestScore := score
-	temperature := t0
-	alpha := alphaFast
-	step := 0
-	sinceImprove := 0
+	boost := 1.0
+	step, sinceImprove, reheats := 0, 0, 0
+	nextLog := logEvery
 
-	for time.Since(start) < limit {
-		idx := weightedPick(weights, rng)
-		var nxt ScheduleState
-		if idx == 0 {
-			nxt = neighborChangeDay(state, rng)
-		} else {
-			nxt = neighborSwapDays(state, rng)
+	for {
+		elapsed := time.Since(start)
+		if elapsed >= limit {
+			break
 		}
-		newScore := scoreSchedule(problem, nxt)
-		delta := float64(newScore - score)
-		accepted := delta >= 0 || rng.Float64() < math.Exp(delta/temperature)
-		if accepted {
-			state = nxt
-			score = newScore
-			wins[idx]++
-			if score > bestScore {
-				bestScore = score
-				bestState = ScheduleState{append([]int{}, state.Types...)}
-				sinceImprove = 0
-			} else {
-				sinceImprove++
+		progress := float64(elapsed) / float64(limit)
+		temperature := t0 * math.Pow(t1/t0, progress) * boost
+
+		idx := weightedPick(weights, rng)
+		m := neighborhoods[idx](state, rng)
+		delta := moveDelta(problem, state.Types, m)
+		if delta >= 0 || rng.Float64() < math.Exp(float64(delta)/temperature) {
+			applyMove(state.Types, m)
+			score += delta
+			if delta > 0 { // 改善した操作だけ「勝ち」に数える
+				wins[idx]++
 			}
+		}
+		if score > bestScore {
+			bestScore = score
+			bestState = ScheduleState{append([]int{}, state.Types...)}
+			sinceImprove = 0
 		} else {
 			sinceImprove++
 		}
 
-		if sinceImprove > 200 {
-			alpha = alphaSlow
+		// 適応的冷却: 停滞気味なら boost をゆっくり 1 に戻す（熱いまま粘る）
+		decay := boostDecayFast
+		if sinceImprove > slowAfter {
+			decay = boostDecaySlow
 		}
+		boost = math.Max(1.0, boost*decay)
+		// 再ヒート: 長く停滞したら温度を一時的に上げて探索をやり直す
 		if sinceImprove >= stagnantLimit {
-			if temperature < t0*reheatFactor {
-				temperature = t0 * reheatFactor
-			}
+			boost = reheatBoost
 			sinceImprove = 0
-			alpha = alphaFast
-			fmt.Fprintf(os.Stderr, "reheat T=%.1f\n", temperature)
+			reheats++
 		}
 
-		temperature *= alpha
 		step++
-		if step%500 == 0 {
-			fmt.Fprintf(os.Stderr, "sa step=%d score=%d best=%d T=%.1f nh=%s wins=%v\n",
-				step, score, bestScore, temperature, names[idx], wins)
+		if step%weightUpdateEvery == 0 {
 			total := wins[0] + wins[1]
 			if total == 0 {
 				total = 1
 			}
-			weights[0] = math.Max(0.2, float64(wins[0])/float64(total)*2)
-			weights[1] = math.Max(0.2, float64(wins[1])/float64(total)*2)
+			for i := range weights {
+				weights[i] = math.Max(0.2, float64(wins[i])/float64(total)*2)
+			}
 		}
+		if progress >= nextLog { // 経過 10% ごとにログ
+			nextLog += logEvery
+			fmt.Fprintf(os.Stderr, "sa step=%d score=%d best=%d T=%.1f boost=%.2f reheats=%d wins=%v\n",
+				step, score, bestScore, temperature, boost, reheats, wins)
+		}
+	}
+	if score != rawScore(problem, state) {
+		panic("moveDelta と rawScore が一致しない")
+	}
+	if bestScore < 0 {
+		bestScore = 0
 	}
 	return bestState, bestScore
 }

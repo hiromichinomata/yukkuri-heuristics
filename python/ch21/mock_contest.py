@@ -92,10 +92,15 @@ def brief_sa(
     score = score_schedule(problem, current)
     best = ScheduleState(list(current.types))
     best_score = score
-    temperature = 5000.0
-    alpha = 0.995
+    t0, t1 = 5000.0, 10.0
+    start = time.perf_counter()
+    span = max(deadline - start, 1e-9)
 
-    while time.perf_counter() < deadline:
+    while True:
+        now = time.perf_counter()
+        if now >= deadline:
+            break
+        temperature = t0 * (t1 / t0) ** ((now - start) / span)  # 第9章と同じ時間ベース冷却
         day = rng.randrange(problem.days)
         trial = ScheduleState(list(current.types))
         trial.types[day] = rng.randint(1, 26)
@@ -107,7 +112,6 @@ def brief_sa(
             if score > best_score:
                 best = ScheduleState(list(current.types))
                 best_score = score
-        temperature *= alpha
     return best
 
 

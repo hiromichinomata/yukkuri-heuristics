@@ -110,9 +110,10 @@ func strategyRandomSA(p ProblemInput, rng *rand.Rand, steps int) ScheduleState {
 	score := scoreSchedule(p, state)
 	best := append([]int{}, state.Types...)
 	bestScore := score
-	temperature := 5000.0
-	alpha := 0.995
+	const t0, t1 = 5000.0, 10.0
 	for s := 0; s < steps; s++ {
+		// 第9章と同じ指数冷却。ここは時間ではなくステップ数で区切るので進み具合 = s / steps
+		temperature := t0 * math.Pow(t1/t0, float64(s)/float64(steps))
 		day := rng.Intn(p.Days)
 		trial := append([]int{}, state.Types...)
 		trial[day] = 1 + rng.Intn(26)
@@ -126,7 +127,6 @@ func strategyRandomSA(p ProblemInput, rng *rand.Rand, steps int) ScheduleState {
 				bestScore = score
 			}
 		}
-		temperature *= alpha
 	}
 	return ScheduleState{best}
 }

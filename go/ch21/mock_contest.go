@@ -126,10 +126,16 @@ func briefSA(p ProblemInput, state ScheduleState, deadline time.Time, rng *rand.
 	score := scoreSchedule(p, ScheduleState{current})
 	best := append([]int{}, current...)
 	bestScore := score
-	temperature := 5000.0
-	alpha := 0.995
+	const t0, t1 = 5000.0, 10.0
+	start := time.Now()
+	span := deadline.Sub(start)
 
-	for time.Now().Before(deadline) {
+	for {
+		now := time.Now()
+		if !now.Before(deadline) {
+			break
+		}
+		temperature := t0 * math.Pow(t1/t0, float64(now.Sub(start))/float64(span)) // 第9章と同じ時間ベース冷却
 		day := rng.Intn(p.Days)
 		trial := append([]int{}, current...)
 		trial[day] = 1 + rng.Intn(26)
@@ -143,7 +149,6 @@ func briefSA(p ProblemInput, state ScheduleState, deadline time.Time, rng *rand.
 				bestScore = score
 			}
 		}
-		temperature *= alpha
 	}
 	return ScheduleState{best}
 }

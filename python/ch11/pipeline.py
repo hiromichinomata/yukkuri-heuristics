@@ -12,8 +12,8 @@ from typing import List, TextIO
 TOTAL_SEC = 2.0
 CONSTRUCT_RATIO = 0.6
 
-T0 = 5000.0
-ALPHA = 0.995
+T0 = 5000.0  # SA 段の開始温度
+T1 = 10.0  # SA 段の終了温度（第9章と同じ時間ベース冷却）
 
 
 @dataclass
@@ -127,8 +127,17 @@ def sa(
     best_score = score
     temperature = T0
     step = 0
+    start = time.perf_counter()
+    span = max(deadline - start, 1e-9)
+    next_log = 0.1
 
-    while time.perf_counter() < deadline:
+    while True:
+        now = time.perf_counter()
+        if now >= deadline:
+            break
+        # SA 段に割り当てられた時間の中で T0 → T1 へ下げる
+        progress = (now - start) / span
+        temperature = T0 * (T1 / T0) ** progress
         day = rng.randrange(problem.days)
         trial = current.copy()
         trial.types[day] = rng.randint(1, 26)
@@ -140,9 +149,9 @@ def sa(
             if score > best_score:
                 best = current.copy()
                 best_score = score
-        temperature *= ALPHA
         step += 1
-        if step % 500 == 0:
+        if progress >= next_log:  # SA 段の 10% ごとにログ
+            next_log += 0.1
             print(f"sa step={step} score={score} T={temperature:.2f}", file=sys.stderr)
 
     return best

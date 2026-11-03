@@ -83,9 +83,10 @@ def strategy_random_sa(
     score = score_schedule(problem, state)
     best = state.copy()
     best_score = score
-    temperature = 5000.0
-    alpha = 0.995
-    for _ in range(steps):
+    t0, t1 = 5000.0, 10.0
+    for i in range(steps):
+        # 第9章と同じ指数冷却。ここは時間ではなくステップ数で区切るので進み具合 = i / steps
+        temperature = t0 * (t1 / t0) ** (i / steps)
         day = rng.randrange(problem.days)
         trial = state.copy()
         trial.types[day] = rng.randint(1, 26)
@@ -97,7 +98,6 @@ def strategy_random_sa(
             if score > best_score:
                 best = state.copy()
                 best_score = score
-        temperature *= alpha
     return best
 
 

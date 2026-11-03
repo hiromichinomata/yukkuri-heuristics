@@ -9,6 +9,7 @@
 #   2. Python: 構文チェック（py_compile）
 #   3. 各プログラムがサンプル入力で終了コード 0 で終わる
 #   4. 乱数を使わないプログラムは Python と Go の stdout が一致する
+#   5. tests/ の単体テスト（差分更新が全再計算と一致する、ランダム入力でも Python/Go が一致する など）
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -151,6 +152,12 @@ for name in "${deterministic[@]}"; do
     ng "stdout differs: $name" "$TMP_DIR/diff.log"
   fi
 done
+
+# ---------- 5. 単体テスト（差分更新・ランダム入力での Python/Go 一致・YAML ローダー） ----------
+if [[ -z "$FILTER" ]]; then
+  echo "== unit tests (tests/) =="
+  if python -m unittest discover -s tests >"$TMP_DIR/unit.log" 2>&1; then ok; else ng "unit tests (python -m unittest discover -s tests -v で詳細)" "$TMP_DIR/unit.log"; fi
+fi
 
 echo ""
 echo "passed: $pass  failed: $fail"

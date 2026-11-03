@@ -16,7 +16,7 @@ const (
 	totalSec       = 2.0
 	constructRatio = 0.6
 	t0             = 5000.0
-	alpha          = 0.995
+	t1             = 10.0 // SA 段の終了温度（第9章と同じ時間ベース冷却）
 )
 
 type ProblemInput struct {
@@ -155,8 +155,18 @@ func sa(problem ProblemInput, state ScheduleState, deadline time.Time, rng *rand
 	bestScore := score
 	temperature := t0
 	step := 0
+	start := time.Now()
+	span := deadline.Sub(start)
+	nextLog := 0.1
 
-	for time.Now().Before(deadline) {
+	for {
+		now := time.Now()
+		if !now.Before(deadline) {
+			break
+		}
+		// SA 段に割り当てられた時間の中で t0 → t1 へ下げる
+		progress := float64(now.Sub(start)) / float64(span)
+		temperature = t0 * math.Pow(t1/t0, progress)
 		day := rng.Intn(problem.Days)
 		trial := copyState(current)
 		trial.Types[day] = rng.Intn(26) + 1
@@ -170,9 +180,9 @@ func sa(problem ProblemInput, state ScheduleState, deadline time.Time, rng *rand
 				bestScore = score
 			}
 		}
-		temperature *= alpha
 		step++
-		if step%5000 == 0 {
+		if progress >= nextLog { // SA 段の 10% ごとにログ
+			nextLog += 0.1
 			fmt.Fprintf(os.Stderr, "sa step=%d score=%d T=%.2f\n", step, score, temperature)
 		}
 	}

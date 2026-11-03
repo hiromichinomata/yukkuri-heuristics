@@ -204,7 +204,7 @@ func (t *Timer) Expired() bool {
 | SA | `templates/sa_template.py` → `ch09/` |
 | ビーム | `ch10/beam_fill.py` |
 | パイプライン | `ch11/pipeline.py` |
-| 並列 SA | `ch18/parallel_sa.py` |
+| multi-start SA（逐次 / --parallel） | `ch18/multi_start_sa.py` |
 
 **霊夢**: コピー元が一覧にあると探しやすいのだ。
 

@@ -10,7 +10,7 @@
 
 | 色 | レーティング | 推奨コンテスト・問題 | 本書の章 | 身につけること |
 |----|-------------|---------------------|---------|---------------|
-| 灰色 | 〜399 | [Intro HC](https://atcoder.jp/contests/intro-heuristics), [AHC001](https://atcoder.jp/contests/ahc001) | 第1–4章 | スコア計算、合法解、シミュレーション、No Submit 回避 |
+| 灰色 | 1–399 | [Intro HC](https://atcoder.jp/contests/intro-heuristics), [AHC001](https://atcoder.jp/contests/ahc001) | 第1–4章 | スコア計算、合法解、シミュレーション、No Submit 回避 |
 | 茶色 | 400–799 | [AHC005](https://atcoder.jp/contests/ahc005), [AHC006](https://atcoder.jp/contests/ahc006) | 第5–8章 | 貪欲、2-opt、粗視化、ビジュアライザ |
 | 緑色 | 800–1199 | [AHC002](https://atcoder.jp/contests/ahc002), [Intro HC 問題C](https://atcoder.jp/contests/intro-heuristics/tasks/intro_heuristics_c) | 第9–11章 | SA（差分更新）、ビーム、パイプライン |
 | 水色 | 1200–1599 | [AHC003](https://atcoder.jp/contests/ahc003), AHC010, AHC011 | 第12–16章 | インタラクティブ、タブー、データ構造、高度SA |
@@ -21,7 +21,7 @@
 
 ---
 
-## 灰色帯（〜399）
+## 灰色帯（1–399）
 
 | 優先 | 問題 | 理由 |
 |------|------|------|
@@ -83,7 +83,7 @@ python python/ch14/loop_toy.py < data/ch14/sample.txt
 | 優先 | 問題 | 技法 |
 |------|------|------|
 | 1 | AHC008 Territory | マルチエージェント |
-| 2 | AHC014 / AHC016 | 配置・構造 |
+| 2 | AHC014 / AHC016 | 配置・構築 / ノイズ付きの推定 |
 | 3 | 経路・配置系の再挑戦 | 多点スタート（第18章）・LNS（第19章） |
 
 ---

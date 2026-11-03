@@ -52,7 +52,7 @@ def overlay_path(grid: Sequence[Sequence[int]], path: Sequence[Tuple[int, int]])
 
 def render_ascii(view: Sequence[Sequence[str]]) -> str:
     rows = [" ".join(row) for row in view]
-    border = "+" + "-" * (len(view[0]) * 2 - 1) + "+"
+    border = "+" + "-" * (len(view[0]) * 2 + 1) + "+"  # 行は "| " + セル*2-1 + " |" なので 2n+1
     body = "\n".join("| " + row + " |" for row in rows)
     return "\n".join([border, body, border])
 

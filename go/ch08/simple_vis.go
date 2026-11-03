@@ -95,7 +95,7 @@ func overlayPath(grid [][]int, path [][2]int) [][]string {
 
 func renderASCII(view [][]string) string {
 	var b strings.Builder
-	border := "+" + strings.Repeat("-", len(view[0])*2-1) + "+"
+	border := "+" + strings.Repeat("-", len(view[0])*2+1) + "+" // 行は "| " + セル*2-1 + " |" なので 2n+1
 	b.WriteString(border + "\n")
 	for _, row := range view {
 		b.WriteString("| " + strings.Join(row, " ") + " |\n")
