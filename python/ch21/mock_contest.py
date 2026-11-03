@@ -177,7 +177,7 @@ class MockContest:
 
 def default_input_path() -> Path:
     root = Path(__file__).resolve().parents[2]
-    for rel in ("data/ch23/sample.txt", "data/ch08/sample.txt"):
+    for rel in ("data/ch23/sample.txt", "data/ch09/sample.txt"):
         p = root / rel
         if p.exists():
             return p

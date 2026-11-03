@@ -218,7 +218,7 @@ func (c *MockContest) run() ScheduleState {
 }
 
 func defaultInput() string {
-	for _, rel := range []string{"data/ch23/sample.txt", "data/ch08/sample.txt"} {
+	for _, rel := range []string{"data/ch23/sample.txt", "data/ch09/sample.txt"} {
 		if _, err := os.Stat(rel); err == nil {
 			return rel
 		}

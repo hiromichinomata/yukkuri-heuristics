@@ -27,7 +27,7 @@
 | 状態 | 各オブジェクトの位置・向き |
 | Move | swap, shift, rotate, サイズ変更 |
 | 例題 | [AHC001](https://atcoder.jp/contests/ahc001), AHC015, AHC016 |
-| 本書 | 第4章（AHC001 玩具）、第16章（GA） |
+| 本書 | 第4章（AHC001 玩具）、第26章（GA） |
 
 **最初に確認すること**
 
@@ -51,7 +51,7 @@ def grow_one_side(rect, direction):
 | 状態 | 頂点の訪問順序 |
 | Move | 2-opt, swap, LNS 破壊区間 |
 | 例題 | [AHC005](https://atcoder.jp/contests/ahc005), AHC002 |
-| 本書 | 第5章（貪欲配達）、第6章（2-opt）、第24章（LNS） |
+| 本書 | 第5章（貪欲配達）、第6章（2-opt）、第19章（LNS） |
 
 **最初に確認すること**
 
@@ -75,7 +75,7 @@ def two_opt(tour, i, j):
 | 状態 | 時間軸上の割当（種類・順序） |
 | Move | 1日変更、swap 2日、種類変更 |
 | 例題 | [Intro HC](https://atcoder.jp/contests/intro-heuristics), AHC011 |
-| 本書 | 第1章、第3章、第8章、第10章 |
+| 本書 | 第1章、第3章、第9章、第11章 |
 
 **最初に確認すること**
 
@@ -93,7 +93,7 @@ def two_opt(tour, i, j):
 | 状態 | 盤面 + 空白位置 |
 | Move | 上下左右、ピース移動 |
 | 例題 | AHC010, AHC014 |
-| 本書 | 第4章（シミュレーション）、第9章、第14章 |
+| 本書 | 第4章（シミュレーション）、第10章、第15章 |
 
 **最初に確認すること**
 
@@ -117,7 +117,7 @@ def h(state, goal):
 | 状態 | 隠れパラメータの推定値 |
 | Move | クエリ先選択、重み更新 |
 | 例題 | [AHC003](https://atcoder.jp/contests/ahc003) |
-| 本書 | 第11章、第25章 |
+| 本書 | 第12章、第24章 |
 
 **最初に確認すること**
 

@@ -2,7 +2,7 @@
 # tools/smoke_test.sh — 全章のサンプルを Python / Go で実行し、壊れていないか確認する
 #
 #   ./tools/smoke_test.sh          # 全部
-#   ./tools/smoke_test.sh ch09     # 名前に ch09 を含むものだけ
+#   ./tools/smoke_test.sh ch10     # 名前に ch10 を含むものだけ
 #
 # 確認すること:
 #   1. Go: ファイル単位の go vet（1ディレクトリに main が複数あるので ./... は使えない）
@@ -77,11 +77,11 @@ run_case() {
 special_cases=(
   "templates/io_template|data/sample.txt||"
   "ch02/sample_solver|data/ch02/input_only.txt||"
-  "ch11/interactive_path|/dev/null|--offline data/ch11/sample.txt|--offline data/ch11/sample.txt"
-  "ch11/query_simulator|/dev/null|data/ch11/sample.txt|"
+  "ch12/interactive_path|/dev/null|--offline data/ch12/sample.txt|--offline data/ch12/sample.txt"
+  "ch12/query_simulator|/dev/null|data/ch12/sample.txt|"
   "ch21/mock_contest|/dev/null|data/ch23/sample.txt --fast|data/ch23/sample.txt --fast"
-  "ch25/bandit_compare|/dev/null|data/ch25/sample.txt|data/ch25/sample.txt"
-  "ch26/simple_vis|data/ch26/sample.txt||-input data/ch26/sample.txt"
+  "ch24/bandit_compare|/dev/null|data/ch24/sample.txt|data/ch24/sample.txt"
+  "ch08/simple_vis|data/ch08/sample.txt||-input data/ch08/sample.txt"
   "ch29/improvement_log|/dev/null|data/ch29/weekly_log.json|-input data/ch29/weekly_log.json"
 )
 
@@ -135,7 +135,7 @@ deterministic=(
   ch01/rating_band ch01/score_intro_hc ch01/greedy_intro_hc
   ch03/score_module ch03/toy_score
   ch04/ahc001_grow ch04/score_ahc001 ch05/greedy_delivery ch07/coarsen
-  ch09/beam_fill ch14/slide_beam ch17/territory_greedy ch19/mcts_toy
+  ch10/beam_fill ch15/slide_beam ch17/territory_greedy ch20/mcts_toy
   ch22/review_sheet ch27/paper_transfer
 )
 for name in "${deterministic[@]}"; do

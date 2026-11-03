@@ -88,8 +88,8 @@ func scoreSchedule(problem ProblemInput, state ScheduleState) ScoreResult
 |---------|------|
 | `python/templates/sa_template.py` | SA 骨格（T0=100 → T1=0.1、時間ベース冷却） |
 | `go/templates/sa_template.go` | 同上 |
-| `python/ch08/sa_intro_hc.py` | Intro HC 向け本番例 |
-| `python/ch18/sa_multi_neighborhood.py` | 複数近傍 + 再ヒート |
+| `python/ch09/sa_intro_hc.py` | Intro HC 向け本番例 |
+| `python/ch16/sa_multi_neighborhood.py` | 複数近傍 + 再ヒート |
 
 ```python
 # python/templates/sa_template.py — 定数
@@ -125,13 +125,13 @@ T := T0 * math.Pow(T1/T0, progress) // progress = elapsed / limit
 
 ## B.4 ビームサーチテンプレート
 
-公式 `templates/` にはビーム用ファイルがない。**第9章** を参照。
+公式 `templates/` にはビーム用ファイルがない。**第10章** を参照。
 
 | ファイル | 用途 |
 |---------|------|
-| `python/ch09/beam_fill.py` | グリッド埋め（簡略 AHC002） |
-| `go/ch09/beam_fill.go` | 同上 |
-| `python/ch14/slide_beam.py` | スライドパズル + ヒューリスティック |
+| `python/ch10/beam_fill.py` | グリッド埋め（簡略 AHC002） |
+| `go/ch10/beam_fill.go` | 同上 |
+| `python/ch15/slide_beam.py` | スライドパズル + ヒューリスティック |
 
 ```python
 # ビームサーチの骨格
@@ -147,7 +147,7 @@ for step in range(max_steps):
 
 ```go
 // 優先度付きキュー + ビーム幅で枝刈り
-// go/ch09/beam_fill.go を参照
+// go/ch10/beam_fill.go を参照
 ```
 
 ---
@@ -159,7 +159,7 @@ for step in range(max_steps):
 | `python/templates/timer.py` | `Timer` クラス |
 | `go/templates/timer.go` | `NewTimer`, `Expired()` |
 | `python/ch02/ahc_main.py` | main + Timer 統合例 |
-| `python/ch10/pipeline.py` | フェーズ別時間配分 |
+| `python/ch11/pipeline.py` | フェーズ別時間配分 |
 
 ```python
 # python/templates/timer.py
@@ -201,10 +201,10 @@ func (t *Timer) Expired() bool {
 | スコアだけ | `ch03/score_module.py` |
 | 貪欲 | `ch05/greedy_delivery.py` |
 | 2-opt | `ch06/two_opt.py` |
-| SA | `templates/sa_template.py` → `ch08/` |
-| ビーム | `ch09/beam_fill.py` |
-| パイプライン | `ch10/pipeline.py` |
-| 並列 SA | `ch20/parallel_sa.py` |
+| SA | `templates/sa_template.py` → `ch09/` |
+| ビーム | `ch10/beam_fill.py` |
+| パイプライン | `ch11/pipeline.py` |
+| 並列 SA | `ch18/parallel_sa.py` |
 
 **霊夢**: コピー元が一覧にあると探しやすいのだ。
 
