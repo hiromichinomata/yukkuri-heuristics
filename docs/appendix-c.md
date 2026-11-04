@@ -36,7 +36,7 @@
 3. 初期解: 点周りの小矩形 → 拡大
 
 ```python
-# 典型 Move: 矩形を1辺だけ伸ばす
+# 擬似コード: 典型 Move — 矩形を1辺だけ伸ばす
 def grow_one_side(rect, direction):
     ...
 ```
@@ -60,7 +60,7 @@ def grow_one_side(rect, direction):
 3. 対称性（逆向き OK か）
 
 ```python
-# 2-opt: 区間 [i+1, j] を反転
+# 擬似コード: 2-opt — 区間 [i+1, j] を反転
 def two_opt(tour, i, j):
     return tour[: i + 1] + tour[i + 1 : j + 1][::-1] + tour[j + 1 :]
 ```
@@ -102,7 +102,7 @@ def two_opt(tour, i, j):
 3. ビジュアライザ必須か
 
 ```python
-# ヒューリスティック例: 各タイルの目標マンハッタン和
+# 擬似コード: ヒューリスティック例 — 各タイルの目標マンハッタン和
 def h(state, goal):
     return sum(manhattan(state.pos[t], goal.pos[t]) for t in tiles)
 ```

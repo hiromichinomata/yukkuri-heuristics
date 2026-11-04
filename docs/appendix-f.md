@@ -69,7 +69,6 @@
 | `data/ch22/pattern_catalog.json` | 問題パターン JSON |
 | `tools/local_test.sh` | ローカル評価 |
 | `tools/check_env.sh` | 環境確認 |
-| `.cursor/skills/write-chapter/` | 章執筆スキル |
 
 ---
 
@@ -100,12 +99,5 @@
 **魔理沙**: URL は変更されることがある。**開けないときは AtCoder トップからコンテスト名で検索** しろ。本書のコードはローカルで動くから、Web がなくても第0–11章は進められるぜ。
 
 ---
-
-## 更新メモ
-
-| 日付 | 内容 |
-|------|------|
-| 2025 | AHC レーティング v2（時間減衰）— 第1章・付録F 参照 |
-| 本書執筆時 | Intro HC / AHC001–020 を章・付録D にマッピング |
 
 > **注**: 最新 AHC の問題 URL は `https://atcoder.jp/contests/ahcNNN` 形式。NNN はコンテスト番号。

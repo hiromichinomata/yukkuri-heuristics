@@ -29,7 +29,7 @@ cd yukkuri-heuristics
 ### Python（任意: venv）
 
 ```bash
-python3 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 ```
 
@@ -45,12 +45,6 @@ python python/ch01/score_intro_hc.py < data/ch01/sample.txt
 
 # ローカル評価パイプライン（第2章）
 ./tools/local_test.sh data/ch02/input_only.txt
-
-# 全章のサンプルを Python / Go で一括実行（go vet・構文チェック・出力一致・単体テストも確認）
-./tools/smoke_test.sh
-
-# 単体テストだけ（差分更新と全再計算の一致、ランダム入力での Python/Go 一致など）
-python -m unittest discover -s tests -v
 ```
 
 ## リポジトリ構成
@@ -70,15 +64,12 @@ yukkuri-heuristics/
 │   └── chNN/
 ├── data/chNN/             # サンプル入力
 ├── data/common/           # 章をまたいで使う入力（intro_hc_d365.txt: 本番サイズの Intro HC）
-├── tests/                 # 手元実行用の単体テスト（unittest）
 ├── tools/
 │   ├── check_env.sh       # 環境チェック
 │   ├── local_test.sh      # ソルバ → スコア計算
 │   ├── run.sh             # テンプレート実行（io, timer, rng, heap, sa）
 │   ├── contest_log.sh     # 模擬コンテスト実行とログ保存（第21章）
-│   ├── smoke_test.sh      # 全章サンプルの一括動作確認
 │   └── gen_intro_hc.py    # Intro HC 形式の入力生成（公式と同じ分布）
-└── .cursor/skills/        # 章執筆用 Cursor スキル（任意）
 ```
 
 ## 章の読み方
@@ -87,30 +78,6 @@ yukkuri-heuristics/
 2. 該当する `docs/NN.md` を読む（掛け合い → ハンズオン → コード → 演習）
 3. `python/chNN/` と `go/chNN/` を実行して手を動かす
 4. [付録D](docs/appendix-d.md) の過去問リストで AtCoder 本番問題に挑戦
-
-## v2 での章構成の変更
-
-v2 では、レーティング帯ごとに必要な技術がそろうよう章の並びを見直しました。章番号とファイル（`docs/NN.md`・`python/chNN/`・`go/chNN/`・`data/chNN/`）が次のように変わっています。
-
-| 章 | v1 の章番号 | v2 の章番号 | v2 の帯 |
-|----|:----------:|:----------:|---------|
-| ビジュアライザ駆動開発 | 26 | **8** | 茶 |
-| 焼きなまし法 | 8 | **9** | 緑 |
-| ビームサーチ | 9 | **10** | 緑 |
-| 多段パイプライン | 10 | **11** | 緑 |
-| インタラクティブ問題 | 11 | **12** | 水色 |
-| タブーサーチと反復局所探索 | 12 | **13** | 水色 |
-| データ構造で速くする | 13 | **14** | 水色 |
-| パズル・構造問題 | 14 | **15** | 水色 |
-| 高度な焼きなましテクニック | 18 | **16** | 水色 |
-| 多点スタートと並列探索 | 20 | **18** | 青 |
-| 大近傍探索（LNS） | 24 | **19** | 青 |
-| モンテカルロ木探索（MCTS） | 19 | **20** | 黄 |
-| 高度なインタラクティブ・オンライン | 25 | **24** | 橙 |
-| 整数計画と緩和（発展） | 15 | **25** | 橙 |
-| 遺伝的アルゴリズム（発展） | 16 | **26** | 橙 |
-
-それ以外の章（第0〜7章、第17章、第21〜23章、第27〜30章）は番号が変わっていません。内容面では、第2章に No Submit 回避のチェックリスト（2.6）、第9章に差分更新（9.4）を追加しています。
 
 ## 参考リンク
 

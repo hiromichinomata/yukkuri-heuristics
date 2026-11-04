@@ -76,7 +76,7 @@ def main():
 ```
 
 ```go
-// Go も同様に read → score → main
+// 骨格: Go も同様に read → score → main
 func scoreSchedule(problem ProblemInput, state ScheduleState) ScoreResult
 ```
 
@@ -169,7 +169,7 @@ class Timer:
 ```
 
 ```python
-# 最良解の保持（提出用）
+# 骨格: 最良解の保持（提出用）
 best_state, best_score = state, score
 while not timer.expired():
     ...

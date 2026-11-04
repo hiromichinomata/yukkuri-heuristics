@@ -1,10 +1,16 @@
 # python/ch20/mcts_toy.py
-"""4 ノードグラフ上のターン制ゲームに MCTS（UCB1）を適用（第20章）."""
+"""4 ノードグラフ上のターン制ゲームに MCTS（UCB1）を適用（第20章）.
+
+  python python/ch20/mcts_toy.py < data/ch20/sample.txt                 # 1手 ITERATIONS 回（再現性のため既定）
+  python python/ch20/mcts_toy.py --time-per-move 0.05 < data/ch20/sample.txt  # 本番と同じく時間で回す
+"""
 from __future__ import annotations
 
+import argparse
 import math
 import random
 import sys
+import time
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, TextIO, Tuple
 
@@ -105,8 +111,17 @@ def best_child(node: MCTSNode) -> MCTSNode:
     return max(node.children.values(), key=lambda c: ucb1(node.visits, c))
 
 
-def mcts(root: MCTSNode, adj: List[List[int]], game: GameInput, rng: random.Random) -> None:
-    for _ in range(ITERATIONS):
+def mcts(
+    root: MCTSNode,
+    adj: List[List[int]],
+    game: GameInput,
+    rng: random.Random,
+    deadline: Optional[float] = None,
+) -> int:
+    """deadline が None なら ITERATIONS 回、指定されていればその時刻まで回す。回した回数を返す."""
+    done = 0
+    while done < ITERATIONS if deadline is None else time.perf_counter() < deadline:
+        done += 1
         node = root
         path: List[MCTSNode] = [node]
 
@@ -136,6 +151,7 @@ def mcts(root: MCTSNode, adj: List[List[int]], game: GameInput, rng: random.Rand
             # 親は子の勝率で手を選ぶので、こう数えると「自分の勝率が高い手」を選べる
             if n.state is not None and winner == 1 - n.state.player:
                 n.wins += 1.0
+    return done
 
 
 def select_move(root: MCTSNode, adj: List[List[int]]) -> int:
@@ -144,10 +160,11 @@ def select_move(root: MCTSNode, adj: List[List[int]]) -> int:
     return max(root.children, key=lambda m: root.children[m].visits)
 
 
-def play_game(game: GameInput, rng: random.Random) -> List[int]:
+def play_game(game: GameInput, rng: random.Random, time_per_move: Optional[float] = None) -> Tuple[List[int], int]:
     adj = build_adjacency(game)
     state = GameState(node=game.start, player=0)
     log: List[int] = []
+    total_iters = 0
 
     for _ in range(MAX_TURNS):
         winner = terminal_winner(state, game)
@@ -158,19 +175,24 @@ def play_game(game: GameInput, rng: random.Random) -> List[int]:
             break
 
         root = MCTSNode(state=state, untried=list(moves))
-        mcts(root, adj, game, rng)
+        deadline = None if time_per_move is None else time.perf_counter() + time_per_move
+        total_iters += mcts(root, adj, game, rng, deadline)
         mv = select_move(root, adj)
         log.append(mv)
         state = apply_move(state, mv)
 
-    return log
+    return log, total_iters
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--time-per-move", type=float, default=None, help="1手あたりの秒数（省略時は ITERATIONS 回）")
+    args = parser.parse_args()
     rng = random.Random(42)
     game = read_game(sys.stdin)
-    moves = play_game(game, rng)
+    moves, total_iters = play_game(game, rng, args.time_per_move)
     print(f"mcts moves={len(moves)} path={' '.join(map(str, moves))}", file=sys.stderr)
+    print(f"mcts iterations={total_iters}", file=sys.stderr)
     for m in moves:
         print(m)
 

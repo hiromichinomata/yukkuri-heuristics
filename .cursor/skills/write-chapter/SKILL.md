@@ -126,7 +126,10 @@ Optional validation:
 
 ```bash
 ./.cursor/skills/write-chapter/scripts/validate-chapter.sh NN
+./tools/smoke_test.sh    # code/doc drift, output examples, TOC and cross-references (see CONTRIBUTING.md)
 ```
+
+In docs, every `python` / `go` code block must start with either the source path (`# python/chNN/foo.py`) or a marker comment (`改変例` / `擬似コード` / `骨格` / `概念` / `イメージ`). See CONTRIBUTING.md for the full rules.
 
 Fix compile/runtime errors; do not leave placeholder `...` in committed code files.
 

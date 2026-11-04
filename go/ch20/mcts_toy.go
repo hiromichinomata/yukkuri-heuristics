@@ -3,12 +3,14 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"math"
 	"math/rand"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
@@ -36,6 +38,7 @@ type MCTSNode struct {
 	HasState bool
 	Parent   *MCTSNode
 	Children map[int]*MCTSNode
+	Order    []int // 子を作った順（map の走査順はランダムなので、同点のとき Python と同じ子を選ぶため）
 	Untried  []int
 	Visits   int
 	Wins     float64
@@ -130,13 +133,15 @@ func expand(node *MCTSNode, adj [][]int, rng *rand.Rand) *MCTSNode {
 		Untried:  append([]int{}, adj[childState.Node]...),
 	}
 	node.Children[move] = child
+	node.Order = append(node.Order, move)
 	return child
 }
 
 func bestChild(node *MCTSNode) *MCTSNode {
 	var best *MCTSNode
 	bestScore := -1.0
-	for _, c := range node.Children {
+	for _, m := range node.Order {
+		c := node.Children[m]
 		s := ucb1(node.Visits, c)
 		if best == nil || s > bestScore {
 			best = c
@@ -146,8 +151,11 @@ func bestChild(node *MCTSNode) *MCTSNode {
 	return best
 }
 
-func mcts(root *MCTSNode, adj [][]int, game GameInput, rng *rand.Rand) {
-	for it := 0; it < iterations; it++ {
+// mcts は deadline がゼロ値なら iterations 回、そうでなければその時刻まで回し、回した回数を返す
+func mcts(root *MCTSNode, adj [][]int, game GameInput, rng *rand.Rand, deadline time.Time) int {
+	done := 0
+	for (deadline.IsZero() && done < iterations) || (!deadline.IsZero() && time.Now().Before(deadline)) {
+		done++
 		node := root
 		path := []*MCTSNode{node}
 
@@ -185,6 +193,7 @@ func mcts(root *MCTSNode, adj [][]int, game GameInput, rng *rand.Rand) {
 			}
 		}
 	}
+	return done
 }
 
 func selectMove(root *MCTSNode, adj [][]int) int {
@@ -193,7 +202,8 @@ func selectMove(root *MCTSNode, adj [][]int) int {
 	}
 	bestMove := -1
 	bestVisits := -1
-	for m, c := range root.Children {
+	for _, m := range root.Order {
+		c := root.Children[m]
 		if c.Visits > bestVisits {
 			bestVisits = c.Visits
 			bestMove = m
@@ -202,10 +212,11 @@ func selectMove(root *MCTSNode, adj [][]int) int {
 	return bestMove
 }
 
-func playGame(game GameInput, rng *rand.Rand) []int {
+func playGame(game GameInput, rng *rand.Rand, timePerMove time.Duration) ([]int, int) {
 	adj := buildAdjacency(game)
 	state := GameState{game.Start, 0}
 	var log []int
+	totalIters := 0
 
 	for turn := 0; turn < maxTurns; turn++ {
 		if _, ok := terminalWinner(state, game); ok {
@@ -220,22 +231,28 @@ func playGame(game GameInput, rng *rand.Rand) []int {
 			Children: map[int]*MCTSNode{},
 			Untried:  append([]int{}, moves...),
 		}
-		mcts(root, adj, game, rng)
+		var deadline time.Time
+		if timePerMove > 0 {
+			deadline = time.Now().Add(timePerMove)
+		}
+		totalIters += mcts(root, adj, game, rng, deadline)
 		mv := selectMove(root, adj)
 		log = append(log, mv)
 		state = applyMove(state, mv)
 	}
-	return log
+	return log, totalIters
 }
 
 func main() {
+	timePerMove := flag.Float64("time-per-move", 0, "1手あたりの秒数（0 なら iterations 回）")
+	flag.Parse()
 	rng := rand.New(rand.NewSource(42))
 	game, err := readGame(bufio.NewReader(os.Stdin))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	moves := playGame(game, rng)
+	moves, totalIters := playGame(game, rng, time.Duration(*timePerMove*float64(time.Second)))
 	fmt.Fprintf(os.Stderr, "mcts moves=%d path=", len(moves))
 	for i, m := range moves {
 		if i > 0 {
@@ -244,6 +261,7 @@ func main() {
 		fmt.Fprint(os.Stderr, m)
 	}
 	fmt.Fprintln(os.Stderr)
+	fmt.Fprintf(os.Stderr, "mcts iterations=%d\n", totalIters)
 	for _, m := range moves {
 		fmt.Println(m)
 	}
