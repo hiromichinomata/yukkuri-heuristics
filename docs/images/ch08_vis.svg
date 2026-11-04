@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="330" viewBox="0 0 660 330" role="img">
+<title>第8章: simple_vis.py の ASCII 出力と、同じ内容を色で描いたもの（data/ch08/sample.txt）</title>
+<rect x="0" y="0" width="660" height="330" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第8章: simple_vis.py の ASCII 出力と、同じ内容を色で描いたもの（data/ch08/sample.txt）</text>
+<text x="30" y="70" font-family="Menlo, Consolas, monospace" font-size="15" fill="#111827" xml:space="preserve">+-----------------+</text>
+<text x="30" y="90" font-family="Menlo, Consolas, monospace" font-size="15" fill="#111827" xml:space="preserve">| . . # . . . . . |</text>
+<text x="30" y="110" font-family="Menlo, Consolas, monospace" font-size="15" fill="#111827" xml:space="preserve">| . S . # . . . . |</text>
+<text x="30" y="130" font-family="Menlo, Consolas, monospace" font-size="15" fill="#111827" xml:space="preserve">| . * * . # . . . |</text>
+<text x="30" y="150" font-family="Menlo, Consolas, monospace" font-size="15" fill="#111827" xml:space="preserve">| . . * . . . . . |</text>
+<text x="30" y="170" font-family="Menlo, Consolas, monospace" font-size="15" fill="#111827" xml:space="preserve">| # # * * . . . G |</text>
+<text x="30" y="190" font-family="Menlo, Consolas, monospace" font-size="15" fill="#111827" xml:space="preserve">| . . . * . . . . |</text>
+<text x="30" y="210" font-family="Menlo, Consolas, monospace" font-size="15" fill="#111827" xml:space="preserve">| . . . . # . . . |</text>
+<text x="30" y="230" font-family="Menlo, Consolas, monospace" font-size="15" fill="#111827" xml:space="preserve">| . . . . . . . . |</text>
+<text x="30" y="250" font-family="Menlo, Consolas, monospace" font-size="15" fill="#111827" xml:space="preserve">+-----------------+</text>
+<rect x="340.0" y="50.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="370.0" y="50.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="400.0" y="50.0" width="30.0" height="30.0" fill="#374151" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="430.0" y="50.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="460.0" y="50.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="490.0" y="50.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="520.0" y="50.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="550.0" y="50.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="340.0" y="80.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="370.0" y="80.0" width="30.0" height="30.0" fill="#16a34a" stroke="#e5e7eb" stroke-width="1"/>
+<text x="385.0" y="100.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">S</text>
+<rect x="400.0" y="80.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="430.0" y="80.0" width="30.0" height="30.0" fill="#374151" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="460.0" y="80.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="490.0" y="80.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="520.0" y="80.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="550.0" y="80.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="340.0" y="110.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="370.0" y="110.0" width="30.0" height="30.0" fill="#bfdbfe" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="400.0" y="110.0" width="30.0" height="30.0" fill="#bfdbfe" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="430.0" y="110.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="460.0" y="110.0" width="30.0" height="30.0" fill="#374151" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="490.0" y="110.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="520.0" y="110.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="550.0" y="110.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="340.0" y="140.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="370.0" y="140.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="400.0" y="140.0" width="30.0" height="30.0" fill="#bfdbfe" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="430.0" y="140.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="460.0" y="140.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="490.0" y="140.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="520.0" y="140.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="550.0" y="140.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="340.0" y="170.0" width="30.0" height="30.0" fill="#374151" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="370.0" y="170.0" width="30.0" height="30.0" fill="#374151" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="400.0" y="170.0" width="30.0" height="30.0" fill="#bfdbfe" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="430.0" y="170.0" width="30.0" height="30.0" fill="#bfdbfe" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="460.0" y="170.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="490.0" y="170.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="520.0" y="170.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="550.0" y="170.0" width="30.0" height="30.0" fill="#dc2626" stroke="#e5e7eb" stroke-width="1"/>
+<text x="565.0" y="190.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">G</text>
+<rect x="340.0" y="200.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="370.0" y="200.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="400.0" y="200.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="430.0" y="200.0" width="30.0" height="30.0" fill="#bfdbfe" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="460.0" y="200.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="490.0" y="200.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="520.0" y="200.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="550.0" y="200.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="340.0" y="230.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="370.0" y="230.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="400.0" y="230.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="430.0" y="230.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="460.0" y="230.0" width="30.0" height="30.0" fill="#374151" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="490.0" y="230.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="520.0" y="230.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="550.0" y="230.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="340.0" y="260.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="370.0" y="260.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="400.0" y="260.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="430.0" y="260.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="460.0" y="260.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="490.0" y="260.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="520.0" y="260.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<rect x="550.0" y="260.0" width="30.0" height="30.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<polyline points="385.0,95.0 385.0,125.0 415.0,125.0 415.0,155.0 415.0,185.0 445.0,185.0 445.0,215.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/>
+<text x="20.0" y="320.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">* と青い線 = 経路、# = 壁。この例の経路はゴール G に届いていない——数字だけ見ていると気づきにくい</text>
+</svg>

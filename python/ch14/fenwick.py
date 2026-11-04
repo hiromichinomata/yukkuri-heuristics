@@ -48,8 +48,8 @@ def benchmark(n: int = 8000, queries: int = 40000) -> None:
     naive_ms = (time.perf_counter() - t0) * 1000
 
     fw = Fenwick(n)
-    for i, v in enumerate(arr):
-        fw.add(i, v)
+    for i in range(n):
+        fw.add(i, 1)  # naive と同じ初期配列（すべて 1）から始める
     t0 = time.perf_counter()
     total_fw = 0
     for l, r, delta in ops:

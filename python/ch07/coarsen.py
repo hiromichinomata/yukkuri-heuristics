@@ -1,5 +1,5 @@
 # python/ch07/coarsen.py
-"""16x16 グリッドを 4x4 ブロックに分割し、貪欲 + 局所 refine."""
+"""16x16 グリッドを 4x4 ブロックに分割し、粗い貪欲 + ブロック内の山登り refine."""
 from __future__ import annotations
 
 import sys
@@ -7,6 +7,7 @@ from typing import List, TextIO, Tuple
 
 N = 16
 BLOCK = 4
+SUB = 2  # 粗い判断に使う小ブロックの一辺
 
 
 def read_grid(stream: TextIO) -> List[List[int]]:
@@ -38,16 +39,18 @@ def coarse_matrix(grid: List[List[int]]) -> List[List[int]]:
 
 
 def greedy_per_block(grid: List[List[int]]) -> List[Tuple[int, int]]:
+    """粗い判断: 各ブロックを 2×2 の小ブロックに分け、和が最大の小ブロックの左上を選ぶ."""
     picks: List[Tuple[int, int]] = []
     for bi in range(BLOCK):
         for bj in range(BLOCK):
             best_val = -1
             best_pos = (bi * BLOCK, bj * BLOCK)
-            for i in range(bi * BLOCK, (bi + 1) * BLOCK):
-                for j in range(bj * BLOCK, (bj + 1) * BLOCK):
-                    if grid[i][j] > best_val:
-                        best_val = grid[i][j]
-                        best_pos = (i, j)
+            for si in range(bi * BLOCK, (bi + 1) * BLOCK, SUB):
+                for sj in range(bj * BLOCK, (bj + 1) * BLOCK, SUB):
+                    s = sum(grid[i][j] for i in range(si, si + SUB) for j in range(sj, sj + SUB))
+                    if s > best_val:
+                        best_val = s
+                        best_pos = (si, sj)
             picks.append(best_pos)
     return picks
 

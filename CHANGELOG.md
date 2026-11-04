@@ -1,5 +1,10 @@
 # 変更履歴
 
+## v2 の追加修正
+
+- 第21章の模擬 AHC の時間配分を、本文の「4 時間」に合わせて変更しました（read 30 / implement 60 / improve **90 → 120** / submit 30 分）。`python/ch21/mock_contest.py`・`go/ch21/mock_contest.go` の既定値が変わっています。`--fast` の配分（0.3 / 0.5 / 0.8 / 0.2 秒）は変わりません。
+- 第1〜30章のすべてに図を入れました（`docs/images/*.svg`、`python tools/gen_figures.py` で作り直せます）。
+
 ## v2（章構成の変更）
 
 v2 では、レーティング帯ごとに必要な技術がそろうよう章の並びを見直しました。章番号とファイル（`docs/NN.md`・`python/chNN/`・`go/chNN/`・`data/chNN/`）が次のように変わっています。

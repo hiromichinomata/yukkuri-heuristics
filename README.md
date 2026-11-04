@@ -9,7 +9,7 @@ Python / Go の両方で、レーティング帯（灰〜赤）に応じた解�
 |------|------|
 | 目次 | [docs/00-toc.md](docs/00-toc.md) |
 | 第0章（使い方） | [docs/00.md](docs/00.md) |
-| 付録 | [docs/appendix-a.md](docs/appendix-a.md) 〜 [appendix-f.md](docs/appendix-f.md) |
+| 付録 | [docs/appendix-a.md](docs/appendix-a.md) 〜 [appendix-g.md](docs/appendix-g.md) |
 
 ## 必要環境
 
@@ -55,7 +55,7 @@ yukkuri-heuristics/
 ├── docs/
 │   ├── 00-toc.md          # 目次（ls で先頭に来るよう命名）
 │   ├── 00.md … 30.md      # 各章本文
-│   └── appendix-*.md      # 付録 A〜F
+│   └── appendix-*.md      # 付録 A〜G
 ├── python/
 │   ├── templates/         # 共通テンプレート（I/O, SA, タイマー等）
 │   └── chNN/              # 章ごとのサンプルコード
@@ -77,7 +77,8 @@ yukkuri-heuristics/
 1. [docs/00-toc.md](docs/00-toc.md) で全体像と自分のレーティング帯を確認
 2. 該当する `docs/NN.md` を読む（掛け合い → ハンズオン → コード → 演習）
 3. `python/chNN/` と `go/chNN/` を実行して手を動かす
-4. [付録D](docs/appendix-d.md) の過去問リストで AtCoder 本番問題に挑戦
+4. 第11章まで読んだら、[付録G](docs/appendix-g.md) の通し演習で Intro HC 問題A を最後まで解く
+5. [付録D](docs/appendix-d.md) の過去問リストで AtCoder 本番問題に挑戦
 
 ## 参考リンク
 

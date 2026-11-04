@@ -76,7 +76,7 @@ def order_crossover(p1: List[int], p2: List[int], rng: random.Random) -> List[in
 
 
 def mutate(order: List[int], rng: random.Random) -> None:
-    if rng.random() >= MUTATION_RATE:
+    if len(order) < 2 or rng.random() >= MUTATION_RATE:  # 1 個だけなら入れ替えようがない
         return
     i, j = rng.sample(range(len(order)), 2)
     order[i], order[j] = order[j], order[i]

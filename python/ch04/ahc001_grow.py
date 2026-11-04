@@ -80,8 +80,10 @@ def grow_rect(company: Company, others: List[Rect]) -> Rect:
 
 def solve(companies: List[Company]) -> List[Rect]:
     rects: List[Rect] = []
-    for company in companies:
-        rect = grow_rect(company, rects)
+    for i, company in enumerate(companies):
+        # まだ置いていない社の 1×1 マスも障害物にする（覆うと、その社の矩形と必ず重なる）
+        pending = [Rect(c.x, c.y, c.x + 1, c.y + 1) for c in companies[i + 1 :]]
+        rect = grow_rect(company, rects + pending)
         rects.append(rect)
     return rects
 

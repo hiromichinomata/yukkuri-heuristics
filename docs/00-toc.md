@@ -351,6 +351,7 @@
 | 付録D 推奨過去問リスト | [appendix-d.md](appendix-d.md) |
 | 付録E 用語集 | [appendix-e.md](appendix-e.md) |
 | 付録F 参考文献・リンク | [appendix-f.md](appendix-f.md) |
+| 付録G 通し演習: Intro HC 問題A を最後まで解く | [appendix-g.md](appendix-g.md) |
 
 ### 付録A 台本テンプレート
 
@@ -401,6 +402,14 @@
 - [AHC Rating System（計算式）](https://img.atcoder.jp/file/AHC_rating_v2_en.pdf)
 - [Introduction to Heuristics Contest](https://atcoder.jp/contests/intro-heuristics)
 - [Heuristic Contest 概要（AtCoderInfo）](https://info.atcoder.jp/overview/contest/heuristic)
+
+### 付録G 通し演習: Intro HC 問題A を最後まで解く
+
+（本文: [appendix-g.md](appendix-g.md)）
+
+- 手元で seed 1〜5 の入力を採点する（`tools/eval_intro_hc.py`）
+- 0 点の解 → 貪欲（TLE に気づく）→ 焼きなまし → 多段パイプライン → Go → 近傍の追加
+- 段ごとの伸びを振り返り、提出する
 
 ---
 

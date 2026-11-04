@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 )
 
 type DayEntry struct {
@@ -98,6 +99,47 @@ func summarize(log WeeklyLog) {
 		commits += d.Commits
 	}
 	fmt.Fprintf(os.Stderr, "total commits: %d\n", commits)
+	printGains(log.Days, scores)
+}
+
+// printGains は一番伸びた日と、担当者ごとの伸び・コミット数を出す（その日の伸びは、その日の owner の成果とみなす）。
+func printGains(days []DayEntry, scores []int) {
+	if len(scores) < 2 {
+		return
+	}
+	top := 1
+	for i := 2; i < len(scores); i++ {
+		if scores[i]-scores[i-1] > scores[top]-scores[top-1] {
+			top = i
+		}
+	}
+	fmt.Printf("biggest gain: day %d (%+d) %s\n", days[top].Day, scores[top]-scores[top-1], days[top].Notes)
+
+	type row struct{ days, gain, commits int }
+	owners := map[string]*row{}
+	var names []string
+	for i := 1; i < len(scores); i++ {
+		r, ok := owners[days[i].Owner]
+		if !ok {
+			r = &row{}
+			owners[days[i].Owner] = r
+			names = append(names, days[i].Owner)
+		}
+		r.days++
+		r.gain += scores[i] - scores[i-1]
+		r.commits += days[i].Commits
+	}
+	sort.Strings(names) // map の順番は毎回変わるので、名前順にそろえる
+	fmt.Println()
+	fmt.Println("owner     days     gain  commits  gain/commit")
+	for _, name := range names {
+		r := owners[name]
+		per := "-"
+		if r.commits > 0 {
+			per = fmt.Sprintf("%.0f", float64(r.gain)/float64(r.commits))
+		}
+		fmt.Printf("%-8s  %4d  %+7d  %7d  %11s\n", name, r.days, r.gain, r.commits, per)
+	}
 }
 
 func main() {

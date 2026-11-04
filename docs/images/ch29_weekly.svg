@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="350" viewBox="0 0 720 350" role="img">
+<title>第29章: 模擬チームの 1 週間のスコア（data/ch29/weekly_log.json）</title>
+<rect x="0" y="0" width="720" height="350" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第29章: 模擬チームの 1 週間のスコア（data/ch29/weekly_log.json）</text>
+<line x1="80.0" y1="260.0" x2="460.0" y2="260.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="74.0" y="264.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">412</text>
+<line x1="80.0" y1="210.0" x2="460.0" y2="210.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="74.0" y="214.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">429</text>
+<line x1="80.0" y1="160.0" x2="460.0" y2="160.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="74.0" y="164.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">445</text>
+<line x1="80.0" y1="110.0" x2="460.0" y2="110.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="74.0" y="114.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">462</text>
+<line x1="80.0" y1="60.0" x2="460.0" y2="60.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="74.0" y="64.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">478</text>
+<text x="80.0" y="276.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">1</text>
+<text x="143.3" y="276.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">2</text>
+<text x="206.7" y="276.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">3</text>
+<text x="270.0" y="276.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">4</text>
+<text x="333.3" y="276.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">5</text>
+<text x="396.7" y="276.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">6</text>
+<text x="460.0" y="276.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">7</text>
+<line x1="80.0" y1="260.0" x2="460.0" y2="260.0" stroke="#111827" stroke-width="1"/>
+<line x1="80.0" y1="60.0" x2="80.0" y2="260.0" stroke="#111827" stroke-width="1"/>
+<text x="270.0" y="294.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="normal">日</text>
+<text x="80.0" y="50.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">スコア（千）</text>
+<polyline points="80.0,260.0 143.3,180.0 206.7,141.7 270.0,145.9 333.3,105.7 396.7,79.2 460.0,60.0" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="80.0" cy="260.0" r="6" fill="#dc2626" stroke="#dc2626" stroke-width="2"/>
+<circle cx="143.3" cy="180.0" r="6" fill="#ea580c" stroke="#ea580c" stroke-width="2"/>
+<circle cx="206.7" cy="141.7" r="6" fill="#dc2626" stroke="#dc2626" stroke-width="2"/>
+<circle cx="270.0" cy="145.9" r="6" fill="#ffffff" stroke="#ea580c" stroke-width="2"/>
+<circle cx="333.3" cy="105.7" r="6" fill="#dc2626" stroke="#dc2626" stroke-width="2"/>
+<circle cx="396.7" cy="79.2" r="6" fill="#ea580c" stroke="#ea580c" stroke-width="2"/>
+<circle cx="460.0" cy="60.0" r="6" fill="#16a34a" stroke="#16a34a" stroke-width="2"/>
+<text x="490.0" y="70.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#dc2626" text-anchor="start" font-weight="bold">1 日目 reimu</text>
+<text x="490.0" y="84.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="10" fill="#111827" text-anchor="start" font-weight="normal">貪欲初期解 + スコア関数のバグ修正</text>
+<text x="490.0" y="100.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#ea580c" text-anchor="start" font-weight="bold">2 日目 marisa</text>
+<text x="490.0" y="114.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="10" fill="#111827" text-anchor="start" font-weight="normal">2-opt を 1.5s まで回す</text>
+<text x="490.0" y="130.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#dc2626" text-anchor="start" font-weight="bold">3 日目 reimu</text>
+<text x="490.0" y="144.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="10" fill="#111827" text-anchor="start" font-weight="normal">ビジュアライザでデッドエンドを確認、近傍追加</text>
+<text x="490.0" y="160.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#ea580c" text-anchor="start" font-weight="bold">4 日目 marisa</text>
+<text x="490.0" y="174.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="10" fill="#111827" text-anchor="start" font-weight="normal">パラメータ振り（悪化）→ ロールバック</text>
+<text x="490.0" y="190.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#dc2626" text-anchor="start" font-weight="bold">5 日目 reimu</text>
+<text x="490.0" y="204.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="10" fill="#111827" text-anchor="start" font-weight="normal">LNS 破壊率 0.25、再構築を貪欲に</text>
+<text x="490.0" y="220.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#ea580c" text-anchor="start" font-weight="bold">6 日目 marisa</text>
+<text x="490.0" y="234.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="10" fill="#111827" text-anchor="start" font-weight="normal">焼きなましを最後の 0.3s に追加</text>
+<text x="490.0" y="250.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#16a34a" text-anchor="start" font-weight="bold">7 日目 team</text>
+<text x="490.0" y="264.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="10" fill="#111827" text-anchor="start" font-weight="normal">最終提出: ベストを固定、ログ整理</text>
+<text x="20.0" y="320.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">丸の色 = その日の担当（赤 reimu、橙 marisa、緑 team）。白抜き = 前日より悪くなった日</text>
+<text x="20.0" y="338.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">悪くなった日もログに残し、ロールバックして次の手を試す。毎日 1 つずつ確かめるので、何が効いたかを後から追える</text>
+</svg>

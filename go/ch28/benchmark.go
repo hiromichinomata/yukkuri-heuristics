@@ -11,7 +11,7 @@ import (
 
 const (
 	gridN  = 50
-	repeat = 400
+	repeat = 40
 	inf    = 1_000_000_000
 )
 
@@ -38,7 +38,7 @@ func buildGrid(n int) [][]int {
 	for r := 0; r < n; r++ {
 		grid[r] = make([]int, n)
 		for c := 0; c < n; c++ {
-			if (r+c)%7 == 0 {
+			if (r+c)%7 == 0 && r%3 != 0 { // 斜めの壁。3 行に 1 つ隙間を空け、どこからでもゴールに届くようにする
 				grid[r][c] = 1
 			}
 		}
@@ -99,7 +99,7 @@ func runBenchmark() (float64, int) {
 				if grid[sr][sc] == 1 {
 					continue
 				}
-				checksum ^= dijkstra(grid, sr, sc, tr, tc)
+				checksum += dijkstra(grid, sr, sc, tr, tc) // 距離の合計（XOR だと偶数回のくり返しで 0 に消える）
 			}
 		}
 	}

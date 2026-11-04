@@ -9,7 +9,7 @@ import time
 from dataclasses import dataclass
 from typing import List, TextIO
 
-TOTAL_SEC = 2.0
+TOTAL_SEC = 1.8  # 本番の制限時間 2 秒から、起動と出力の分を残す
 CONSTRUCT_RATIO = 0.6
 
 T0 = 5000.0  # SA 段の開始温度

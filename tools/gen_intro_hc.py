@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """Intro HC（AtCoder Introduction to Heuristics Contest）形式の入力を生成する.
 
 公式と同じ分布: D = 365、c_i は 0〜100、s_{d,i} は 0〜20000 の一様乱数。

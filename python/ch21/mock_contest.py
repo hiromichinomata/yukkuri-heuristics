@@ -253,7 +253,7 @@ def main() -> None:
             problem = read_problem(f)
         print(f"input={path}", file=sys.stderr)
 
-    phase_min = [0.3, 0.5, 0.8, 0.2] if fast else [30.0, 60.0, 90.0, 30.0]
+    phase_min = [0.3, 0.5, 0.8, 0.2] if fast else [30.0, 60.0, 120.0, 30.0]
     contest = MockContest(problem, phase_min, fast=fast, log_json=args.json_log)
     final = contest.run()
     for t in final.types:

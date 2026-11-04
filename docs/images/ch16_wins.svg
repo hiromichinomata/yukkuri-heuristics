@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="370" viewBox="0 0 700 370" role="img">
+<title>第16章: 近傍ごとの勝ち数と選ばれる確率（D=365、20000 手）</title>
+<rect x="0" y="0" width="700" height="370" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第16章: 近傍ごとの勝ち数と選ばれる確率（D=365、20000 手）</text>
+<line x1="70.0" y1="270.0" x2="300.0" y2="270.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="64.0" y="274.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">0</text>
+<line x1="70.0" y1="220.0" x2="300.0" y2="220.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="64.0" y="224.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">124</text>
+<line x1="70.0" y1="170.0" x2="300.0" y2="170.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="64.0" y="174.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">249</text>
+<line x1="70.0" y1="120.0" x2="300.0" y2="120.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="64.0" y="124.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">374</text>
+<line x1="70.0" y1="70.0" x2="300.0" y2="70.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="64.0" y="74.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">498</text>
+<text x="70.0" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">0</text>
+<text x="127.5" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">5000</text>
+<text x="185.0" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">10000</text>
+<text x="242.5" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">15000</text>
+<text x="300.0" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">20000</text>
+<line x1="70.0" y1="270.0" x2="300.0" y2="270.0" stroke="#111827" stroke-width="1"/>
+<line x1="70.0" y1="70.0" x2="70.0" y2="270.0" stroke="#111827" stroke-width="1"/>
+<text x="185.0" y="304.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="normal">手数</text>
+<text x="70.0" y="60.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">改善した回数（累計）</text>
+<polyline points="70.0,270.0 81.5,214.6 93.0,184.5 104.5,164.8 116.0,148.7 127.5,137.1 139.0,127.8 150.5,120.6 162.0,113.0 173.5,108.2 185.0,103.3 196.5,97.3 208.0,90.9 219.5,86.1 231.0,84.9 242.5,80.8 254.0,78.4 265.5,77.2 277.0,74.4 288.5,72.4 300.0,70.0" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="70.0,270.0 81.5,236.3 93.0,224.2 104.5,219.4 116.0,215.0 127.5,212.2 139.0,211.8 150.5,211.0 162.0,210.6 173.5,210.6 185.0,210.6 196.5,209.8 208.0,209.4 219.5,209.0 231.0,208.2 242.5,207.3 254.0,206.5 265.5,206.1 277.0,205.3 288.5,204.9 300.0,202.9" fill="none" stroke="#ea580c" stroke-width="2" stroke-linejoin="round"/>
+<line x1="420.0" y1="270.0" x2="650.0" y2="270.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="414.0" y="274.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">0</text>
+<line x1="420.0" y1="220.0" x2="650.0" y2="220.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="414.0" y="224.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">25</text>
+<line x1="420.0" y1="170.0" x2="650.0" y2="170.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="414.0" y="174.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">50</text>
+<line x1="420.0" y1="120.0" x2="650.0" y2="120.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="414.0" y="124.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">75</text>
+<line x1="420.0" y1="70.0" x2="650.0" y2="70.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="414.0" y="74.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">100</text>
+<text x="420.0" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">0</text>
+<text x="477.5" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">5000</text>
+<text x="535.0" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">10000</text>
+<text x="592.5" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">15000</text>
+<text x="650.0" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">20000</text>
+<line x1="420.0" y1="270.0" x2="650.0" y2="270.0" stroke="#111827" stroke-width="1"/>
+<line x1="420.0" y1="70.0" x2="420.0" y2="270.0" stroke="#111827" stroke-width="1"/>
+<text x="535.0" y="304.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="normal">手数</text>
+<text x="420.0" y="60.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">選ばれる確率（%）</text>
+<polyline points="420.0,170.0 431.5,145.7 443.0,139.7 454.5,134.9 466.0,132.4 477.5,130.6 489.0,128.1 500.5,126.6 512.0,124.9 523.5,123.7 535.0,122.6 546.5,121.7 558.0,120.6 569.5,119.8 581.0,120.1 592.5,119.8 604.0,119.8 615.5,119.8 627.0,119.7 638.5,119.5 650.0,120.2" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="420.0,170.0 431.5,194.3 443.0,200.3 454.5,205.1 466.0,207.6 477.5,209.4 489.0,211.9 500.5,213.4 512.0,215.1 523.5,216.3 535.0,217.4 546.5,218.3 558.0,219.4 569.5,220.2 581.0,219.9 592.5,220.2 604.0,220.2 615.5,220.2 627.0,220.3 638.5,220.5 650.0,219.8" fill="none" stroke="#ea580c" stroke-width="2" stroke-linejoin="round"/>
+<line x1="200.0" y1="330.0" x2="218.0" y2="330.0" stroke="#2563eb" stroke-width="3"/>
+<text x="224.0" y="334.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">change_day</text>
+<line x1="340.0" y1="330.0" x2="358.0" y2="330.0" stroke="#ea580c" stroke-width="3"/>
+<text x="364.0" y="334.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">swap_days</text>
+<text x="20.0" y="360.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">1000 手ごとに勝ち数で重みを付け直す。改善を多く出す change_day に、手が多く回るようになる</text>
+</svg>

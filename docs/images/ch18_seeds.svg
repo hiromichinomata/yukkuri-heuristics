@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="330" viewBox="0 0 640 330" role="img">
+<title>第18章: 合計 16000 手をシードで分けたときのスコア（D=365）</title>
+<rect x="0" y="0" width="640" height="330" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第18章: 合計 16000 手をシードで分けたときのスコア（D=365）</text>
+<line x1="80.0" y1="270.0" x2="440.0" y2="270.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="74.0" y="274.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">-0.91</text>
+<line x1="80.0" y1="217.5" x2="440.0" y2="217.5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="74.0" y="221.5" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">-0.48</text>
+<line x1="80.0" y1="165.0" x2="440.0" y2="165.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="74.0" y="169.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">-0.05</text>
+<line x1="80.0" y1="112.5" x2="440.0" y2="112.5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="74.0" y="116.5" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">0.38</text>
+<line x1="80.0" y1="60.0" x2="440.0" y2="60.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="74.0" y="64.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="end" font-weight="normal">0.81</text>
+<line x1="80.0" y1="270.0" x2="440.0" y2="270.0" stroke="#111827" stroke-width="1"/>
+<line x1="80.0" y1="60.0" x2="80.0" y2="270.0" stroke="#111827" stroke-width="1"/>
+<text x="80.0" y="50.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">スコア（百万、0 で切る前）</text>
+<text x="125.0" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">1 × 16000</text>
+<circle cx="125.0" cy="77.5" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<text x="215.0" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">2 × 8000</text>
+<circle cx="215.0" cy="110.1" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="215.0" cy="116.4" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<text x="305.0" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">4 × 4000</text>
+<circle cx="305.0" cy="176.8" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="305.0" cy="175.0" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="305.0" cy="161.2" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="305.0" cy="148.5" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<text x="395.0" y="286.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle" font-weight="normal">8 × 2000</text>
+<circle cx="395.0" cy="250.9" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="395.0" cy="248.8" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="395.0" cy="211.0" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="395.0" cy="252.5" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="395.0" cy="244.9" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="395.0" cy="228.8" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="395.0" cy="240.4" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<circle cx="395.0" cy="245.7" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<polyline points="125.0,77.5 215.0,110.1 305.0,148.5 395.0,211.0" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="125.0" cy="77.5" r="5" fill="#2563eb" stroke="none" stroke-width="1.0"/>
+<circle cx="215.0" cy="110.1" r="5" fill="#2563eb" stroke="none" stroke-width="1.0"/>
+<circle cx="305.0" cy="148.5" r="5" fill="#2563eb" stroke="none" stroke-width="1.0"/>
+<circle cx="395.0" cy="211.0" r="5" fill="#2563eb" stroke="none" stroke-width="1.0"/>
+<text x="260.0" y="304.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="normal">シード数 × 1 本あたりの手数</text>
+<circle cx="470.0" cy="90.0" r="4" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+<text x="482.0" y="94.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">1 本ずつの best</text>
+<circle cx="470.0" cy="112.0" r="5" fill="#2563eb" stroke="none" stroke-width="1.0"/>
+<text x="482.0" y="116.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">マージ（max）</text>
+<text x="20.0" y="318.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">Intro HC は長く冷やすほど伸びる型なので、本数を増やして 1 本を短くすると、max を取っても下がる</text>
+</svg>

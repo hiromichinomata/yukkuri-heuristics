@@ -293,7 +293,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	phaseMin := []float64{30, 60, 90, 30}
+	phaseMin := []float64{30, 60, 120, 30}
 	if fast {
 		phaseMin = []float64{0.3, 0.5, 0.8, 0.2}
 	}

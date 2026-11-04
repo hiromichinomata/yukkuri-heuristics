@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" role="img">
+<title>第6・13章: 同じ初期解からの巡回（data/common/tsp40.txt、40 点）</title>
+<rect x="0" y="0" width="720" height="300" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第6・13章: 同じ初期解からの巡回（data/common/tsp40.txt、40 点）</text>
+<text x="30.0" y="54.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#9ca3af" text-anchor="start" font-weight="bold">ランダムな初期解: 2058.25</text>
+<polygon points="211.2,260.2 159.5,105.5 30.0,155.9 33.7,122.9 87.5,146.5 196.4,129.6 60.5,154.4 219.0,188.6 44.2,260.7 102.2,176.8 49.7,198.5 31.9,216.9 218.4,180.3 198.0,152.9 69.5,180.3 132.5,186.2 126.0,260.4 207.3,93.7 30.7,221.2 174.0,121.3 230.0,90.9 170.1,128.8 228.1,145.4 189.7,181.9 157.6,228.5 70.0,172.6 128.6,66.0 129.9,107.6 127.2,174.7 52.5,93.5 106.1,231.7 129.2,146.2 197.6,178.1 182.4,266.0 72.1,73.5 115.3,165.2 73.0,219.3 84.7,262.0 182.7,214.4 116.9,119.2" fill="none" stroke="#9ca3af" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="52.5" cy="93.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="182.7" cy="214.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="127.2" cy="174.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="159.5" cy="105.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="44.2" cy="260.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="197.6" cy="178.1" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="182.4" cy="266.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="116.9" cy="119.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="72.1" cy="73.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="211.2" cy="260.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="30.0" cy="155.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="219.0" cy="188.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="69.5" cy="180.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="30.7" cy="221.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="115.3" cy="165.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="73.0" cy="219.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="70.0" cy="172.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="84.7" cy="262.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="198.0" cy="152.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="157.6" cy="228.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="230.0" cy="90.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="49.7" cy="198.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="174.0" cy="121.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="218.4" cy="180.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="196.4" cy="129.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="87.5" cy="146.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="207.3" cy="93.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="129.2" cy="146.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="31.9" cy="216.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="189.7" cy="181.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="60.5" cy="154.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="170.1" cy="128.8" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="102.2" cy="176.8" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="129.9" cy="107.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="132.5" cy="186.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="126.0" cy="260.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="33.7" cy="122.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="228.1" cy="145.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="106.1" cy="231.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="128.6" cy="66.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="265.0" y="54.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#ea580c" text-anchor="start" font-weight="bold">2-opt 山登り: 646.19</text>
+<polygon points="446.2,260.2 417.4,266.0 361.0,260.4 319.7,262.0 279.2,260.7 265.7,221.2 266.9,216.9 284.7,198.5 304.5,180.3 305.0,172.6 295.5,154.4 265.0,155.9 268.7,122.9 287.5,93.5 307.1,73.5 322.5,146.5 351.9,119.2 364.9,107.6 363.6,66.0 394.5,105.5 405.1,128.8 409.0,121.3 442.3,93.7 465.0,90.9 463.1,145.4 431.4,129.6 433.0,152.9 424.7,181.9 432.6,178.1 453.4,180.3 454.0,188.6 417.7,214.4 392.6,228.5 367.5,186.2 362.2,174.7 364.2,146.2 350.3,165.2 337.2,176.8 308.0,219.3 341.1,231.7" fill="none" stroke="#ea580c" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="287.5" cy="93.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="417.7" cy="214.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="362.2" cy="174.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="394.5" cy="105.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="279.2" cy="260.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="432.6" cy="178.1" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="417.4" cy="266.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="351.9" cy="119.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="307.1" cy="73.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="446.2" cy="260.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="265.0" cy="155.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="454.0" cy="188.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="304.5" cy="180.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="265.7" cy="221.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="350.3" cy="165.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="308.0" cy="219.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="305.0" cy="172.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="319.7" cy="262.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="433.0" cy="152.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="392.6" cy="228.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="465.0" cy="90.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="284.7" cy="198.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="409.0" cy="121.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="453.4" cy="180.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="431.4" cy="129.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="322.5" cy="146.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="442.3" cy="93.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="364.2" cy="146.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="266.9" cy="216.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="424.7" cy="181.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="295.5" cy="154.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="405.1" cy="128.8" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="337.2" cy="176.8" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="364.9" cy="107.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="367.5" cy="186.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="361.0" cy="260.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="268.7" cy="122.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="463.1" cy="145.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="341.1" cy="231.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="363.6" cy="66.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="500.0" y="54.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#16a34a" text-anchor="start" font-weight="bold">タブーサーチ: 592.83</text>
+<polygon points="681.2,260.2 652.4,266.0 627.6,228.5 596.0,260.4 576.1,231.7 554.7,262.0 514.2,260.7 500.7,221.2 501.9,216.9 519.7,198.5 543.0,219.3 539.5,180.3 540.0,172.6 530.5,154.4 500.0,155.9 503.7,122.9 522.5,93.5 542.1,73.5 598.6,66.0 599.9,107.6 586.9,119.2 557.5,146.5 572.2,176.8 602.5,186.2 597.2,174.7 585.3,165.2 599.2,146.2 629.5,105.5 644.0,121.3 640.1,128.8 666.4,129.6 677.3,93.7 700.0,90.9 698.1,145.4 668.0,152.9 688.4,180.3 689.0,188.6 667.6,178.1 659.7,181.9 652.7,214.4" fill="none" stroke="#16a34a" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="522.5" cy="93.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="652.7" cy="214.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="597.2" cy="174.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="629.5" cy="105.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="514.2" cy="260.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="667.6" cy="178.1" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="652.4" cy="266.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="586.9" cy="119.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="542.1" cy="73.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="681.2" cy="260.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="500.0" cy="155.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="689.0" cy="188.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="539.5" cy="180.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="500.7" cy="221.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="585.3" cy="165.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="543.0" cy="219.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="540.0" cy="172.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="554.7" cy="262.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="668.0" cy="152.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="627.6" cy="228.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="700.0" cy="90.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="519.7" cy="198.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="644.0" cy="121.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="688.4" cy="180.3" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="666.4" cy="129.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="557.5" cy="146.5" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="677.3" cy="93.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="599.2" cy="146.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="501.9" cy="216.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="659.7" cy="181.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="530.5" cy="154.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="640.1" cy="128.8" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="572.2" cy="176.8" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="599.9" cy="107.6" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="602.5" cy="186.2" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="596.0" cy="260.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="503.7" cy="122.9" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="698.1" cy="145.4" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="576.1" cy="231.7" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="598.6" cy="66.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="20.0" y="290.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">2-opt は交差がなくなったところ（局所最適）で止まる。タブーは悪化も受け入れて、その先へ進む</text>
+</svg>

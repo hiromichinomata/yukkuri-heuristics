@@ -72,8 +72,8 @@ func benchmark() {
 	naiveMs := time.Since(start).Seconds() * 1000
 
 	fw := NewFenwick(n)
-	for i, v := range arr {
-		fw.Add(i, v)
+	for i := 0; i < n; i++ {
+		fw.Add(i, 1) // naive と同じ初期配列（すべて 1）から始める
 	}
 	start = time.Now()
 	totalFw := 0

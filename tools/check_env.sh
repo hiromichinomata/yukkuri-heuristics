@@ -6,8 +6,8 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 echo "== Python =="
-python3 --version
-python3 python/ch02/env_check.py
+python --version
+python python/ch02/env_check.py
 
 echo ""
 echo "== Go =="

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="320" viewBox="0 0 700 320" role="img">
+<title>第23章: 解法仮説 3 案のスコア（hypothesis_compare.py。入力の大きさで勝者が変わる）</title>
+<rect x="0" y="0" width="700" height="320" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第23章: 解法仮説 3 案のスコア（hypothesis_compare.py。入力の大きさで勝者が変わる）</text>
+<text x="60.0" y="56.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="bold">D=5（data/ch23/sample.txt）</text>
+<line x1="60.0" y1="250.0" x2="320.0" y2="250.0" stroke="#111827" stroke-width="1"/>
+<rect x="75.0" y="93.5" width="60.0" height="156.5" fill="#9ca3af" fill-opacity="0.85" stroke="none" stroke-width="0"/>
+<text x="105.0" y="87.5" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="normal">1,079,455</text>
+<text x="105.0" y="266.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="normal">greedy</text>
+<rect x="160.0" y="93.5" width="60.0" height="156.5" fill="#ea580c" fill-opacity="0.85" stroke="none" stroke-width="0"/>
+<text x="190.0" y="87.5" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="bold">1,079,507</text>
+<text x="190.0" y="266.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="normal">random_sa</text>
+<text x="190.0" y="282.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#dc2626" text-anchor="middle" font-weight="bold">勝ち</text>
+<rect x="245.0" y="93.5" width="60.0" height="156.5" fill="#16a34a" fill-opacity="0.85" stroke="none" stroke-width="0"/>
+<text x="275.0" y="87.5" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="normal">1,079,455</text>
+<text x="275.0" y="266.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="normal">pipeline_lite</text>
+<text x="390.0" y="56.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="bold">D=365（data/common/intro_hc_d365.txt）</text>
+<line x1="390.0" y1="250.0" x2="650.0" y2="250.0" stroke="#111827" stroke-width="1"/>
+<rect x="405.0" y="183.4" width="60.0" height="66.6" fill="#9ca3af" fill-opacity="0.85" stroke="none" stroke-width="0"/>
+<text x="435.0" y="177.4" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="normal">551,804</text>
+<text x="435.0" y="266.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="normal">greedy</text>
+<rect x="490.0" y="250.0" width="60.0" height="0.0" fill="#ea580c" fill-opacity="0.85" stroke="none" stroke-width="0"/>
+<text x="520.0" y="244.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="normal">0</text>
+<text x="520.0" y="266.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="normal">random_sa</text>
+<rect x="575.0" y="93.5" width="60.0" height="156.5" fill="#16a34a" fill-opacity="0.85" stroke="none" stroke-width="0"/>
+<text x="605.0" y="87.5" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="bold">1,297,714</text>
+<text x="605.0" y="266.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="normal">pipeline_lite</text>
+<text x="605.0" y="282.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#dc2626" text-anchor="middle" font-weight="bold">勝ち</text>
+<text x="20.0" y="296.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">D=5 は 3 案ともほぼ同じで、ランダム初期解の焼きなまし（800 手）がわずかに勝つ。D=365 ではその 800 手が足りずに 0 点、</text>
+<text x="20.0" y="312.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">貪欲 + 山登りの pipeline_lite が大きく勝つ。小さい入力で当たりを付けても、最後は本番サイズで確かめる</text>
+</svg>

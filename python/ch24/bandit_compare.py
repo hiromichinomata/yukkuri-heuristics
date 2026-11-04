@@ -1,49 +1,64 @@
 # python/ch24/bandit_compare.py
-"""AHC003 簡略グラフで辺選択バンディット 3 戦略を比較（UCB1 / Thompson / ε-greedy）."""
+"""AHC003 風の玩具で、経路選びの探索戦略を比べる（第24章）.
+
+  python python/ch24/bandit_compare.py data/ch24/sample.txt
+  python python/ch24/bandit_compare.py data/ch24/sample.txt --rounds 5 --epsilon 0.3
+
+各クエリで、ソルバは **自分の推定** で経路を選び、**選んだ経路の長さ（ノイズ付き）だけ** を観測する。
+どの辺が長かったかは分からないので、第12章と同じく、ずれを経路上の辺にまとめて配る。
+
+  後悔（regret）= 選んだ経路の真の長さ − 真の最短路長
+
+をクエリ全体で足し、seed を変えた TRIALS 回の平均で比べる（小さいほど良い）。
+"""
 from __future__ import annotations
 
+import argparse
 import heapq
 import math
 import random
 import sys
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+Edge = Tuple[int, int]
 
-def edge_key(u: int, v: int) -> Tuple[int, int]:
+STRATEGIES = ("greedy", "epsilon_greedy", "ucb1", "thompson")
+INIT_WEIGHT = 6.0  # 推定の初期値（真の重みは 1〜6。上限から始める = 悲観的な事前知識）
+LEARNING_RATE = 0.5  # 観測と予測のずれをどれだけ反映するか（第12章と同じ）
+NOISE = 0.1  # 観測に掛かるノイズ（0.9〜1.1 倍、AHC003 と同じ）
+ROUNDS = 50  # クエリ列を何周するか
+TRIALS = 20  # seed を変えて何回走らせ、平均を取るか
+EPSILON = 0.15  # ε-greedy: この確率でランダムな経路を試す
+UCB_C = 1.0  # UCB1: 通った回数が少ない辺を、どれだけ短く見せるか
+THOMPSON_SIGMA = 0.5  # Thompson: 推定のばらつきの大きさ（通るほど小さくなる）
+
+
+def edge_key(u: int, v: int) -> Edge:
     return (u, v) if u < v else (v, u)
 
 
-def load_sample(path: Path) -> Tuple[int, List[Tuple[int, int, float]], List[Tuple[int, int]]]:
-    lines = path.read_text().splitlines()
+def load_sample(path: Path) -> Tuple[int, Dict[Edge, float], List[Tuple[int, int]]]:
+    lines = [ln for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
     n, m = map(int, lines[0].split())
-    edges: List[Tuple[int, int, float]] = []
-    for i in range(1, m + 1):
+    weights: Dict[Edge, float] = {}
+    for i in range(1, 1 + m):
         u, v, w = lines[i].split()
-        edges.append((int(u), int(v), float(w)))
-    q = int(lines[m + 1])
-    queries = []
-    for j in range(m + 2, m + 2 + q):
-        s, t = map(int, lines[j].split())
-        queries.append((s, t))
-    return n, edges, queries
+        weights[edge_key(int(u), int(v))] = float(w)
+    q = int(lines[1 + m])
+    queries = [tuple(map(int, lines[2 + m + i].split())) for i in range(q)]
+    return n, weights, queries  # type: ignore[return-value]
 
 
-def build_adj(n: int, edges: List[Tuple[int, int, float]]) -> List[List[Tuple[int, float]]]:
+def dijkstra(n: int, weights: Dict[Edge, float], start: int, goal: int) -> Tuple[float, List[int]]:
     adj: List[List[Tuple[int, float]]] = [[] for _ in range(n)]
-    for u, v, w in edges:
+    for (u, v), w in weights.items():
         adj[u].append((v, w))
         adj[v].append((u, w))
-    return adj
-
-
-def dijkstra(adj: List[List[Tuple[int, float]]], start: int, goal: int) -> Tuple[float, List[int]]:
-    n = len(adj)
     dist = [math.inf] * n
     prev = [-1] * n
     dist[start] = 0.0
-    pq: List[Tuple[float, int]] = [(0.0, start)]
+    pq = [(0.0, start)]
     while pq:
         d, u = heapq.heappop(pq)
         if d > dist[u]:
@@ -51,152 +66,106 @@ def dijkstra(adj: List[List[Tuple[int, float]]], start: int, goal: int) -> Tuple
         if u == goal:
             break
         for v, w in adj[u]:
-            nd = d + w
-            if nd < dist[v]:
-                dist[v] = nd
+            if d + w < dist[v]:
+                dist[v] = d + w
                 prev[v] = u
-                heapq.heappush(pq, (nd, v))
-    if dist[goal] == math.inf:
-        return math.inf, []
-    path: List[int] = []
+                heapq.heappush(pq, (dist[v], v))
+    path = []
     cur = goal
     while cur != -1:
         path.append(cur)
         cur = prev[cur]
-    path.reverse()
-    return dist[goal], path
+    return dist[goal], path[::-1]
 
 
-@dataclass
-class EdgeStats:
-    pulls: int = 0
-    reward_sum: float = 0.0
-    alpha: float = 1.0
-    beta: float = 1.0
+def path_edges(path: List[int]) -> List[Edge]:
+    return [edge_key(path[i], path[i + 1]) for i in range(len(path) - 1)]
 
 
-class BanditSolver:
-    def __init__(
-        self,
-        n: int,
-        topo: List[Tuple[int, int]],
-        strategy: str,
-        rng: random.Random,
-        epsilon: float = 0.15,
-    ) -> None:
+class Solver:
+    def __init__(self, n: int, edges: List[Edge], strategy: str, rng: random.Random, epsilon: float) -> None:
         self.n = n
-        self.topo = topo
         self.strategy = strategy
         self.rng = rng
         self.epsilon = epsilon
-        self.est: Dict[Tuple[int, int], float] = {edge_key(u, v): 1.0 for u, v in topo}
-        self.stats: Dict[Tuple[int, int], EdgeStats] = {
-            k: EdgeStats() for k in self.est
-        }
-        self.total_pulls = 0
+        self.est: Dict[Edge, float] = {k: INIT_WEIGHT for k in edges}
+        self.pulls: Dict[Edge, int] = {k: 0 for k in edges}
+        self.t = 0  # これまでのクエリ数
 
-    def adj(self) -> List[List[Tuple[int, float]]]:
-        adj: List[List[Tuple[int, float]]] = [[] for _ in range(self.n)]
-        for (u, v), w in self.est.items():
-            bonus = self.exploration_bonus((u, v))
-            adj[u].append((v, max(0.01, w - bonus)))
-            adj[v].append((u, max(0.01, w - bonus)))
-        return adj
-
-    def exploration_bonus(self, key: Tuple[int, int]) -> float:
-        st = self.stats[key]
-        if st.pulls == 0:
-            return 2.0
+    def planning_weight(self, key: Edge) -> float:
+        """経路を選ぶときに使う重み。探索したい辺ほど短く見せる."""
+        w = self.est[key]
         if self.strategy == "ucb1":
-            return 0.5 * math.sqrt(math.log(self.total_pulls + 1) / st.pulls)
+            # 通った回数が少ない辺ほど短く見せる（楽観）。クエリが進むと log でゆっくり効きが弱まる
+            return w / (1.0 + UCB_C * math.sqrt(math.log(self.t + 2) / (self.pulls[key] + 1)))
         if self.strategy == "thompson":
-            sample = self.rng.betavariate(st.alpha, st.beta)
-            mean = st.reward_sum / st.pulls if st.pulls else 0.5
-            return 0.8 * (sample - mean)
-        if self.strategy == "epsilon_greedy":
-            if self.rng.random() < self.epsilon:
-                return 1.5
-            return 0.0
-        return 0.0
+            # 推定のまわりにばらつかせた値を引く。通った回数が少ない辺ほど大きくばらつく
+            return w * math.exp(self.rng.gauss(0.0, THOMPSON_SIGMA / math.sqrt(self.pulls[key] + 1)))
+        return w
 
-    def pick_focus_edge(self, path: List[int]) -> Tuple[int, int]:
-        edges_on_path = [edge_key(path[i], path[i + 1]) for i in range(len(path) - 1)]
-        if not edges_on_path:
-            return next(iter(self.est))
-        if self.strategy == "ucb1":
-            return max(
-                edges_on_path,
-                key=lambda k: self.stats[k].reward_sum / max(1, self.stats[k].pulls)
-                + math.sqrt(2 * math.log(self.total_pulls + 1) / max(1, self.stats[k].pulls)),
-            )
-        if self.strategy == "thompson":
-            return max(
-                edges_on_path,
-                key=lambda k: self.rng.betavariate(self.stats[k].alpha, self.stats[k].beta),
-            )
-        if self.rng.random() < self.epsilon:
-            return self.rng.choice(edges_on_path)
-        return max(edges_on_path, key=lambda k: self.stats[k].reward_sum / max(1, self.stats[k].pulls))
+    def choose_path(self, s: int, t: int) -> List[int]:
+        if self.strategy == "epsilon_greedy" and self.rng.random() < self.epsilon:
+            plan = {k: self.rng.random() for k in self.est}  # 確率 ε でランダムな経路
+        else:
+            plan = {k: self.planning_weight(k) for k in self.est}
+        return dijkstra(self.n, plan, s, t)[1]
 
-    def update_estimates(self, path: List[int], predicted: float, actual: float) -> None:
-        if len(path) < 2 or predicted <= 0:
-            return
-        ratio = actual / predicted
-        for i in range(len(path) - 1):
-            k = edge_key(path[i], path[i + 1])
-            self.est[k] = max(0.1, self.est.get(k, 1.0) * ratio)
-        focus = self.pick_focus_edge(path)
-        err = max(0.0, min(1.0, abs(actual - predicted) / max(actual, 1.0)))
-        reward = 1.0 - err
-        st = self.stats[focus]
-        st.pulls += 1
-        st.reward_sum += reward
-        st.alpha += reward
-        st.beta += 1.0 - reward
-        self.total_pulls += 1
-        self.est[focus] = max(0.1, self.est[focus] * (0.9 + 0.2 * reward))
+    def update(self, path: List[int], observed: float) -> None:
+        keys = path_edges(path)
+        predicted = sum(self.est[k] for k in keys)
+        factor = 1.0 + LEARNING_RATE * (observed / predicted - 1.0)
+        for k in keys:
+            self.est[k] *= factor
+            self.pulls[k] += 1
+        self.t += 1
 
-    def answer(self, s: int, t: int) -> Tuple[float, List[int]]:
-        return dijkstra(self.adj(), s, t)
 
-    def run_offline(
-        self,
-        true_adj: List[List[Tuple[int, float]]],
-        queries: List[Tuple[int, int]],
-    ) -> Tuple[float, float]:
-        total_pred = 0.0
-        total_true = 0.0
+def run(
+    n: int,
+    true_w: Dict[Edge, float],
+    queries: List[Tuple[int, int]],
+    strategy: str,
+    seed: int,
+    rounds: int,
+    epsilon: float,
+) -> Tuple[float, int]:
+    """(後悔の合計, 一度も通らなかった辺の数) を返す."""
+    solver = Solver(n, list(true_w), strategy, random.Random(seed), epsilon)
+    noise = random.Random(seed + 1_000_000)  # 観測ノイズは戦略と別の乱数（全戦略で同じ列になる）
+    regret = 0.0
+    for _ in range(rounds):
         for s, t in queries:
-            pred, path = self.answer(s, t)
-            true_len, true_path = dijkstra(true_adj, s, t)
-            self.update_estimates(true_path, pred, true_len)
-            total_pred += pred
-            total_true += true_len
-        return total_pred, total_true
+            path = solver.choose_path(s, t)
+            true_len = sum(true_w[k] for k in path_edges(path))
+            regret += true_len - dijkstra(n, true_w, s, t)[0]
+            solver.update(path, true_len * noise.uniform(1 - NOISE, 1 + NOISE))
+    untouched = sum(1 for c in solver.pulls.values() if c == 0)
+    return regret, untouched
 
 
 def main() -> None:
     root = Path(__file__).resolve().parents[2]
-    path = Path(sys.argv[1]) if len(sys.argv) > 1 else root / "data" / "ch24" / "sample.txt"
-    n, edges, queries = load_sample(path)
-    true_adj = build_adj(n, edges)
-    topo = [(u, v) for u, v, _ in edges]
-    rng = random.Random(42)
+    parser = argparse.ArgumentParser(description="探索戦略の比較（第24章）")
+    parser.add_argument("input", nargs="?", default=str(root / "data" / "ch24" / "sample.txt"))
+    parser.add_argument("--rounds", type=int, default=ROUNDS, help="クエリ列を何周するか")
+    parser.add_argument("--trials", type=int, default=TRIALS, help="seed を変えて何回平均するか")
+    parser.add_argument("--epsilon", type=float, default=EPSILON)
+    args = parser.parse_args()
 
-    print(f"graph n={n} m={len(edges)} queries={len(queries)}", file=sys.stderr)
+    n, true_w, queries = load_sample(Path(args.input))
+    print(
+        f"graph n={n} m={len(true_w)} queries={len(queries)} rounds={args.rounds} trials={args.trials}",
+        file=sys.stderr,
+    )
     results = []
-    for name in ("ucb1", "thompson", "epsilon_greedy"):
-        solver = BanditSolver(n, topo, name, rng)
-        pred, true = solver.run_offline(true_adj, queries)
-        gap = pred - true
-        results.append((name, pred, true, gap))
-        print(
-            f"strategy={name} sum_pred={pred:.4f} sum_true={true:.4f} gap={gap:.4f}",
-            file=sys.stderr,
-        )
-
-    best = min(results, key=lambda x: x[3])
-    print(f"best_gap={best[0]} (smallest pred-true gap)", file=sys.stderr)
+    for name in STRATEGIES:
+        runs = [run(n, true_w, queries, name, seed, args.rounds, args.epsilon) for seed in range(args.trials)]
+        regret = sum(r[0] for r in runs) / len(runs)
+        untouched = sum(r[1] for r in runs) / len(runs)
+        results.append((regret, name))
+        print(f"strategy={name} regret={regret:.2f} untouched_edges={untouched:.1f}", file=sys.stderr)
+    best = min(results)
+    print(f"best={best[1]} (smallest regret)", file=sys.stderr)
 
 
 if __name__ == "__main__":

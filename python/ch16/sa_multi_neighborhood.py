@@ -98,6 +98,8 @@ def neighbor_change_day(state: ScheduleState, rng: random.Random) -> Move:
 
 
 def neighbor_swap_days(state: ScheduleState, rng: random.Random) -> Move:
+    if len(state.types) < 2:  # 1 日しかないと入れ替えられないので、1 日の変更で代える
+        return neighbor_change_day(state, rng)
     a, b = rng.sample(range(len(state.types)), 2)
     return ("swap", a, b)
 

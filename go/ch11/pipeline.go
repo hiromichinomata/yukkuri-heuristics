@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	totalSec       = 2.0
+	totalSec       = 1.8 // 本番の制限時間 2 秒から、起動と出力の分を残す
 	constructRatio = 0.6
 	t0             = 5000.0
 	t1             = 10.0 // SA 段の終了温度（第9章と同じ時間ベース冷却）

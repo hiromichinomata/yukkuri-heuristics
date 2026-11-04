@@ -45,6 +45,12 @@ CASES = [
     ("25.md", "python python/ch25/assignment_relax.py < data/ch25/sample.txt", "exact"),
     ("26.md", "python python/ch26/ga_placement.py < data/ch26/sample.txt", "exact"),
     ("27.md", "python python/ch27/paper_transfer.py", "exact"),
+    ("appendix-g.md", "python tools/eval_intro_hc.py -- python python/ch02/sample_solver.py", "shape"),
+    # 大きめの入力（data/common/tsp40.txt, data/ch26/hard.txt）
+    ("06.md", "python python/ch06/two_opt.py < data/common/tsp40.txt | tail -1", "exact"),
+    ("13.md", "python python/ch13/tabu_tsp.py < data/common/tsp40.txt | tail -1\npython python/ch06/two_opt.py < data/common/tsp40.txt | tail -1", "exact"),
+    ("19.md", "python python/ch19/lns_tsp.py < data/common/tsp40.txt 2>/dev/null | tail -1", "exact"),
+    ("26.md", "python python/ch26/ga_placement.py < data/ch26/hard.txt 2>&1 >/dev/null", "exact"),
 ]
 
 
@@ -63,11 +69,15 @@ def code_blocks(lines):
 
 
 def documented_output(md: str, command: str):
-    """command を含む bash ブロックの直後にある出力例を返す（なければ None）."""
+    """command を含む bash ブロックの直後にある出力例を返す（なければ None）.
+
+    command が複数行なら、ブロックの中に、その行がその順で並んでいればよい。
+    """
     lines = (ROOT / "docs" / md).read_text(encoding="utf-8").split("\n")
     blocks = list(code_blocks(lines))
     for k, (lang, _, end, body) in enumerate(blocks):
-        if lang == "bash" and any(b.strip() == command for b in body) and k + 1 < len(blocks):
+        joined = "\n".join(b.strip() for b in body)  # 複数行のコマンドは改行でつないで渡す
+        if lang == "bash" and command in joined and k + 1 < len(blocks):
             nlang, nstart, _, nbody = blocks[k + 1]
             if nlang in ("", "text") and nstart - end <= 8:
                 return nstart + 2, nbody

@@ -72,22 +72,6 @@ func scoreSchedule(p ProblemInput, s ScheduleState) int {
 	return 0
 }
 
-func finalSat(p ProblemInput, types []int) int {
-	last := make([]int, 26)
-	satisfaction := 0
-	for day := 1; day <= len(types); day++ {
-		t := types[day-1] - 1
-		satisfaction += p.Gain[day-1][t]
-		last[t] = day
-		decay := 0
-		for i := 0; i < 26; i++ {
-			decay += p.Decay[i] * (day - last[i])
-		}
-		satisfaction -= decay
-	}
-	return satisfaction
-}
-
 // typePenalty はタイプ t の減衰ペナルティ合計 c_t * Σ L(L-1)/2。O(D)（第9章 9.4）
 func typePenalty(p ProblemInput, types []int, t int) int {
 	total, prev := 0, 0
@@ -117,19 +101,29 @@ func deltaChange(p ProblemInput, types []int, day, newType int) int {
 	return gain - (after - before)
 }
 
+// strategyGreedy は各日、その日終了時の満足度が最大になるタイプを選ぶ。
+// 満足度と各タイプの最終開催日 last を持ち回すので 1 日あたり O(26²)、全体 O(26²·D)。
 func strategyGreedy(p ProblemInput) ScheduleState {
+	last := make([]int, 26)
+	satisfaction := 0
 	schedule := make([]int, 0, p.Days)
 	for day := 1; day <= p.Days; day++ {
-		bestT, bestSat := 1, -1<<30
+		decayAll := 0
+		for i := 0; i < 26; i++ {
+			decayAll += p.Decay[i] * (day - last[i])
+		}
+		bestT, bestSat := 1, 0
 		for t := 1; t <= 26; t++ {
-			trial := append(append([]int{}, schedule...), t)
-			sat := finalSat(p, trial)
-			if sat > bestSat {
+			// タイプ t を開くと、t の減衰だけ 0 になる
+			sat := satisfaction + p.Gain[day-1][t-1] - (decayAll - p.Decay[t-1]*(day-last[t-1]))
+			if t == 1 || sat > bestSat {
 				bestSat = sat
 				bestT = t
 			}
 		}
 		schedule = append(schedule, bestT)
+		satisfaction = bestSat
+		last[bestT-1] = day
 	}
 	return ScheduleState{schedule}
 }

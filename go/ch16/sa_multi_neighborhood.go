@@ -133,6 +133,9 @@ func neighborChangeDay(state ScheduleState, rng *rand.Rand) Move {
 
 func neighborSwapDays(state ScheduleState, rng *rand.Rand) Move {
 	n := len(state.Types)
+	if n < 2 { // 1 日しかないと入れ替えられないので、1 日の変更で代える
+		return neighborChangeDay(state, rng)
+	}
 	a := rng.Intn(n)
 	b := rng.Intn(n - 1)
 	if b >= a {

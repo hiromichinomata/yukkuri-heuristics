@@ -30,7 +30,7 @@ def nearest_neighbor(
     cur = depot
     total = 0.0
     while unvisited:
-        nxt = min(unvisited, key=lambda i: dist(cur, orders[i]))
+        nxt = min(unvisited, key=lambda i: (dist(cur, orders[i]), i))  # 同じ距離なら番号の小さいほう
         total += dist(cur, orders[nxt])
         route.append(nxt)
         cur = orders[nxt]

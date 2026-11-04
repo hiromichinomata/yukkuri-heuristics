@@ -1,8 +1,19 @@
 // go/ch24/bandit_compare.go
+//
+// AHC003 風の玩具で、経路選びの探索戦略を比べる（第24章）。
+//
+//	go run go/ch24/bandit_compare.go data/ch24/sample.txt
+//	go run go/ch24/bandit_compare.go -rounds 5 -epsilon 0.3 data/ch24/sample.txt
+//
+// 各クエリで、ソルバは自分の推定で経路を選び、選んだ経路の長さ（ノイズ付き）だけを観測する。
+// 後悔（regret）= 選んだ経路の真の長さ − 真の最短路長 を、seed を変えた trials 回の平均で比べる。
+// 乱数は Go の math/rand なので、数値は Python 版と一致しない（傾向は同じ）。
 package main
 
 import (
 	"bufio"
+	"container/heap"
+	"flag"
 	"fmt"
 	"math"
 	"math/rand"
@@ -11,323 +22,235 @@ import (
 	"strings"
 )
 
-type edge struct {
-	u, v int
-	w    float64
+const (
+	initWeight    = 6.0 // 推定の初期値（真の重みは 1〜6。上限から始める = 悲観的な事前知識）
+	learningRate  = 0.5 // 観測と予測のずれをどれだけ反映するか（第12章と同じ）
+	noise         = 0.1 // 観測に掛かるノイズ（0.9〜1.1 倍）
+	ucbC          = 1.0 // UCB1: 通った回数が少ない辺を、どれだけ短く見せるか
+	thompsonSigma = 0.5 // Thompson: 推定のばらつきの大きさ（通るほど小さくなる）
+)
+
+var strategies = []string{"greedy", "epsilon_greedy", "ucb1", "thompson"}
+
+type Edge struct{ U, V int }
+
+type Graph struct {
+	N     int
+	Edges []Edge // 辺の順番を固定する（map の順番に頼らない）
+	index map[Edge]int
 }
 
-type EdgeStats struct {
-	pulls     int
-	rewardSum float64
-	alpha     float64
-	beta      float64
-}
-
-type BanditSolver struct {
-	n          int
-	topo       [][2]int
-	strategy   string
-	rng        *rand.Rand
-	epsilon    float64
-	est        map[[2]int]float64
-	stats      map[[2]int]*EdgeStats
-	totalPulls int
-}
-
-func edgeKey(u, v int) [2]int {
+func key(u, v int) Edge {
 	if u < v {
-		return [2]int{u, v}
+		return Edge{u, v}
 	}
-	return [2]int{v, u}
+	return Edge{v, u}
 }
 
-func loadSample(path string) (int, []edge, [][2]int, error) {
+func loadSample(path string) (Graph, []float64, [][2]int, error) {
 	f, err := os.Open(path)
 	if err != nil {
-		return 0, nil, nil, err
+		return Graph{}, nil, nil, err
 	}
 	defer f.Close()
-	sc := bufio.NewScanner(f)
 	var lines []string
+	sc := bufio.NewScanner(f)
 	for sc.Scan() {
-		lines = append(lines, sc.Text())
+		if strings.TrimSpace(sc.Text()) != "" {
+			lines = append(lines, sc.Text())
+		}
 	}
-	if err := sc.Err(); err != nil {
-		return 0, nil, nil, err
+	head := strings.Fields(lines[0])
+	n, _ := strconv.Atoi(head[0])
+	m, _ := strconv.Atoi(head[1])
+	g := Graph{N: n, index: map[Edge]int{}}
+	trueW := make([]float64, 0, m)
+	for i := 1; i <= m; i++ {
+		p := strings.Fields(lines[i])
+		u, _ := strconv.Atoi(p[0])
+		v, _ := strconv.Atoi(p[1])
+		w, _ := strconv.ParseFloat(p[2], 64)
+		g.index[key(u, v)] = len(g.Edges)
+		g.Edges = append(g.Edges, key(u, v))
+		trueW = append(trueW, w)
 	}
-	p := strings.Fields(lines[0])
-	n, _ := strconv.Atoi(p[0])
-	m, _ := strconv.Atoi(p[1])
-	edges := make([]edge, m)
-	topo := make([][2]int, m)
-	for i := 0; i < m; i++ {
-		q := strings.Fields(lines[1+i])
-		u, _ := strconv.Atoi(q[0])
-		v, _ := strconv.Atoi(q[1])
-		w, _ := strconv.ParseFloat(q[2], 64)
-		edges[i] = edge{u, v, w}
-		topo[i] = [2]int{u, v}
-	}
-	q, _ := strconv.Atoi(lines[1+m])
+	q, _ := strconv.Atoi(strings.TrimSpace(lines[1+m]))
 	queries := make([][2]int, q)
-	for j := 0; j < q; j++ {
-		qp := strings.Fields(lines[2+m+j])
-		s, _ := strconv.Atoi(qp[0])
-		t, _ := strconv.Atoi(qp[1])
-		queries[j] = [2]int{s, t}
+	for i := 0; i < q; i++ {
+		p := strings.Fields(lines[2+m+i])
+		queries[i][0], _ = strconv.Atoi(p[0])
+		queries[i][1], _ = strconv.Atoi(p[1])
 	}
-	return n, edges, queries, nil
+	return g, trueW, queries, nil
 }
 
-func buildAdj(n int, edges []edge) [][]struct {
-	to int
-	w  float64
-} {
-	adj := make([][]struct {
-		to int
-		w  float64
-	}, n)
-	for _, e := range edges {
-		adj[e.u] = append(adj[e.u], struct {
-			to int
-			w  float64
-		}{e.v, e.w})
-		adj[e.v] = append(adj[e.v], struct {
-			to int
-			w  float64
-		}{e.u, e.w})
-	}
-	return adj
+type item struct {
+	d float64
+	v int
+}
+type pq []item
+
+func (h pq) Len() int            { return len(h) }
+func (h pq) Less(i, j int) bool  { return h[i].d < h[j].d }
+func (h pq) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
+func (h *pq) Push(x interface{}) { *h = append(*h, x.(item)) }
+func (h *pq) Pop() interface{} {
+	old := *h
+	x := old[len(old)-1]
+	*h = old[:len(old)-1]
+	return x
 }
 
-func dijkstra(adj [][]struct {
-	to int
-	w  float64
-}, start, goal int) (float64, []int) {
-	n := len(adj)
-	dist := make([]float64, n)
-	prev := make([]int, n)
-	used := make([]bool, n)
+// dijkstra は重み w（辺の添字順）で start→goal の最短距離と、通る辺の添字を返す。
+func dijkstra(g Graph, w []float64, start, goal int) (float64, []int) {
+	type arc struct{ to, e int }
+	adj := make([][]arc, g.N)
+	for i, e := range g.Edges {
+		adj[e.U] = append(adj[e.U], arc{e.V, i})
+		adj[e.V] = append(adj[e.V], arc{e.U, i})
+	}
+	dist := make([]float64, g.N)
+	prevEdge := make([]int, g.N)
+	prevNode := make([]int, g.N)
 	for i := range dist {
 		dist[i] = math.Inf(1)
-		prev[i] = -1
+		prevNode[i] = -1
 	}
 	dist[start] = 0
-	for iter := 0; iter < n; iter++ {
-		u := -1
-		best := math.Inf(1)
-		for i := 0; i < n; i++ {
-			if !used[i] && dist[i] < best {
-				best = dist[i]
-				u = i
-			}
+	h := &pq{{0, start}}
+	for h.Len() > 0 {
+		it := heap.Pop(h).(item)
+		if it.d > dist[it.v] {
+			continue
 		}
-		if u == -1 {
+		if it.v == goal {
 			break
 		}
-		used[u] = true
-		if u == goal {
-			break
-		}
-		for _, e := range adj[u] {
-			nd := dist[u] + e.w
-			if nd < dist[e.to] {
-				dist[e.to] = nd
-				prev[e.to] = u
+		for _, a := range adj[it.v] {
+			if nd := it.d + w[a.e]; nd < dist[a.to] {
+				dist[a.to] = nd
+				prevNode[a.to] = it.v
+				prevEdge[a.to] = a.e
+				heap.Push(h, item{nd, a.to})
 			}
 		}
 	}
-	if dist[goal] == math.Inf(1) {
-		return math.Inf(1), nil
+	var edges []int
+	for cur := goal; prevNode[cur] != -1; cur = prevNode[cur] {
+		edges = append(edges, prevEdge[cur])
 	}
-	path := []int{}
-	cur := goal
-	for cur != -1 {
-		path = append([]int{cur}, path...)
-		cur = prev[cur]
-	}
-	return dist[goal], path
+	return dist[goal], edges
 }
 
-func newBanditSolver(n int, topo [][2]int, strategy string, rng *rand.Rand) *BanditSolver {
-	est := make(map[[2]int]float64)
-	stats := make(map[[2]int]*EdgeStats)
-	for _, e := range topo {
-		k := edgeKey(e[0], e[1])
-		est[k] = 1.0
-		stats[k] = &EdgeStats{alpha: 1, beta: 1}
-	}
-	return &BanditSolver{
-		n: n, topo: topo, strategy: strategy, rng: rng, epsilon: 0.15,
-		est: est, stats: stats,
-	}
+type Solver struct {
+	g        Graph
+	strategy string
+	rng      *rand.Rand
+	epsilon  float64
+	est      []float64
+	pulls    []int
+	t        int
 }
 
-func (s *BanditSolver) explorationBonus(key [2]int) float64 {
-	st := s.stats[key]
-	if st.pulls == 0 {
-		return 2.0
-	}
+// planningWeight は経路を選ぶときに使う重み。探索したい辺ほど短く見せる。
+func (s *Solver) planningWeight(i int) float64 {
+	w := s.est[i]
 	switch s.strategy {
 	case "ucb1":
-		return 0.5 * math.Sqrt(math.Log(float64(s.totalPulls+1))/float64(st.pulls))
+		// 通った回数が少ない辺ほど短く見せる（楽観）
+		return w / (1 + ucbC*math.Sqrt(math.Log(float64(s.t+2))/float64(s.pulls[i]+1)))
 	case "thompson":
-		sample := betaSample(s.rng, st.alpha, st.beta)
-		mean := st.rewardSum / float64(st.pulls)
-		return 0.8 * (sample - mean)
-	case "epsilon_greedy":
-		if s.rng.Float64() < s.epsilon {
-			return 1.5
-		}
+		// 推定のまわりにばらつかせた値を引く。通った回数が少ない辺ほど大きくばらつく
+		return w * math.Exp(s.rng.NormFloat64()*thompsonSigma/math.Sqrt(float64(s.pulls[i]+1)))
 	}
-	return 0
+	return w
 }
 
-func betaSample(rng *rand.Rand, alpha, beta float64) float64 {
-	// 簡易: 平均 + 小ノイズ（本番は math/rand 以外でも可）
-	return alpha/(alpha+beta) + (rng.Float64()-0.5)*0.2
-}
-
-func (s *BanditSolver) adj() [][]struct {
-	to int
-	w  float64
-} {
-	adj := make([][]struct {
-		to int
-		w  float64
-	}, s.n)
-	for k, w := range s.est {
-		bonus := s.explorationBonus(k)
-		adjW := w - bonus
-		if adjW < 0.01 {
-			adjW = 0.01
-		}
-		adj[k[0]] = append(adj[k[0]], struct {
-			to int
-			w  float64
-		}{k[1], adjW})
-		adj[k[1]] = append(adj[k[1]], struct {
-			to int
-			w  float64
-		}{k[0], adjW})
-	}
-	return adj
-}
-
-func (s *BanditSolver) pickFocus(path []int) [2]int {
-	var edges [][2]int
-	for i := 0; i+1 < len(path); i++ {
-		edges = append(edges, edgeKey(path[i], path[i+1]))
-	}
-	if len(edges) == 0 {
-		for k := range s.est {
-			return k
+func (s *Solver) choosePath(from, to int) []int {
+	plan := make([]float64, len(s.est))
+	random := s.strategy == "epsilon_greedy" && s.rng.Float64() < s.epsilon
+	for i := range plan {
+		if random {
+			plan[i] = s.rng.Float64() // 確率 ε でランダムな経路
+		} else {
+			plan[i] = s.planningWeight(i)
 		}
 	}
-	bestK := edges[0]
-	bestScore := -1.0
-	for _, k := range edges {
-		st := s.stats[k]
-		score := 0.0
-		switch s.strategy {
-		case "ucb1":
-			score = st.rewardSum/float64(max(1, st.pulls)) +
-				math.Sqrt(2*math.Log(float64(s.totalPulls+1))/float64(max(1, st.pulls)))
-		case "thompson":
-			score = betaSample(s.rng, st.alpha, st.beta)
-		default:
-			score = st.rewardSum / float64(max(1, st.pulls))
-			if s.rng.Float64() < s.epsilon {
-				return k
+	_, edges := dijkstra(s.g, plan, from, to)
+	return edges
+}
+
+func (s *Solver) update(edges []int, observed float64) {
+	predicted := 0.0
+	for _, i := range edges {
+		predicted += s.est[i]
+	}
+	factor := 1 + learningRate*(observed/predicted-1)
+	for _, i := range edges {
+		s.est[i] *= factor
+		s.pulls[i]++
+	}
+	s.t++
+}
+
+// run は (後悔の合計, 一度も通らなかった辺の数) を返す。
+func run(g Graph, trueW []float64, queries [][2]int, strategy string, seed int64, rounds int, epsilon float64) (float64, int) {
+	s := &Solver{g: g, strategy: strategy, rng: rand.New(rand.NewSource(seed)), epsilon: epsilon,
+		est: make([]float64, len(g.Edges)), pulls: make([]int, len(g.Edges))}
+	for i := range s.est {
+		s.est[i] = initWeight
+	}
+	noiseRng := rand.New(rand.NewSource(seed + 1_000_000)) // 観測ノイズは戦略と別の乱数
+	regret := 0.0
+	for r := 0; r < rounds; r++ {
+		for _, q := range queries {
+			edges := s.choosePath(q[0], q[1])
+			trueLen := 0.0
+			for _, i := range edges {
+				trueLen += trueW[i]
 			}
+			best, _ := dijkstra(g, trueW, q[0], q[1])
+			regret += trueLen - best
+			s.update(edges, trueLen*(1-noise+2*noise*noiseRng.Float64()))
 		}
-		if score > bestScore {
-			bestScore = score
-			bestK = k
+	}
+	untouched := 0
+	for _, c := range s.pulls {
+		if c == 0 {
+			untouched++
 		}
 	}
-	return bestK
-}
-
-func (s *BanditSolver) updateEstimates(path []int, predicted, actual float64) {
-	if len(path) < 2 || predicted <= 0 {
-		return
-	}
-	ratio := actual / predicted
-	for i := 0; i+1 < len(path); i++ {
-		k := edgeKey(path[i], path[i+1])
-		s.est[k] = math.Max(0.1, s.est[k]*ratio)
-	}
-	focus := s.pickFocus(path)
-	err := math.Abs(actual-predicted) / math.Max(actual, 1)
-	if err < 0 {
-		err = 0
-	}
-	if err > 1 {
-		err = 1
-	}
-	reward := 1.0 - err
-	st := s.stats[focus]
-	st.pulls++
-	st.rewardSum += reward
-	st.alpha += reward
-	st.beta += 1.0 - reward
-	s.totalPulls++
-	s.est[focus] = math.Max(0.1, s.est[focus]*(0.9+0.2*reward))
-}
-
-func (s *BanditSolver) runOffline(trueAdj [][]struct {
-	to int
-	w  float64
-}, queries [][2]int) (float64, float64) {
-	totalPred, totalTrue := 0.0, 0.0
-	for _, q := range queries {
-		pred, _ := dijkstra(s.adj(), q[0], q[1])
-		trueLen, truePath := dijkstra(trueAdj, q[0], q[1])
-		s.updateEstimates(truePath, pred, trueLen)
-		totalPred += pred
-		totalTrue += trueLen
-	}
-	return totalPred, totalTrue
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return regret, untouched
 }
 
 func main() {
+	rounds := flag.Int("rounds", 50, "クエリ列を何周するか")
+	trials := flag.Int("trials", 20, "seed を変えて何回平均するか")
+	epsilon := flag.Float64("epsilon", 0.15, "ε-greedy でランダムな経路を試す確率")
+	flag.Parse()
 	path := "data/ch24/sample.txt"
-	if len(os.Args) > 1 {
-		path = os.Args[1]
+	if flag.NArg() > 0 {
+		path = flag.Arg(0)
 	}
-	n, edges, queries, err := loadSample(path)
+	g, trueW, queries, err := loadSample(path)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	trueAdj := buildAdj(n, edges)
-	topo := make([][2]int, len(edges))
-	for i, e := range edges {
-		topo[i] = [2]int{e.u, e.v}
-	}
-	rng := rand.New(rand.NewSource(42))
-	fmt.Fprintf(os.Stderr, "graph n=%d m=%d queries=%d\n", n, len(edges), len(queries))
-
-	bestName := ""
-	bestGap := math.MaxFloat64
-	for _, name := range []string{"ucb1", "thompson", "epsilon_greedy"} {
-		solver := newBanditSolver(n, topo, name, rng)
-		pred, true := solver.runOffline(trueAdj, queries)
-		gap := pred - true
-		fmt.Fprintf(os.Stderr, "strategy=%s sum_pred=%.4f sum_true=%.4f gap=%.4f\n",
-			name, pred, true, gap)
-		if gap < bestGap {
-			bestGap = gap
-			bestName = name
+	fmt.Fprintf(os.Stderr, "graph n=%d m=%d queries=%d rounds=%d trials=%d\n", g.N, len(g.Edges), len(queries), *rounds, *trials)
+	bestName, bestRegret := "", math.Inf(1)
+	for _, name := range strategies {
+		sumRegret, sumUntouched := 0.0, 0
+		for seed := 0; seed < *trials; seed++ {
+			r, u := run(g, trueW, queries, name, int64(seed), *rounds, *epsilon)
+			sumRegret += r
+			sumUntouched += u
+		}
+		regret := sumRegret / float64(*trials)
+		fmt.Fprintf(os.Stderr, "strategy=%s regret=%.2f untouched_edges=%.1f\n", name, regret, float64(sumUntouched)/float64(*trials))
+		if regret < bestRegret {
+			bestName, bestRegret = name, regret
 		}
 	}
-	fmt.Fprintf(os.Stderr, "best_gap=%s (smallest pred-true gap)\n", bestName)
+	fmt.Fprintf(os.Stderr, "best=%s (smallest regret)\n", bestName)
 }

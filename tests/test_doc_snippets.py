@@ -25,7 +25,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 HEADER = re.compile(r"^\s*(?:#|//)\s*((?:python|go)/[\w/.-]+\.(?:py|go))(.*)$")
-SKIP_MARKERS = ("改変例", "擬似コード", "骨格", "概念", "イメージ")
+SKIP_MARKERS = ("改変例", "擬似コード", "骨格", "概念", "イメージ", "解答例")
 TRAILING_COMMENT = re.compile(r"\s+(?:#|//)\s.*$")
 VAR_ANNOTATION = re.compile(r"^([A-Za-z_]\w*): [^=]+ = ")
 

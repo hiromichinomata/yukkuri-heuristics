@@ -6,6 +6,8 @@
   - 「第N章 N.M」のような節の参照が、実在する節を指している
   - 「次章: **タイトル**（第N章）」が、本当に次の章とそのタイトルを指している
   - 「第N章「タイトル」」のタイトルが、その章のタイトルか節タイトルと一致する
+  - 各章の演習に、ヒントと解答例の折りたたみ（<details>）がある
+  - 本文の図が実在し、tools/gen_figures.py で作り直したものと一致する
 """
 from __future__ import annotations
 
@@ -99,6 +101,54 @@ class DocStructureTest(unittest.TestCase):
                         name = t.group(1)
                         ok = name in title or norm(name) in norm(title) or any(name in s for s in secs.values())
                         self.assertTrue(ok, f"{p.name}:{lineno}: 次章のタイトル「{name}」が第{t.group(2)}章「{title}」と違う")
+
+    def test_exercises_have_hints_and_answers(self):
+        """演習の節があれば、その中に <details> のヒントと解答例がある（<summary> の後は空行）."""
+        for p in sorted(DOCS.glob("[0-9][0-9].md")):
+            body, inside, fence = [], False, False
+            for line in p.read_text(encoding="utf-8").split("\n"):
+                if line.startswith("```"):
+                    fence = not fence
+                if not fence and line.startswith("## "):
+                    inside = "演習" in line  # 解答例のコードブロック内の「## 」は見出しとみなさない
+                    continue
+                if inside:
+                    body.append(line)
+            if not body:
+                continue
+            body = "\n".join(body)
+            with self.subTest(chapter=p.name):
+                for label in ("ヒント", "解答例"):
+                    self.assertTrue(f"<details>\n<summary>{label}</summary>\n\n" in body, f"{p.name}: 演習に「{label}」の折りたたみがない")
+                self.assertEqual(body.count("<details>"), body.count("</details>"), f"{p.name}: <details> の開き閉じが合わない")
+
+    def test_images_exist(self):
+        """本文の ![...](images/xxx.svg) が実在し、docs/images/ に使われていない図がない."""
+        used = set()
+        for p in doc_files():
+            for m in re.finditer(r"!\[[^\]]*\]\((images/[^)]+)\)", p.read_text(encoding="utf-8")):
+                used.add(m.group(1))
+                with self.subTest(image=m.group(1), doc=p.name):
+                    self.assertTrue((DOCS / m.group(1)).exists(), f"{p.name}: {m.group(1)} がない")
+        files = {f"images/{f.name}" for f in (DOCS / "images").glob("*.svg")}
+        self.assertEqual(sorted(files - used), [], "どの章からも使われていない図がある")
+
+    def test_figures_up_to_date(self):
+        """tools/gen_figures.py で作り直した図が、docs/images/ のものと一致する（コードを直したら図も作り直す）."""
+        import subprocess
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            subprocess.run(["python", "tools/gen_figures.py", "--out", tmp], cwd=ROOT, check=True, capture_output=True)
+            for f in sorted(Path(tmp).glob("*.svg")):
+                with self.subTest(figure=f.name):
+                    committed = DOCS / "images" / f.name
+                    self.assertTrue(committed.exists(), f"{f.name} が docs/images/ にない")
+                    self.assertEqual(
+                        f.read_text(encoding="utf-8"),
+                        committed.read_text(encoding="utf-8"),
+                        f"{f.name} が古い。python tools/gen_figures.py で作り直す",
+                    )
 
     def test_quoted_chapter_titles(self):
         chs = chapters()
