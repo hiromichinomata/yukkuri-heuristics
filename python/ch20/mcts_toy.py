@@ -62,7 +62,8 @@ def build_adjacency(game: GameInput) -> List[List[int]]:
 
 def terminal_winner(state: GameState, game: GameInput) -> Optional[int]:
     if state.node == game.terminal:
-        return state.player
+        # state.player は「次に指す人」。終点に入ったのはその相手なので、相手の勝ち
+        return 1 - state.player
     return None
 
 
@@ -86,7 +87,9 @@ def rollout(state: GameState, adj: List[List[int]], game: GameInput, rng: random
 def ucb1(parent_visits: int, child: MCTSNode) -> float:
     if child.visits == 0:
         return float("inf")
-    return child.wins / child.visits + EXPLORATION * math.sqrt(math.log(parent_visits) / child.visits)
+    return child.wins / child.visits + EXPLORATION * math.sqrt(
+        math.log(parent_visits) / child.visits
+    )
 
 
 def expand(node: MCTSNode, adj: List[List[int]], rng: random.Random) -> MCTSNode:
@@ -129,7 +132,9 @@ def mcts(root: MCTSNode, adj: List[List[int]], game: GameInput, rng: random.Rand
 
         for n in path:
             n.visits += 1
-            if n.state is not None and winner == n.state.player:
+            # ノード n の勝率は「n へ進む手を指した人」（= n で次に指す人の相手）から見たもの。
+            # 親は子の勝率で手を選ぶので、こう数えると「自分の勝率が高い手」を選べる
+            if n.state is not None and winner == 1 - n.state.player:
                 n.wins += 1.0
 
 

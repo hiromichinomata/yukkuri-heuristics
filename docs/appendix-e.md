@@ -12,7 +12,7 @@
 |------|------|
 | AHC | AtCoder Heuristic Contest。ヒューリスティック部門の主力コンテスト |
 | AC | Accepted。アルゴ部門では正解。ヒューリスティックでは「合法解」に近い |
-| WA | Wrong Answer。出力形式違反・非法解 |
+| WA | Wrong Answer。出力形式違反・不正な解 |
 | TLE | Time Limit Exceeded。制限時間超過 |
 | スコア | 高いほど良いことが多い。問題ごとに計算式が異なる |
 | スコア関数 | 出力から点数を計算する関数。ローカル実装推奨 |

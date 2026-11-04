@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -170,8 +171,13 @@ func ga(problem ProblemInput, rng *rand.Rand) ([]int, int, []placement) {
 		}
 		pop = next
 
-		if gen%50 == 0 {
-			fmt.Fprintf(os.Stderr, "ga gen=%d best=%d\n", gen, bestFit)
+		if gen%50 == 0 || gen == generations-1 {
+			// best は歴代最高、avg はこの世代の平均。avg が上がっていくのが「集団が進化している」印
+			sum := 0
+			for _, f := range fitness {
+				sum += f
+			}
+			fmt.Fprintf(os.Stderr, "ga gen=%d best=%d avg=%.1f\n", gen, bestFit, float64(sum)/float64(len(fitness)))
 		}
 	}
 	return bestOrder, bestFit, bestPlace
@@ -193,6 +199,14 @@ func main() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+	// 比較用: 幅の大きい順に詰める貪欲（同じ幅なら番号の小さい順）
+	desc := make([]int, len(problem.Widths))
+	for i := range desc {
+		desc[i] = i
+	}
+	sort.SliceStable(desc, func(a, b int) bool { return problem.Widths[desc[a]] > problem.Widths[desc[b]] })
+	greedyFit, _ := evaluate(problem, desc)
+	fmt.Fprintf(os.Stderr, "greedy(width desc) placed_width=%d\n", greedyFit)
 	_, fit, placement := ga(problem, rng)
 	fmt.Fprintf(os.Stderr, "placed_width=%d capacity=%d\n", fit, problem.Capacity)
 	fmt.Println(len(placement))

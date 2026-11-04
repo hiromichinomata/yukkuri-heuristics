@@ -85,24 +85,33 @@ func destroySegment(tour []int, rng *rand.Rand) ([]int, []int) {
 	kept := append([]int{}, tour...)
 	removed := make([]int, 0, segLen)
 	for k := 0; k < segLen; k++ {
+		// 取り除くと後ろが詰まって同じ位置に次の頂点が来るので、start は進めない（連続区間を外す）
 		idx := start % len(kept)
 		removed = append(removed, kept[idx])
 		kept = append(kept[:idx], kept[idx+1:]...)
-		start++
 	}
 	return kept, removed
 }
 
+// repairTour は外した頂点を、残した巡回のいちばん安く入る位置に1つずつ戻す（最安挿入）。
+// 残した部分の並びはそのまま使う。全部作り直すと、壊した意味がなくなる。
 func repairTour(pts []Point, partial, removed []int) []int {
 	if len(partial) == 0 {
-		nodes := make([]int, len(pts))
-		for i := range nodes {
-			nodes[i] = i
-		}
-		return nearestNeighbor(pts, 0, nodes)
+		return nearestNeighbor(pts, removed[0], removed)
 	}
-	nodes := append(append([]int{}, partial...), removed...)
-	return nearestNeighbor(pts, partial[0], nodes)
+	tour := append([]int{}, partial...)
+	for _, v := range removed {
+		bestPos, bestCost := 0, math.Inf(1)
+		for i := range tour {
+			a, b := tour[i], tour[(i+1)%len(tour)]
+			cost := edgeDist(pts, a, v) + edgeDist(pts, v, b) - edgeDist(pts, a, b) // a-b の間に v を入れる増分
+			if cost < bestCost {
+				bestPos, bestCost = i+1, cost
+			}
+		}
+		tour = append(tour[:bestPos], append([]int{v}, tour[bestPos:]...)...)
+	}
+	return tour
 }
 
 func lns(pts []Point, rng *rand.Rand, iterations int) ([]int, float64, float64) {

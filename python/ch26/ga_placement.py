@@ -109,8 +109,10 @@ def ga(problem: ProblemInput, rng: random.Random) -> Tuple[List[int], int, List[
             next_pop.append(child)
         population = next_pop
 
-        if gen % 50 == 0:
-            print(f"ga gen={gen} best={best_fit}", file=sys.stderr)
+        if gen % 50 == 0 or gen == GENERATIONS - 1:
+            # best は歴代最高、avg はこの世代の平均。avg が上がっていくのが「集団が進化している」印
+            avg = sum(fitness) / len(fitness)
+            print(f"ga gen={gen} best={best_fit} avg={avg:.1f}", file=sys.stderr)
 
     return best_order, best_fit, best_place
 
@@ -118,6 +120,9 @@ def ga(problem: ProblemInput, rng: random.Random) -> Tuple[List[int], int, List[
 def main() -> None:
     rng = random.Random(42)
     problem = read_problem(sys.stdin)
+    # 比較用: 幅の大きい順に詰める貪欲
+    greedy_fit, _ = evaluate(problem, sorted(range(len(problem.widths)), key=lambda i: -problem.widths[i]))
+    print(f"greedy(width desc) placed_width={greedy_fit}", file=sys.stderr)
     order, fit, placement = ga(problem, rng)
     print(f"placed_width={fit} capacity={problem.capacity}", file=sys.stderr)
     print(len(placement))

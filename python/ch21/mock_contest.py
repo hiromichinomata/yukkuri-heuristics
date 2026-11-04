@@ -92,6 +92,33 @@ def _final_satisfaction(problem: ProblemInput, state: ScheduleState) -> int:
     return satisfaction
 
 
+def type_penalty(problem: ProblemInput, types: List[int], t: int) -> int:
+    """タイプ t の減衰ペナルティ合計 c_t * Σ L(L-1)/2。O(D)（第9章 9.4）."""
+    total = 0
+    prev = 0
+    for day, x in enumerate(types, start=1):
+        if x == t:
+            gap = day - prev
+            total += gap * (gap - 1) // 2
+            prev = day
+    gap = problem.days + 1 - prev
+    total += gap * (gap - 1) // 2
+    return problem.decay[t - 1] * total
+
+
+def delta_change(problem: ProblemInput, types: List[int], day: int, new_type: int) -> int:
+    """types[day] を new_type に変えたときの (10^6 + 満足度) の変化量。O(D)（第9章 9.4）."""
+    old_type = types[day]
+    if old_type == new_type:
+        return 0
+    before = type_penalty(problem, types, old_type) + type_penalty(problem, types, new_type)
+    types[day] = new_type
+    after = type_penalty(problem, types, old_type) + type_penalty(problem, types, new_type)
+    types[day] = old_type
+    gain = problem.gain[day][new_type - 1] - problem.gain[day][old_type - 1]
+    return gain - (after - before)
+
+
 def brief_sa(
     problem: ProblemInput,
     state: ScheduleState,
@@ -99,7 +126,7 @@ def brief_sa(
     rng: random.Random,
 ) -> ScheduleState:
     current = ScheduleState(list(state.types))
-    score = score_schedule(problem, current)
+    score = 10**6 + _final_satisfaction(problem, current)  # 0 で切らない値で比べる
     best = ScheduleState(list(current.types))
     best_score = score
     t0, t1 = 5000.0, 10.0
@@ -112,16 +139,15 @@ def brief_sa(
             break
         temperature = t0 * (t1 / t0) ** ((now - start) / span)  # 第9章と同じ時間ベース冷却
         day = rng.randrange(problem.days)
-        trial = ScheduleState(list(current.types))
-        trial.types[day] = rng.randint(1, 26)
-        trial_score = score_schedule(problem, trial)
-        delta = trial_score - score
+        new_type = rng.randint(1, 26)
+        delta = delta_change(problem, current.types, day, new_type)  # 差分だけ計算（第9章 9.4）
         if delta >= 0 or rng.random() < math.exp(delta / temperature):
-            current = trial
-            score = trial_score
+            current.types[day] = new_type
+            score += delta
             if score > best_score:
                 best = ScheduleState(list(current.types))
                 best_score = score
+    assert score == 10**6 + _final_satisfaction(problem, current), "差分と全再計算が一致しない"
     return best
 
 
@@ -175,14 +201,16 @@ class MockContest:
         self.best_score = score_schedule(self.problem, self.state)
         self._emit("implement", "submit", self.best_score, "initial solution")
 
-        self.wait_phase("improve", self.phase_min[2])
-        improve_end = self.elapsed() + (
-            self.phase_min[2] * 60.0 if not self.fast else self.phase_min[2]
-        )
+        # improve フェーズの時間はまるごと SA に使う（待ってから SA、ではない）
+        improve_sec = self.phase_min[2] * 60.0 if not self.fast else self.phase_min[2]
+        self._emit("improve", "start", self.best_score, f"duration={improve_sec:.1f}s")
         self._emit("improve", "work", self.best_score, "brief SA")
+        # brief_sa は time.perf_counter() と比べるので、締め切りも同じ時計で渡す
+        improve_end = time.perf_counter() + improve_sec
         self.state = brief_sa(self.problem, self.state, improve_end, self.rng)
         self.best_score = score_schedule(self.problem, self.state)
         self._emit("improve", "submit", self.best_score, "improved solution")
+        self._emit("improve", "end", self.best_score, "phase complete")
 
         self.wait_phase("submit", self.phase_min[3])
         self._emit("submit", "final", self.best_score, "stdout schedule")

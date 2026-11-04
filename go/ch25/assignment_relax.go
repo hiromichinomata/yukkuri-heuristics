@@ -1,4 +1,6 @@
 // go/ch25/assignment_relax.go
+// 割当問題: 制約を外す緩和で下界を作り、修復 + 入れ替え山登りで整数解にする（第25章）。
+// python/ch25/assignment_relax.py と同じ出力。
 package main
 
 import (
@@ -10,15 +12,15 @@ import (
 	"strings"
 )
 
-func readCost(sc *bufio.Scanner) (int, [][]int, error) {
+func readCost(sc *bufio.Scanner) ([][]int, error) {
 	var lines []string
 	for sc.Scan() {
 		lines = append(lines, sc.Text())
 	}
 	if err := sc.Err(); err != nil {
-		return 0, nil, err
+		return nil, err
 	}
-	n, _ := strconv.Atoi(lines[0])
+	n, _ := strconv.Atoi(strings.TrimSpace(lines[0]))
 	cost := make([][]int, n)
 	for i := 0; i < n; i++ {
 		row := strings.Fields(lines[i+1])
@@ -27,86 +29,113 @@ func readCost(sc *bufio.Scanner) (int, [][]int, error) {
 			cost[i][j], _ = strconv.Atoi(s)
 		}
 	}
-	return n, cost, nil
+	return cost, nil
 }
 
-type fracEntry struct {
-	c, i, j int
+func assignmentCost(cost [][]int, assign []int) int {
+	total := 0
+	for i, j := range assign {
+		total += cost[i][j]
+	}
+	return total
 }
 
-func fractionalRelaxation(cost [][]int) ([][]float64, float64) {
+// relaxedLowerBound は「各列に1人」を外した緩和。各行で最安の列を選ぶ（下界）
+func relaxedLowerBound(cost [][]int) ([]int, int) {
 	n := len(cost)
-	var entries []fracEntry
+	choice := make([]int, n)
+	for i := range cost {
+		for j := 1; j < n; j++ {
+			if cost[i][j] < cost[i][choice[i]] {
+				choice[i] = j
+			}
+		}
+	}
+	return choice, assignmentCost(cost, choice)
+}
+
+// repair は後悔（2番目に安いコストとの差）の大きい行から、空いている最安の列を取らせる
+func repair(cost [][]int) []int {
+	n := len(cost)
+	regret := func(i int) int {
+		row := append([]int{}, cost[i]...)
+		sort.Ints(row)
+		if n > 1 {
+			return row[1] - row[0]
+		}
+		return 0
+	}
+	order := make([]int, n)
+	for i := range order {
+		order[i] = i
+	}
+	sort.SliceStable(order, func(a, b int) bool { return regret(order[a]) > regret(order[b]) })
+	assign := make([]int, n)
+	used := make([]bool, n)
+	for _, i := range order {
+		best := -1
+		for j := 0; j < n; j++ {
+			if !used[j] && (best == -1 || cost[i][j] < cost[i][best]) {
+				best = j
+			}
+		}
+		assign[i] = best
+		used[best] = true
+	}
+	return assign
+}
+
+// swapImprove は 2 行の割当を入れ替えて良くなる限り続ける山登り
+func swapImprove(cost [][]int, assign []int) []int {
+	assign = append([]int{}, assign...)
+	n := len(assign)
+	for improved := true; improved; {
+		improved = false
+		for i := 0; i < n; i++ {
+			for k := i + 1; k < n; k++ {
+				a, b := assign[i], assign[k]
+				if cost[i][b]+cost[k][a] < cost[i][a]+cost[k][b] {
+					assign[i], assign[k] = b, a
+					improved = true
+				}
+			}
+		}
+	}
+	return assign
+}
+
+// greedyByCost は比較用: コストの安い (i, j) から、行・列が空いていれば詰める
+func greedyByCost(cost [][]int) []int {
+	n := len(cost)
+	type entry struct{ c, i, j int }
+	var entries []entry
 	for i := 0; i < n; i++ {
 		for j := 0; j < n; j++ {
-			entries = append(entries, fracEntry{cost[i][j], i, j})
+			entries = append(entries, entry{cost[i][j], i, j})
 		}
 	}
-	sort.Slice(entries, func(a, b int) bool { return entries[a].c < entries[b].c })
-	rowRem := make([]float64, n)
-	colRem := make([]float64, n)
-	for i := range rowRem {
-		rowRem[i], colRem[i] = 1, 1
-	}
-	x := make([][]float64, n)
-	for i := range x {
-		x[i] = make([]float64, n)
-	}
-	total := 0.0
-	for _, e := range entries {
-		val := rowRem[e.i]
-		if colRem[e.j] < val {
-			val = colRem[e.j]
+	sort.Slice(entries, func(a, b int) bool { // Python の sorted((c, i, j)) と同じ順
+		x, y := entries[a], entries[b]
+		if x.c != y.c {
+			return x.c < y.c
 		}
-		if val <= 0 {
-			continue
+		if x.i != y.i {
+			return x.i < y.i
 		}
-		x[e.i][e.j] = val
-		rowRem[e.i] -= val
-		colRem[e.j] -= val
-		total += float64(e.c) * val
-	}
-	return x, total
-}
-
-type roundItem struct {
-	frac float64
-	c    int
-	i, j int
-}
-
-func roundAssignment(cost [][]int, frac [][]float64) ([]int, int) {
-	n := len(cost)
-	var items []roundItem
-	for i := 0; i < n; i++ {
-		for j := 0; j < n; j++ {
-			items = append(items, roundItem{frac[i][j], cost[i][j], i, j})
-		}
-	}
-	sort.Slice(items, func(a, b int) bool { return items[a].frac > items[b].frac })
+		return x.j < y.j
+	})
 	assign := make([]int, n)
 	for i := range assign {
 		assign[i] = -1
 	}
-	usedCol := make([]bool, n)
-	total := 0
-	for _, it := range items {
-		if assign[it.i] != -1 || usedCol[it.j] {
-			continue
+	used := make([]bool, n)
+	for _, e := range entries {
+		if assign[e.i] == -1 && !used[e.j] {
+			assign[e.i] = e.j
+			used[e.j] = true
 		}
-		assign[it.i] = it.j
-		usedCol[it.j] = true
-		total += it.c
 	}
-	return assign, total
-}
-
-func permCost(cost [][]int, perm []int) int {
-	s := 0
-	for i, j := range perm {
-		s += cost[i][j]
-	}
-	return s
+	return assign
 }
 
 func bruteOptimal(cost [][]int) ([]int, int) {
@@ -115,48 +144,53 @@ func bruteOptimal(cost [][]int) ([]int, int) {
 	for i := range perm {
 		perm[i] = i
 	}
-	best := append([]int(nil), perm...)
-	bestVal := permCost(cost, perm)
-	var dfs func(int)
-	dfs = func(pos int) {
-		if pos == n {
-			v := permCost(cost, perm)
-			if v < bestVal {
-				bestVal = v
-				copy(best, perm)
+	best, bestVal := append([]int{}, perm...), assignmentCost(cost, perm)
+	var rec func(k int)
+	rec = func(k int) { // 辞書順に全順列を試す（最初に見つかった最小を残す = Python の min と同じ）
+		if k == n {
+			if v := assignmentCost(cost, perm); v < bestVal {
+				best, bestVal = append([]int{}, perm...), v
 			}
 			return
 		}
-		for j := pos; j < n; j++ {
-			perm[pos], perm[j] = perm[j], perm[pos]
-			dfs(pos + 1)
-			perm[pos], perm[j] = perm[j], perm[pos]
+		for i := k; i < n; i++ {
+			// perm[k:] を辞書順に保つため、取り出して先頭に回す
+			x := perm[i]
+			copy(perm[k+1:i+1], perm[k:i])
+			perm[k] = x
+			rec(k + 1)
+			copy(perm[k:i], perm[k+1:i+1])
+			perm[i] = x
 		}
 	}
-	dfs(0)
+	rec(0)
 	return best, bestVal
 }
 
+// pyList は Python の print(list) と同じ表記 [a, b, c] にする
+func pyList(a []int) string {
+	s := make([]string, len(a))
+	for i, v := range a {
+		s[i] = strconv.Itoa(v)
+	}
+	return "[" + strings.Join(s, ", ") + "]"
+}
+
 func main() {
-	_, cost, err := readCost(bufio.NewScanner(os.Stdin))
+	cost, err := readCost(bufio.NewScanner(os.Stdin))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	n := len(cost)
-	frac, fracCost := fractionalRelaxation(cost)
-	assign, rounded := roundAssignment(cost, frac)
-	opt, optCost := bruteOptimal(cost)
-	gap := rounded - optCost
-	fmt.Printf("fractional_cost %.2f\n", fracCost)
-	fmt.Printf("rounded_assign %v cost %d\n", assign, rounded)
-	fmt.Printf("optimal_assign %v cost %d\n", opt, optCost)
-	fmt.Printf("n=%d gap=%d ratio=%.3f\n", n, gap, float64(rounded)/float64(max(optCost, 1)))
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	relaxed, lb := relaxedLowerBound(cost)
+	repaired := repair(cost)
+	improved := swapImprove(cost, repaired)
+	greedy := greedyByCost(cost)
+	optimal, opt := bruteOptimal(cost)
+	fmt.Println("lower_bound", lb, "relaxed_assign", pyList(relaxed))
+	fmt.Println("repaired_assign", pyList(repaired), "cost", assignmentCost(cost, repaired))
+	fmt.Println("improved_assign", pyList(improved), "cost", assignmentCost(cost, improved))
+	fmt.Println("greedy_assign", pyList(greedy), "cost", assignmentCost(cost, greedy))
+	fmt.Println("optimal_assign", pyList(optimal), "cost", opt)
+	fmt.Printf("n=%d optimal is in [%d, %d]\n", len(cost), lb, assignmentCost(cost, improved))
 }

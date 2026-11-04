@@ -60,6 +60,33 @@ def _final_satisfaction(problem: ProblemInput, state: ScheduleState) -> int:
     return satisfaction
 
 
+def type_penalty(problem: ProblemInput, types: List[int], t: int) -> int:
+    """タイプ t の減衰ペナルティ合計 c_t * Σ L(L-1)/2。O(D)（第9章 9.4）."""
+    total = 0
+    prev = 0
+    for day, x in enumerate(types, start=1):
+        if x == t:
+            gap = day - prev
+            total += gap * (gap - 1) // 2
+            prev = day
+    gap = problem.days + 1 - prev
+    total += gap * (gap - 1) // 2
+    return problem.decay[t - 1] * total
+
+
+def delta_change(problem: ProblemInput, types: List[int], day: int, new_type: int) -> int:
+    """types[day] を new_type に変えたときの (10^6 + 満足度) の変化量。O(D)（第9章 9.4）."""
+    old_type = types[day]
+    if old_type == new_type:
+        return 0
+    before = type_penalty(problem, types, old_type) + type_penalty(problem, types, new_type)
+    types[day] = new_type
+    after = type_penalty(problem, types, old_type) + type_penalty(problem, types, new_type)
+    types[day] = old_type
+    gain = problem.gain[day][new_type - 1] - problem.gain[day][old_type - 1]
+    return gain - (after - before)
+
+
 def strategy_greedy(problem: ProblemInput) -> ScheduleState:
     """各日、その日終了時の満足度が最大になるタイプを選ぶ。
 
@@ -116,19 +143,14 @@ def strategy_pipeline_lite(
     rng: random.Random,
 ) -> ScheduleState:
     state = strategy_greedy(problem)
-    score = score_schedule(problem, state)
     for _ in range(400):
         day = rng.randrange(problem.days)
         old = state.types[day]
         for t in range(1, 27):
             if t == old:
                 continue
-            trial = state.copy()
-            trial.types[day] = t
-            trial_score = score_schedule(problem, trial)
-            if trial_score > score:
-                state = trial
-                score = trial_score
+            if delta_change(problem, state.types, day, t) > 0:  # 差分だけ計算（第9章 9.4）
+                state.types[day] = t
                 break
     return state
 

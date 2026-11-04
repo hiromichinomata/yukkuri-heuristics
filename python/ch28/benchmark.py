@@ -73,10 +73,7 @@ def run_go_timing() -> Tuple[float, int]:
     go_file = repo_root() / "go" / "ch28" / "benchmark.go"
     proc = subprocess.run(
         ["go", "run", str(go_file), "--timing-only"],
-        cwd=repo_root(),
-        capture_output=True,
-        text=True,
-        check=False,
+        cwd=repo_root(), capture_output=True, text=True,
     )
     if proc.returncode != 0:
         print(proc.stderr, file=sys.stderr)

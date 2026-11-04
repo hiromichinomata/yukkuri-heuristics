@@ -57,17 +57,32 @@ func reverseSegment(tour []int, lo, hi int) {
 	}
 }
 
+func edgeKey(u, v int) [2]int {
+	if u < v {
+		return [2]int{u, v}
+	}
+	return [2]int{v, u}
+}
+
+// tabuSearch は 2-opt 近傍のタブーサーチ（python/ch13/tabu_tsp.py と同じ）。
+// 毎回「タブーでない手の中で最良の手」を、悪化する手でも採用する。
+// タブー = 最近外した辺を tabuTenure 反復のあいだ付け直さないこと。過去最良を更新するならタブーでも採用（aspiration）。
 func tabuSearch(pts []Point, tour []int, tabuTenure, maxIter int) ([]int, float64) {
 	n := len(tour)
 	best := append([]int(nil), tour...)
 	bestLen := tourLength(pts, best)
 	cur := append([]int(nil), tour...)
 	curLen := bestLen
-	tabu := make([][2]int, 0, tabuTenure)
-	tabuSet := make(map[[2]int]bool)
+	tabuUntil := map[[2]int]int{} // 辺 → この反復まで付け直し禁止
+	isTabu := func(e [2]int, it int) bool {
+		until, ok := tabuUntil[e]
+		return ok && until >= it
+	}
 
-	for iter := 0; iter < maxIter; iter++ {
-		var bestMove *[3]float64
+	for it := 0; it < maxIter; it++ {
+		found := false
+		var bestNew float64
+		bi, bk := -1, -1
 		for i := 0; i < n; i++ {
 			limit := n
 			if i == 0 {
@@ -78,40 +93,31 @@ func tabuSearch(pts []Point, tour []int, tabuTenure, maxIter int) ([]int, float6
 				c, d := cur[k], cur[(k+1)%n]
 				before := edgeDist(pts, a, b) + edgeDist(pts, c, d)
 				after := edgeDist(pts, a, c) + edgeDist(pts, b, d)
-				if after+1e-9 >= before {
-					continue
+				newLen := curLen - before + after // 悪化もありうる
+				tabu := isTabu(edgeKey(a, c), it) || isTabu(edgeKey(b, d), it)
+				if tabu && newLen >= bestLen-1e-9 {
+					continue // タブーかつ最良更新にならない
 				}
-				move := [2]int{i, k}
-				newLen := curLen - before + after
-				if tabuSet[move] && newLen >= bestLen {
-					continue
-				}
-				if bestMove == nil || newLen < (*bestMove)[0] {
-					bestMove = &[3]float64{newLen, float64(i), float64(k)}
+				if !found || newLen < bestNew {
+					found, bestNew, bi, bk = true, newLen, i, k
 				}
 			}
 		}
-		if bestMove == nil {
-			break
+		if !found {
+			break // 全部の手がタブー
 		}
-		i, k := int((*bestMove)[1]), int((*bestMove)[2])
-		reverseSegment(cur, i+1, k)
-		curLen = (*bestMove)[0]
-		move := [2]int{i, k}
-		if len(tabu) == tabuTenure {
-			old := tabu[0]
-			tabu = tabu[1:]
-			delete(tabuSet, old)
-		}
-		tabu = append(tabu, move)
-		tabuSet[move] = true
-		if curLen < bestLen {
+		a, b := cur[bi], cur[(bi+1)%n]
+		c, d := cur[bk], cur[(bk+1)%n]
+		reverseSegment(cur, bi+1, bk)
+		curLen = bestNew
+		tabuUntil[edgeKey(a, b)] = it + tabuTenure // 外した辺をしばらく付け直さない
+		tabuUntil[edgeKey(c, d)] = it + tabuTenure
+		if curLen < bestLen-1e-9 {
 			bestLen = curLen
 			copy(best, cur)
 		}
-		_ = iter
 	}
-	return best, bestLen
+	return best, tourLength(pts, best)
 }
 
 func main() {

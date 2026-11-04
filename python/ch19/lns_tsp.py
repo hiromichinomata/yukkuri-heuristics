@@ -53,9 +53,9 @@ def destroy_segment(tour: List[int], rng: random.Random) -> Tuple[List[int], Lis
     removed = []
     kept = list(tour)
     for _ in range(seg_len):
+        # pop すると後ろが詰まって同じ位置に次の頂点が来るので、start は進めない（連続区間を外す）
         idx = start % len(kept)
         removed.append(kept.pop(idx))
-        start += 1
     return kept, removed
 
 
@@ -64,12 +64,22 @@ def repair_tour(
     partial: List[int],
     removed: List[int],
 ) -> List[int]:
+    """外した頂点を、残した巡回の「いちばん安く入る位置」に1つずつ戻す（最安挿入）.
+
+    残した部分の並びはそのまま使うのがポイント。全部作り直すと、壊した意味がなくなる。
+    """
     if not partial:
-        return nearest_neighbor_tour(pts, 0, list(range(len(pts))))
-    nodes = partial + removed
-    start = partial[0]
-    rebuilt = nearest_neighbor_tour(pts, start, nodes)
-    return rebuilt
+        return nearest_neighbor_tour(pts, removed[0], removed)
+    tour = list(partial)
+    for v in removed:
+        best_pos, best_cost = 0, float("inf")
+        for i in range(len(tour)):
+            a, b = tour[i], tour[(i + 1) % len(tour)]
+            cost = dist(pts, a, v) + dist(pts, v, b) - dist(pts, a, b)  # 辺 a-b の間に v を入れる増分
+            if cost < best_cost:
+                best_pos, best_cost = i + 1, cost
+        tour.insert(best_pos, v)
+    return tour
 
 
 def lns(

@@ -136,7 +136,7 @@ deterministic=(
   ch03/score_module ch03/toy_score
   ch04/ahc001_grow ch04/score_ahc001 ch05/greedy_delivery ch07/coarsen
   ch10/beam_fill ch15/slide_beam ch17/territory_greedy ch20/mcts_toy
-  ch22/review_sheet ch27/paper_transfer
+  ch22/review_sheet ch25/assignment_relax ch27/paper_transfer
 )
 for name in "${deterministic[@]}"; do
   [[ -n "$FILTER" && "$name" != *"$FILTER"* ]] && continue

@@ -93,6 +93,33 @@ def _final_satisfaction(problem: ProblemInput, state: ScheduleState) -> int:
     return satisfaction
 
 
+def type_penalty(problem: ProblemInput, types: List[int], t: int) -> int:
+    """タイプ t の減衰ペナルティ合計 c_t * Σ L(L-1)/2。O(D)（第9章 9.4）."""
+    total = 0
+    prev = 0
+    for day, x in enumerate(types, start=1):
+        if x == t:
+            gap = day - prev
+            total += gap * (gap - 1) // 2
+            prev = day
+    gap = problem.days + 1 - prev
+    total += gap * (gap - 1) // 2
+    return problem.decay[t - 1] * total
+
+
+def delta_change(problem: ProblemInput, types: List[int], day: int, new_type: int) -> int:
+    """types[day] を new_type に変えたときの (10^6 + 満足度) の変化量。O(D)（第9章 9.4）."""
+    old_type = types[day]
+    if old_type == new_type:
+        return 0
+    before = type_penalty(problem, types, old_type) + type_penalty(problem, types, new_type)
+    types[day] = new_type
+    after = type_penalty(problem, types, old_type) + type_penalty(problem, types, new_type)
+    types[day] = old_type
+    gain = problem.gain[day][new_type - 1] - problem.gain[day][old_type - 1]
+    return gain - (after - before)
+
+
 def hill_climb(
     problem: ProblemInput,
     state: ScheduleState,
@@ -100,28 +127,23 @@ def hill_climb(
     rng: random.Random,
 ) -> ScheduleState:
     current = state.copy()
-    score = score_schedule(problem, current)
+    score = 10**6 + _final_satisfaction(problem, current)  # 0 で切らない値で比べる
     steps = 0
     while time.perf_counter() < deadline:
         day = rng.randrange(problem.days)
         old_type = current.types[day]
-        improved = False
         for t in range(1, 27):
             if t == old_type:
                 continue
-            trial = current.copy()
-            trial.types[day] = t
-            trial_score = score_schedule(problem, trial)
-            if trial_score > score:
-                current = trial
-                score = trial_score
-                improved = True
+            delta = delta_change(problem, current.types, day, t)  # 全再計算せず差分だけ（第9章 9.4）
+            if delta > 0:
+                current.types[day] = t
+                score += delta
                 break
         steps += 1
         if steps % 200 == 0:
-            print(f"hc step={steps} score={score}", file=sys.stderr)
-        if not improved and steps % 50 == 0:
-            continue
+            print(f"hc step={steps} score={max(score, 0)}", file=sys.stderr)
+    assert score == 10**6 + _final_satisfaction(problem, current), "差分と全再計算が一致しない"
     return current
 
 
@@ -132,7 +154,7 @@ def sa(
     rng: random.Random,
 ) -> ScheduleState:
     current = state.copy()
-    score = score_schedule(problem, current)
+    score = 10**6 + _final_satisfaction(problem, current)  # 0 で切らない値で比べる
     best = current.copy()
     best_score = score
     temperature = T0
@@ -149,21 +171,20 @@ def sa(
         progress = (now - start) / span
         temperature = T0 * (T1 / T0) ** progress
         day = rng.randrange(problem.days)
-        trial = current.copy()
-        trial.types[day] = rng.randint(1, 26)
-        trial_score = score_schedule(problem, trial)
-        delta = trial_score - score
+        new_type = rng.randint(1, 26)
+        delta = delta_change(problem, current.types, day, new_type)  # 全再計算せず差分だけ（第9章 9.4）
         if delta >= 0 or rng.random() < math.exp(delta / temperature):
-            current = trial
-            score = trial_score
+            current.types[day] = new_type
+            score += delta
             if score > best_score:
                 best = current.copy()
                 best_score = score
         step += 1
         if progress >= next_log:  # SA 段の 10% ごとにログ
             next_log += 0.1
-            print(f"sa step={step} score={score} T={temperature:.2f}", file=sys.stderr)
+            print(f"sa step={step} score={max(score, 0)} T={temperature:.2f}", file=sys.stderr)
 
+    assert score == 10**6 + _final_satisfaction(problem, current), "差分と全再計算が一致しない"
     return best
 
 

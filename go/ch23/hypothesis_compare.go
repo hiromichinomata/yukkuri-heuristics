@@ -88,6 +88,35 @@ func finalSat(p ProblemInput, types []int) int {
 	return satisfaction
 }
 
+// typePenalty はタイプ t の減衰ペナルティ合計 c_t * Σ L(L-1)/2。O(D)（第9章 9.4）
+func typePenalty(p ProblemInput, types []int, t int) int {
+	total, prev := 0, 0
+	for i, x := range types {
+		if x == t {
+			gap := i + 1 - prev
+			total += gap * (gap - 1) / 2
+			prev = i + 1
+		}
+	}
+	gap := p.Days + 1 - prev
+	total += gap * (gap - 1) / 2
+	return p.Decay[t-1] * total
+}
+
+// deltaChange は types[day] を newType に変えたときの (10^6 + 満足度) の変化量。O(D)（第9章 9.4）
+func deltaChange(p ProblemInput, types []int, day, newType int) int {
+	oldType := types[day]
+	if oldType == newType {
+		return 0
+	}
+	before := typePenalty(p, types, oldType) + typePenalty(p, types, newType)
+	types[day] = newType
+	after := typePenalty(p, types, oldType) + typePenalty(p, types, newType)
+	types[day] = oldType
+	gain := p.Gain[day][newType-1] - p.Gain[day][oldType-1]
+	return gain - (after - before)
+}
+
 func strategyGreedy(p ProblemInput) ScheduleState {
 	schedule := make([]int, 0, p.Days)
 	for day := 1; day <= p.Days; day++ {
@@ -137,7 +166,6 @@ func strategyRandomSA(p ProblemInput, rng *rand.Rand, steps int) ScheduleState {
 
 func strategyPipelineLite(p ProblemInput, rng *rand.Rand) ScheduleState {
 	state := strategyGreedy(p)
-	score := scoreSchedule(p, state)
 	for s := 0; s < 400; s++ {
 		day := rng.Intn(p.Days)
 		old := state.Types[day]
@@ -145,12 +173,8 @@ func strategyPipelineLite(p ProblemInput, rng *rand.Rand) ScheduleState {
 			if t == old {
 				continue
 			}
-			trial := append([]int{}, state.Types...)
-			trial[day] = t
-			trialScore := scoreSchedule(p, ScheduleState{trial})
-			if trialScore > score {
-				state = ScheduleState{trial}
-				score = trialScore
+			if deltaChange(p, state.Types, day, t) > 0 { // 差分だけ計算（第9章 9.4）
+				state.Types[day] = t
 				break
 			}
 		}

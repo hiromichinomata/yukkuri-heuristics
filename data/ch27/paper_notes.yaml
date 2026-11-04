@@ -20,7 +20,7 @@ key_ideas:
     ahc_analogy: "スコア関数の罰則項をイテレーションごとに強めたり弱めたりする。"
 
 transfer_candidates:
-  - target: "AHC005 風の配送ルート"
+  - target: "AHC006 風の配送ルート"
     technique: "ILS + 2-opt"
     expected_gain: "初期貪欲から +3〜8% 程度（問題依存）"
     risk: "時間制限内に再構築が終わらない"

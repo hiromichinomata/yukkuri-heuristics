@@ -30,10 +30,7 @@ def read_vis(stream: TextIO) -> VisInput:
     n = int(lines[0])
     grid = [list(map(int, lines[i + 1].split())) for i in range(n)]
     path_len = int(lines[n + 1])
-    path = []
-    for i in range(path_len):
-        r, c = map(int, lines[n + 2 + i].split())
-        path.append((r, c))
+    path = [tuple(map(int, lines[n + 2 + i].split())) for i in range(path_len)]
     return VisInput(n=n, grid=grid, path=path)
 
 

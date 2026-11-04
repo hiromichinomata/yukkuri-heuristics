@@ -85,7 +85,8 @@ func buildAdjacency(game GameInput) [][]int {
 
 func terminalWinner(state GameState, game GameInput) (int, bool) {
 	if state.Node == game.Terminal {
-		return state.Player, true
+		// state.Player は「次に指す人」。終点に入ったのはその相手なので、相手の勝ち
+		return 1 - state.Player, true
 	}
 	return 0, false
 }
@@ -178,7 +179,8 @@ func mcts(root *MCTSNode, adj [][]int, game GameInput, rng *rand.Rand) {
 
 		for _, n := range path {
 			n.Visits++
-			if n.HasState && winner == n.State.Player {
+			// ノード n の勝率は「n へ進む手を指した人」（= n で次に指す人の相手）から見たもの
+			if n.HasState && winner == 1-n.State.Player {
 				n.Wins++
 			}
 		}
