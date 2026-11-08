@@ -6,7 +6,7 @@ ROOT="$(cd "$(dirname "$0")/../../../.." && pwd)"
 cd "$ROOT"
 
 chapter="${1:?usage: validate-chapter.sh <chapter_number>}"
-chapter="$(printf '%02d' "$chapter")"
+chapter="$(printf '%02d' "$((10#$chapter))")"  # 08 / 09 を 8 進数と読まないよう 10 進数に直す
 doc="docs/${chapter}.md"
 
 if [[ ! -f "$doc" ]]; then

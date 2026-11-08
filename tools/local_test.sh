@@ -25,24 +25,27 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   exit 0
 fi
 
+TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$TMP_DIR"' EXIT
+
 run_python() {
   echo "== Python pipeline =="
-  python "$SOLVER_PY" < "$INPUT" > /tmp/yh_out_py.txt
+  python "$SOLVER_PY" < "$INPUT" > "$TMP_DIR/out_py.txt"
   echo "solver output:"
-  cat /tmp/yh_out_py.txt
+  cat "$TMP_DIR/out_py.txt"
   echo "daily satisfaction:"
-  cat "$INPUT" /tmp/yh_out_py.txt | python "$SCORER_PY" 2>/tmp/yh_err_py.txt
-  echo "final score: $(cat /tmp/yh_err_py.txt)"
+  cat "$INPUT" "$TMP_DIR/out_py.txt" | python "$SCORER_PY" 2>"$TMP_DIR/err_py.txt"
+  echo "final score: $(cat "$TMP_DIR/err_py.txt")"
 }
 
 run_go() {
   echo "== Go pipeline =="
-  go run "$SOLVER_GO" < "$INPUT" > /tmp/yh_out_go.txt
+  go run "$SOLVER_GO" < "$INPUT" > "$TMP_DIR/out_go.txt"
   echo "solver output:"
-  cat /tmp/yh_out_go.txt
+  cat "$TMP_DIR/out_go.txt"
   echo "daily satisfaction:"
-  cat "$INPUT" /tmp/yh_out_go.txt | go run go/ch01/score_intro_hc.go 2>/tmp/yh_err_go.txt
-  echo "final score: $(cat /tmp/yh_err_go.txt)"
+  cat "$INPUT" "$TMP_DIR/out_go.txt" | go run go/ch01/score_intro_hc.go 2>"$TMP_DIR/err_go.txt"
+  echo "final score: $(cat "$TMP_DIR/err_go.txt")"
 }
 
 run_python

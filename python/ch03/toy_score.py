@@ -21,11 +21,7 @@ def apply_move(state: ToyState, index: int, pick: bool) -> ToyState:
 
 
 def score(state: ToyState, inp: ToyInput) -> int:
-    total = 0
-    for i, picked in enumerate(state.picked):
-        if picked:
-            total += inp.values[i]
-    return total
+    return sum(v for v, p in zip(inp.values, state.picked) if p)
 
 
 def main() -> None:

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="540" viewBox="0 0 760 540" role="img">
+<title>第30章: この本で通ってきた道（レーティング帯と章、docs/00-toc.md から）</title>
+<rect x="0" y="0" width="760" height="540" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第30章: この本で通ってきた道（レーティング帯と章、docs/00-toc.md から）</text>
+<rect x="20.0" y="46.0" width="360.0" height="110.0" fill="#808080" fill-opacity="0.08" stroke="#808080" stroke-width="1.5"/>
+<rect x="20.0" y="46.0" width="8.0" height="110.0" fill="#808080" stroke="none" stroke-width="0"/>
+<text x="38.0" y="66.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#808080" text-anchor="start" font-weight="bold">灰色（Gray）— 1〜399</text>
+<text x="38.0" y="86.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第2章 開発環境とコンテスト参加の準備</text>
+<text x="38.0" y="102.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第3章 問題文の読み方と設計の第一歩</text>
+<text x="38.0" y="118.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第4章 シミュレーションと素朴な解法</text>
+<rect x="390.0" y="46.0" width="360.0" height="110.0" fill="#804000" fill-opacity="0.08" stroke="#804000" stroke-width="1.5"/>
+<rect x="390.0" y="46.0" width="8.0" height="110.0" fill="#804000" stroke="none" stroke-width="0"/>
+<text x="408.0" y="66.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#804000" text-anchor="start" font-weight="bold">茶色（Brown）— 400〜799</text>
+<text x="408.0" y="86.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第5章 貪欲法 — ヒューリスティックの基本</text>
+<text x="408.0" y="102.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第6章 山登り法</text>
+<text x="408.0" y="118.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第7章 問題の粗視化と分割</text>
+<text x="408.0" y="134.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第8章 ビジュアライザ駆動開発</text>
+<rect x="20.0" y="164.0" width="360.0" height="110.0" fill="#008000" fill-opacity="0.08" stroke="#008000" stroke-width="1.5"/>
+<rect x="20.0" y="164.0" width="8.0" height="110.0" fill="#008000" stroke="none" stroke-width="0"/>
+<text x="38.0" y="184.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#008000" text-anchor="start" font-weight="bold">緑色（Green）— 800〜1199</text>
+<text x="38.0" y="204.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第9章 焼きなまし法</text>
+<text x="38.0" y="220.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第10章 ビームサーチ</text>
+<text x="38.0" y="236.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第11章 多段パイプライン</text>
+<rect x="390.0" y="164.0" width="360.0" height="110.0" fill="#00c0c0" fill-opacity="0.08" stroke="#00c0c0" stroke-width="1.5"/>
+<rect x="390.0" y="164.0" width="8.0" height="110.0" fill="#00c0c0" stroke="none" stroke-width="0"/>
+<text x="408.0" y="184.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#00c0c0" text-anchor="start" font-weight="bold">水色（Cyan）— 1200〜1599</text>
+<text x="408.0" y="204.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第12章 インタラクティブ問題</text>
+<text x="408.0" y="220.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第13章 タブーサーチと反復局所探索</text>
+<text x="408.0" y="236.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第14章 データ構造で速くする</text>
+<text x="408.0" y="252.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第15章 パズル・構造問題</text>
+<text x="408.0" y="268.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第16章 高度な焼きなましテクニック</text>
+<rect x="20.0" y="282.0" width="360.0" height="110.0" fill="#0000ff" fill-opacity="0.08" stroke="#0000ff" stroke-width="1.5"/>
+<rect x="20.0" y="282.0" width="8.0" height="110.0" fill="#0000ff" stroke="none" stroke-width="0"/>
+<text x="38.0" y="302.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#0000ff" text-anchor="start" font-weight="bold">青色（Blue）— 1600〜1999</text>
+<text x="38.0" y="322.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第17章 マルチエージェント問題</text>
+<text x="38.0" y="338.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第18章 多点スタートと並列探索</text>
+<text x="38.0" y="354.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第19章 大近傍探索</text>
+<rect x="390.0" y="282.0" width="360.0" height="110.0" fill="#c0c000" fill-opacity="0.08" stroke="#c0c000" stroke-width="1.5"/>
+<rect x="390.0" y="282.0" width="8.0" height="110.0" fill="#c0c000" stroke="none" stroke-width="0"/>
+<text x="408.0" y="302.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#8a8a00" text-anchor="start" font-weight="bold">黄色（Yellow）— 2000〜2399</text>
+<text x="408.0" y="322.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第20章 モンテカルロ木探索</text>
+<text x="408.0" y="338.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第21章 コンテスト戦略</text>
+<text x="408.0" y="354.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第22章 過去問の徹底復習</text>
+<rect x="20.0" y="400.0" width="360.0" height="110.0" fill="#ff8000" fill-opacity="0.08" stroke="#ff8000" stroke-width="1.5"/>
+<rect x="20.0" y="400.0" width="8.0" height="110.0" fill="#ff8000" stroke="none" stroke-width="0"/>
+<text x="38.0" y="420.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#ff8000" text-anchor="start" font-weight="bold">橙色（Orange）— 2400〜2799</text>
+<text x="38.0" y="440.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第23章 問題固有解法の設計</text>
+<text x="38.0" y="456.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第24章 高度なインタラクティブ・オンライン</text>
+<text x="38.0" y="472.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第25章 整数計画と緩和</text>
+<text x="38.0" y="488.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第26章 遺伝的アルゴリズムと母集団探索</text>
+<rect x="390.0" y="400.0" width="360.0" height="110.0" fill="#ff0000" fill-opacity="0.08" stroke="#ff0000" stroke-width="1.5"/>
+<rect x="390.0" y="400.0" width="8.0" height="110.0" fill="#ff0000" stroke="none" stroke-width="0"/>
+<text x="408.0" y="420.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#ff0000" text-anchor="start" font-weight="bold">赤色（Red）— 2800〜</text>
+<text x="408.0" y="440.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第27章 最新研究と AHC 解法</text>
+<text x="408.0" y="456.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第28章 超高速実装</text>
+<text x="408.0" y="472.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第29章 チーム戦・マラソン形式</text>
+<text x="408.0" y="488.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">第30章 コンテスト後の成長</text>
+<text x="20.0" y="532.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">灰色の「まず動くもの」から、赤の「研究を取り込む」まで。次の 1 問は、地図のどこに当たるかを考えてから解き始める</text>
+</svg>

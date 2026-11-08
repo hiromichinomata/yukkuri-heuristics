@@ -1,16 +1,16 @@
 {
   "problem_id": "AHC001",
-  "title": "企業の宣伝会場",
+  "title": "AtCoder 広告",
   "difficulty": "Gray",
   "rating_band": "灰色〜茶色",
   "grid_size": 20,
-  "solved_score": 485000,
+  "solved_score": "138（第4章の玩具・sample）",
   "solver_style": "greedy_grow",
   "time_spent_hours": 4,
   "key_ideas": [
-    "各企業の中心から矩形を拡大する貪欲",
+    "各企業の点から矩形を広げる貪欲",
     "重なり禁止をシミュレーションで確認",
-    "スコアは面積×距離ペナルティ"
+    "満足度は希望面積とのずれで決まる（1 − (1 − min/max)²）"
   ],
   "pitfalls": [
     "矩形の更新順で結果が変わる",
@@ -23,8 +23,18 @@
     "貪欲拡大の流れ",
     "改善の余地（焼きなまし・交換）"
   ],
+  "handson": [
+    "`data/ch04/sample.txt` で入出力の形を確かめる",
+    "`python/ch04/ahc001_grow.py` を動かし、`score_ahc001.py` でスコアを出す",
+    "企業の処理順を 1 つ変えて、スコアの差を見る",
+    "タイマー付きでベストスコアを stderr に残す"
+  ],
+  "commands": [
+    "python python/ch04/ahc001_grow.py < data/ch04/sample.txt",
+    "go run go/ch04/ahc001_grow.go < data/ch04/sample.txt"
+  ],
   "references": [
-    "https://atcoder.jp/contests/intro-heuristics/tasks/intro_heuristics_a",
+    "https://atcoder.jp/contests/ahc001/tasks/ahc001_a",
     "python/ch04/ahc001_grow.py"
   ]
 }

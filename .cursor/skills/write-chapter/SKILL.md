@@ -55,7 +55,7 @@ Every **technique chapter** must include:
 1. **掛け合い解説** — Reimu asks, Marisa explains
 2. **ハンズオン** — runnable steps referencing repo paths
 3. **Python / Go 実装** — working code, not snippets only
-4. **演習** — 1–3 tasks the reader can do alone
+4. **演習** — 1–3 tasks the reader can do alone, followed by collapsible `<details>` hints and answers (see CONTRIBUTING.md)
 
 ### Step 2: Write dialogue
 
@@ -126,7 +126,10 @@ Optional validation:
 
 ```bash
 ./.cursor/skills/write-chapter/scripts/validate-chapter.sh NN
+./tools/smoke_test.sh    # code/doc drift, output examples, TOC and cross-references (see CONTRIBUTING.md)
 ```
+
+In docs, every `python` / `go` code block must start with either the source path (`# python/chNN/foo.py`) or a marker comment (`改変例` / `擬似コード` / `骨格` / `概念` / `イメージ` / `解答例`). See CONTRIBUTING.md for the full rules.
 
 Fix compile/runtime errors; do not leave placeholder `...` in committed code files.
 

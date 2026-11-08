@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320" role="img">
+<title>第5章: 最近傍の貪欲と、全探索した最短（data/ch05/sample.txt）</title>
+<rect x="0" y="0" width="640" height="320" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第5章: 最近傍の貪欲と、全探索した最短（data/ch05/sample.txt）</text>
+<polygon points="40.0,280.0 160.0,230.0 208.0,180.0 280.0,255.0 112.0,80.0" fill="none" stroke="#ea580c" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="40.0" cy="280.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="160.0" cy="230.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="280.0" cy="255.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="112.0" cy="80.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="208.0" cy="180.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="40.0" y="56.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#ea580c" text-anchor="start" font-weight="bold">最近傍: 30.90</text>
+<text x="47.0" y="274.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">デポ</text>
+<text x="167.0" y="224.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">0</text>
+<text x="287.0" y="249.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">1</text>
+<text x="119.0" y="74.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">2</text>
+<text x="215.0" y="174.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">3</text>
+<polygon points="350.0,280.0 470.0,230.0 590.0,255.0 518.0,180.0 422.0,80.0" fill="none" stroke="#16a34a" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="350.0" cy="280.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="470.0" cy="230.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="590.0" cy="255.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="422.0" cy="80.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="518.0" cy="180.0" r="3" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="350.0" y="56.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#16a34a" text-anchor="start" font-weight="bold">最短（全 24 通り）: 28.93</text>
+<text x="357.0" y="274.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">デポ</text>
+<text x="477.0" y="224.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">0</text>
+<text x="597.0" y="249.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">1</text>
+<text x="429.0" y="74.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">2</text>
+<text x="525.0" y="174.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="normal">3</text>
+<text x="20.0" y="305.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">貪欲は「今いちばん近い点」へ進むので、最後に遠い道を戻ることになりやすい</text>
+</svg>

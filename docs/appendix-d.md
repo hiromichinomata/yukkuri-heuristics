@@ -10,13 +10,13 @@
 
 | 色 | レーティング | 推奨コンテスト・問題 | 本書の章 | 身につけること |
 |----|-------------|---------------------|---------|---------------|
-| 灰色 | 1–399 | [Intro HC](https://atcoder.jp/contests/intro-heuristics), [AHC001](https://atcoder.jp/contests/ahc001) | 第1–4章 | スコア計算、合法解、シミュレーション |
-| 茶色 | 400–799 | [AHC005](https://atcoder.jp/contests/ahc005), [AHC006](https://atcoder.jp/contests/ahc006) | 第5–7章 | 貪欲、2-opt、粗視化 |
-| 緑色 | 800–1199 | [AHC002](https://atcoder.jp/contests/ahc002), AHC011, AHC015 | 第8–10章 | SA、ビーム、パイプライン |
-| 水色 | 1200–1599 | [AHC003](https://atcoder.jp/contests/ahc003), AHC009, AHC010 | 第11–14章 | インタラクティブ、タブー、データ構造 |
-| 青色 | 1600–1999 | [AHC008](https://atcoder.jp/contests/ahc008), AHC014, AHC016 | 第15–18章 | LP、GA、マルチエージェント、高度SA |
-| 黄色 | 2000–2399 | AHC020 以降（解説充実） | 第19–22章 | MCTS、並列、戦略、復習 |
-| 橙色 | 2400–2799 | 直近2年の AHC 全問 | 第23–26章 | 問題固有、LNS、バンディット、vis |
+| 灰色 | 1–399 | [Intro HC](https://atcoder.jp/contests/intro-heuristics), [AHC001](https://atcoder.jp/contests/ahc001) | 第1–4章 | スコア計算、合法解、シミュレーション、No Submit 回避 |
+| 茶色 | 400–799 | [AHC005](https://atcoder.jp/contests/ahc005), [AHC006](https://atcoder.jp/contests/ahc006) | 第5–8章 | 貪欲、2-opt、粗視化、ビジュアライザ |
+| 緑色 | 800–1199 | [AHC002](https://atcoder.jp/contests/ahc002), [Intro HC 問題C](https://atcoder.jp/contests/intro-heuristics/tasks/intro_heuristics_c) | 第9–11章 | SA（差分更新）、ビーム、パイプライン |
+| 水色 | 1200–1599 | [AHC003](https://atcoder.jp/contests/ahc003), AHC010, AHC011 | 第12–16章 | インタラクティブ、タブー、データ構造、高度SA |
+| 青色 | 1600–1999 | [AHC008](https://atcoder.jp/contests/ahc008), AHC014, AHC016 | 第17–19章 | マルチエージェント、多点スタート、LNS |
+| 黄色 | 2000–2399 | AHC020 以降（解説充実） | 第20–22章 | MCTS、戦略、復習 |
+| 橙色 | 2400–2799 | 直近2年の AHC 全問 | 第23–26章 | 問題固有、バンディット、LP・GA（発展） |
 | 赤色 | 2800– | 最新 AHC + 他サイト | 第27–30章 | 研究、高速化、チーム、解説執筆 |
 
 ---
@@ -53,12 +53,12 @@ python python/ch04/ahc001_grow.py < data/ch04/sample.txt
 |------|------|------|
 | 1 | Intro HC 問題C | SA |
 | 2 | AHC002 Walking on Tiles | ビームサーチ |
-| 3 | AHC011 Sliding Tree Puzzle | 初期解 + SA（第10章） |
+| 3 | AHC001 / AHC005 再挑戦 | 貪欲 → SA のパイプライン（第11章） |
 
 ```bash
-python python/ch08/sa_intro_hc.py < data/ch08/sample.txt
-python python/ch09/beam_fill.py < data/ch09/sample.txt
-python python/ch10/pipeline.py < data/ch10/sample.txt
+python python/ch09/sa_intro_hc.py < data/ch09/sample.txt
+python python/ch10/beam_fill.py < data/ch10/sample.txt
+python python/ch11/pipeline.py < data/ch11/sample.txt
 ```
 
 ---
@@ -69,11 +69,11 @@ python python/ch10/pipeline.py < data/ch10/sample.txt
 |------|------|------|
 | 1 | AHC003 Shortest Path Queries | インタラクティブ + ダイクストラ |
 | 2 | AHC010 Loop Lines | データ構造 + 合法手生成 |
-| 3 | AHC009 | シミュレーション + 構造 |
+| 3 | AHC011 Sliding Tree Puzzle | パズル + ビーム（第15章）。重め |
 
 ```bash
-python python/ch11/interactive_path.py --offline data/ch11/sample.txt
-python python/ch13/loop_toy.py < data/ch13/sample.txt
+python python/ch12/local_judge.py --seed 1 -- python python/ch12/solver.py
+python python/ch14/loop_toy.py < data/ch14/sample.txt
 ```
 
 ---
@@ -83,8 +83,8 @@ python python/ch13/loop_toy.py < data/ch13/sample.txt
 | 優先 | 問題 | 技法 |
 |------|------|------|
 | 1 | AHC008 Territory | マルチエージェント |
-| 2 | AHC014 / AHC016 | 配置・構造 |
-| 3 | 割当・配置系 | LP 緩和（第15章） |
+| 2 | AHC014 / AHC016 | 配置・構築 / ノイズ付きの推定 |
+| 3 | 経路・配置系の再挑戦 | 多点スタート（第18章）・LNS（第19章） |
 
 ---
 
@@ -94,7 +94,7 @@ python python/ch13/loop_toy.py < data/ch13/sample.txt
 |------|------|
 | 1 | AHC020 以降を **解説付き** で復習（第22章） |
 | 2 | 模擬コンテスト（第21章 `mock_contest.py --fast`） |
-| 3 | 並列 multi-start SA（第20章） |
+| 3 | ターン制・乱数のある問題で MCTS（第20章） |
 
 ---
 
@@ -102,7 +102,7 @@ python python/ch13/loop_toy.py < data/ch13/sample.txt
 
 | 帯 | 活動 |
 |----|------|
-| 橙 | 直近 AHC を **仮説3案比較**（第23章）、LNS・vis 必須 |
+| 橙 | 直近 AHC を **仮説3案比較**（第23章）、LP・GA は発展（第25・26章） |
 | 赤 | 他サイト参加、論文転用（第27章）、チーム戦（第29章） |
 
 ### 他サイト（参考）

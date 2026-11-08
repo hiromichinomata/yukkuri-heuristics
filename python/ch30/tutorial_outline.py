@@ -2,10 +2,24 @@
 """解いた AHC 問題のゆっくり風チュートリアル骨子を Markdown で生成（第30章）."""
 from __future__ import annotations
 
+import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
+
+
+DEFAULT_HANDSON = [
+    "問題文の入出力の形を、サンプルで確かめる",
+    "自分の解法を動かし、スコアを出す",
+    "パラメータを 1 つだけ変えて差分を見る",
+    "タイマー付きでベストスコアを stderr に残す",
+]
+
+
+def repo_root() -> Path:
+    return Path(__file__).resolve().parents[2]
 
 
 def default_meta_path() -> Path:
@@ -29,6 +43,8 @@ def generate_outline(meta: Dict[str, Any]) -> str:
     key_ideas: List[str] = meta.get("key_ideas", [])
     pitfalls: List[str] = meta.get("pitfalls", [])
     refs: List[str] = meta.get("references", [])
+    handson: List[str] = meta.get("handson", DEFAULT_HANDSON)
+    commands: List[str] = meta.get("commands", [])
     score = meta.get("solved_score", "?")
     style = meta.get("solver_style", "?")
     hours = meta.get("time_spent_hours", "?")
@@ -42,6 +58,8 @@ def generate_outline(meta: Dict[str, Any]) -> str:
         )
 
     refs_block = bullet_lines(refs) if refs else "- （公式・自分のコードへのリンク）"
+    handson_block = "\n".join(f"{i}. {step}" for i, step in enumerate(handson, start=1))
+    commands_block = "\n".join(commands) if commands else "# （読者が打つコマンドを書く）"
 
     return f"""# 【ゆっくり解説骨子】{pid} {title}
 
@@ -66,10 +84,11 @@ def generate_outline(meta: Dict[str, Any]) -> str:
 {chr(10).join(section_blocks)}
 ## ハンズオン（読者向け）
 
-1. `data/ch04/sample.txt` などで入出力を確認する
-2. `python/ch04/ahc001_grow.py` を動かし、スコアを出す
-3. パラメータを 1 つだけ変えて差分を見る
-4. タイマー付きでベストスコアを stderr に残す
+{handson_block}
+
+```bash
+{commands_block}
+```
 
 ## 章末まとめ（テンプレ）
 
@@ -86,9 +105,25 @@ def generate_outline(meta: Dict[str, Any]) -> str:
 """
 
 
+def check_commands(commands: List[str]) -> bool:
+    """骨子に載せるコマンドを、リポジトリのルートで実際に動かす（公開前チェック）."""
+    ok = True
+    for cmd in commands:
+        proc = subprocess.run(cmd, shell=True, cwd=repo_root(), capture_output=True, text=True)
+        status = "OK" if proc.returncode == 0 else f"NG (exit {proc.returncode})"
+        print(f"check {status}: {cmd}", file=sys.stderr)
+        ok = ok and proc.returncode == 0
+    return ok
+
+
 def main() -> None:
-    path = Path(sys.argv[1]) if len(sys.argv) > 1 else default_meta_path()
-    meta = load_meta(path)
+    parser = argparse.ArgumentParser(description="解説の骨子を生成（第30章）")
+    parser.add_argument("meta", nargs="?", default=str(default_meta_path()))
+    parser.add_argument("--check", action="store_true", help="commands を実際に動かして確かめる")
+    args = parser.parse_args()
+    meta = load_meta(Path(args.meta))
+    if args.check:
+        sys.exit(0 if check_commands(meta.get("commands", [])) else 1)
     print(generate_outline(meta))
     print(f"outline for {meta.get('problem_id', '?')} written to stdout", file=sys.stderr)
 

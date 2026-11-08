@@ -12,6 +12,7 @@ import (
 const (
 	nGrid  = 16
 	blockN = 4
+	subN   = 2 // 粗い判断に使う小ブロックの一辺
 )
 
 func readGrid(sc *bufio.Scanner) ([][]int, error) {
@@ -61,17 +62,24 @@ func coarseMatrix(grid [][]int) [][]int {
 
 type pos struct{ i, j int }
 
+// greedyPerBlock は粗い判断: 各ブロックを 2×2 の小ブロックに分け、和が最大の小ブロックの左上を選ぶ。
 func greedyPerBlock(grid [][]int) []pos {
 	picks := make([]pos, 0, blockN*blockN)
 	for bi := 0; bi < blockN; bi++ {
 		for bj := 0; bj < blockN; bj++ {
 			bestVal := -1
 			best := pos{bi * blockN, bj * blockN}
-			for i := bi * blockN; i < (bi+1)*blockN; i++ {
-				for j := bj * blockN; j < (bj+1)*blockN; j++ {
-					if grid[i][j] > bestVal {
-						bestVal = grid[i][j]
-						best = pos{i, j}
+			for si := bi * blockN; si < (bi+1)*blockN; si += subN {
+				for sj := bj * blockN; sj < (bj+1)*blockN; sj += subN {
+					s := 0
+					for i := si; i < si+subN; i++ {
+						for j := sj; j < sj+subN; j++ {
+							s += grid[i][j]
+						}
+					}
+					if s > bestVal {
+						bestVal = s
+						best = pos{si, sj}
 					}
 				}
 			}

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="240" viewBox="0 0 620 240" role="img">
+<title>第6章: 2-opt — 交差する 2 本の辺 (a,b) (c,d) を (a,c) (b,d) に付け替える</title>
+<rect x="0" y="0" width="620" height="240" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第6章: 2-opt — 交差する 2 本の辺 (a,b) (c,d) を (a,c) (b,d) に付け替える</text>
+<line x1="60.0" y1="80.0" x2="220.0" y2="200.0" stroke="#ea580c" stroke-width="3"/>
+<line x1="60.0" y1="200.0" x2="220.0" y2="80.0" stroke="#ea580c" stroke-width="3"/>
+<line x1="30.0" y1="50.0" x2="60.0" y2="80.0" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="220.0" y1="80.0" x2="250.0" y2="50.0" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3"/>
+<path d="M 220 200 C 280 220, 0 220, 60 200" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3"/>
+<circle cx="60.0" cy="80.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="44.0" y="85.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="14" fill="#111827" text-anchor="start" font-weight="bold">a</text>
+<circle cx="220.0" cy="200.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="230.0" y="205.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="14" fill="#111827" text-anchor="start" font-weight="bold">b</text>
+<circle cx="60.0" cy="200.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="44.0" y="205.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="14" fill="#111827" text-anchor="start" font-weight="bold">c</text>
+<circle cx="220.0" cy="80.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="230.0" y="85.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="14" fill="#111827" text-anchor="start" font-weight="bold">d</text>
+<text x="40.0" y="40.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#ea580c" text-anchor="start" font-weight="bold">前: a→b, c→d（交差している）</text>
+<line x1="380.0" y1="80.0" x2="380.0" y2="200.0" stroke="#16a34a" stroke-width="3"/>
+<line x1="540.0" y1="200.0" x2="540.0" y2="80.0" stroke="#16a34a" stroke-width="3"/>
+<line x1="350.0" y1="50.0" x2="380.0" y2="80.0" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="540.0" y1="80.0" x2="570.0" y2="50.0" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3"/>
+<path d="M 540 200 C 600 220, 320 220, 380 200" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 3"/>
+<circle cx="380.0" cy="80.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="364.0" y="85.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="14" fill="#111827" text-anchor="start" font-weight="bold">a</text>
+<circle cx="540.0" cy="200.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="550.0" y="205.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="14" fill="#111827" text-anchor="start" font-weight="bold">b</text>
+<circle cx="380.0" cy="200.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="364.0" y="205.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="14" fill="#111827" text-anchor="start" font-weight="bold">c</text>
+<circle cx="540.0" cy="80.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="550.0" y="85.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="14" fill="#111827" text-anchor="start" font-weight="bold">d</text>
+<text x="360.0" y="40.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#16a34a" text-anchor="start" font-weight="bold">後: a→c, b→d（区間 b…c を反転）</text>
+<line x1="270.0" y1="140.0" x2="330.0" y2="140.0" stroke="#111827" stroke-width="2"/>
+<line x1="330.0" y1="140.0" x2="323.1" y2="144.1" stroke="#111827" stroke-width="2"/>
+<line x1="330.0" y1="140.0" x2="323.1" y2="135.9" stroke="#111827" stroke-width="2"/>
+<text x="20.0" y="230.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">点線 = 巡回の残り。dist(a,c) + dist(b,d) &lt; dist(a,b) + dist(c,d) なら採用する</text>
+</svg>

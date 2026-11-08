@@ -1,5 +1,5 @@
 # python/ch01/greedy_intro_hc.py
-"""Intro HC 問題A 向け貪欲の骨格（第5章で本実装）."""
+"""Intro HC 問題A 向け貪欲（第5章で本格化）."""
 
 
 def daily_satisfactions(d, c, s, schedule):
@@ -28,3 +28,27 @@ def greedy_schedule(d, c, s):
                 best_t = t
         schedule.append(best_t)
     return schedule
+
+
+def read_problem(stream):
+    """D, c, s を読む（後ろにスケジュール行があっても無視する）."""
+    lines = stream.read().split("\n")
+    d = int(lines[0])
+    c = list(map(int, lines[1].split()))
+    s = [list(map(int, lines[2 + i].split())) for i in range(d)]
+    return d, c, s
+
+
+def main():
+    import sys
+
+    d, c, s = read_problem(sys.stdin)
+    schedule = greedy_schedule(d, c, s)
+    for t in schedule:
+        print(t)
+    final = daily_satisfactions(d, c, s, schedule)[-1]
+    print(f"final score={max(10**6 + final, 0)}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()

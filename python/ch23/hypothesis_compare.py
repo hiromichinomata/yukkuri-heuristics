@@ -60,17 +60,54 @@ def _final_satisfaction(problem: ProblemInput, state: ScheduleState) -> int:
     return satisfaction
 
 
+def type_penalty(problem: ProblemInput, types: List[int], t: int) -> int:
+    """タイプ t の減衰ペナルティ合計 c_t * Σ L(L-1)/2。O(D)（第9章 9.4）."""
+    total = 0
+    prev = 0
+    for day, x in enumerate(types, start=1):
+        if x == t:
+            gap = day - prev
+            total += gap * (gap - 1) // 2
+            prev = day
+    gap = problem.days + 1 - prev
+    total += gap * (gap - 1) // 2
+    return problem.decay[t - 1] * total
+
+
+def delta_change(problem: ProblemInput, types: List[int], day: int, new_type: int) -> int:
+    """types[day] を new_type に変えたときの (10^6 + 満足度) の変化量。O(D)（第9章 9.4）."""
+    old_type = types[day]
+    if old_type == new_type:
+        return 0
+    before = type_penalty(problem, types, old_type) + type_penalty(problem, types, new_type)
+    types[day] = new_type
+    after = type_penalty(problem, types, old_type) + type_penalty(problem, types, new_type)
+    types[day] = old_type
+    gain = problem.gain[day][new_type - 1] - problem.gain[day][old_type - 1]
+    return gain - (after - before)
+
+
 def strategy_greedy(problem: ProblemInput) -> ScheduleState:
+    """各日、その日終了時の満足度が最大になるタイプを選ぶ。
+
+    満足度と各タイプの最終開催日 last を持ち回すので 1 日あたり O(26²)、全体 O(26²·D)。
+    （毎回スケジュール全体を計算し直すと O(26²·D²) になり、D=365 では Python で数秒かかる）
+    """
+    last = [0] * 26
+    satisfaction = 0
     schedule: List[int] = []
     for day in range(1, problem.days + 1):
+        decay_all = sum(problem.decay[i] * (day - last[i]) for i in range(26))
         best_t, best_sat = 1, None
         for t in range(1, 27):
-            trial = ScheduleState(schedule + [t])
-            sat = _final_satisfaction(problem, trial)
+            # タイプ t を開くと、t の減衰だけ 0 になる
+            sat = satisfaction + problem.gain[day - 1][t - 1] - (decay_all - problem.decay[t - 1] * (day - last[t - 1]))
             if best_sat is None or sat > best_sat:
                 best_sat = sat
                 best_t = t
         schedule.append(best_t)
+        satisfaction = best_sat
+        last[best_t - 1] = day
     return ScheduleState(schedule)
 
 
@@ -80,16 +117,17 @@ def strategy_random_sa(
     steps: int = 800,
 ) -> ScheduleState:
     state = ScheduleState([rng.randint(1, 26) for _ in range(problem.days)])
-    score = score_schedule(problem, state)
+    score = 10**6 + _final_satisfaction(problem, state)  # SA の中では 0 で切らない（第9章 9.4）
     best = state.copy()
     best_score = score
-    temperature = 5000.0
-    alpha = 0.995
-    for _ in range(steps):
+    t0, t1 = 5000.0, 10.0
+    for i in range(steps):
+        # 第9章と同じ指数冷却。ここは時間ではなくステップ数で区切るので進み具合 = i / steps
+        temperature = t0 * (t1 / t0) ** (i / steps)
         day = rng.randrange(problem.days)
         trial = state.copy()
         trial.types[day] = rng.randint(1, 26)
-        trial_score = score_schedule(problem, trial)
+        trial_score = 10**6 + _final_satisfaction(problem, trial)
         delta = trial_score - score
         if delta >= 0 or rng.random() < math.exp(delta / temperature):
             state = trial
@@ -97,7 +135,6 @@ def strategy_random_sa(
             if score > best_score:
                 best = state.copy()
                 best_score = score
-        temperature *= alpha
     return best
 
 
@@ -106,19 +143,14 @@ def strategy_pipeline_lite(
     rng: random.Random,
 ) -> ScheduleState:
     state = strategy_greedy(problem)
-    score = score_schedule(problem, state)
     for _ in range(400):
         day = rng.randrange(problem.days)
         old = state.types[day]
         for t in range(1, 27):
             if t == old:
                 continue
-            trial = state.copy()
-            trial.types[day] = t
-            trial_score = score_schedule(problem, trial)
-            if trial_score > score:
-                state = trial
-                score = trial_score
+            if delta_change(problem, state.types, day, t) > 0:  # 差分だけ計算（第9章 9.4）
+                state.types[day] = t
                 break
     return state
 
@@ -143,7 +175,7 @@ def main() -> None:
 
     best = max(results, key=lambda x: x[1])
     print(f"best={best[0]} score={best[1]} total_elapsed={time.perf_counter()-t0:.3f}s", file=sys.stderr)
-    print(f"# winner schedule ({best[0]})")
+    print(f"winner schedule ({best[0]}) を stdout に出力", file=sys.stderr)  # stdout は提出形式（日程だけ）に保つ
     for t in best[3].types:
         print(t)
 

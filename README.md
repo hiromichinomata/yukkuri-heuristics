@@ -9,7 +9,7 @@ Python / Go の両方で、レーティング帯（灰〜赤）に応じた解�
 |------|------|
 | 目次 | [docs/00-toc.md](docs/00-toc.md) |
 | 第0章（使い方） | [docs/00.md](docs/00.md) |
-| 付録 | [docs/appendix-a.md](docs/appendix-a.md) 〜 [appendix-f.md](docs/appendix-f.md) |
+| 付録 | [docs/appendix-a.md](docs/appendix-a.md) 〜 [appendix-g.md](docs/appendix-g.md) |
 
 ## 必要環境
 
@@ -29,7 +29,7 @@ cd yukkuri-heuristics
 ### Python（任意: venv）
 
 ```bash
-python3 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 ```
 
@@ -55,7 +55,7 @@ yukkuri-heuristics/
 ├── docs/
 │   ├── 00-toc.md          # 目次（ls で先頭に来るよう命名）
 │   ├── 00.md … 30.md      # 各章本文
-│   └── appendix-*.md      # 付録 A〜F
+│   └── appendix-*.md      # 付録 A〜G
 ├── python/
 │   ├── templates/         # 共通テンプレート（I/O, SA, タイマー等）
 │   └── chNN/              # 章ごとのサンプルコード
@@ -63,11 +63,13 @@ yukkuri-heuristics/
 │   ├── templates/
 │   └── chNN/
 ├── data/chNN/             # サンプル入力
+├── data/common/           # 章をまたいで使う入力（intro_hc_d365.txt: 本番サイズの Intro HC）
 ├── tools/
 │   ├── check_env.sh       # 環境チェック
 │   ├── local_test.sh      # ソルバ → スコア計算
-│   └── run.sh             # テンプレート実行
-└── .cursor/skills/        # 章執筆用 Cursor スキル（任意）
+│   ├── run.sh             # テンプレート実行（io, timer, rng, heap, sa）
+│   ├── contest_log.sh     # 模擬コンテスト実行とログ保存（第21章）
+│   └── gen_intro_hc.py    # Intro HC 形式の入力生成（公式と同じ分布）
 ```
 
 ## 章の読み方
@@ -75,7 +77,8 @@ yukkuri-heuristics/
 1. [docs/00-toc.md](docs/00-toc.md) で全体像と自分のレーティング帯を確認
 2. 該当する `docs/NN.md` を読む（掛け合い → ハンズオン → コード → 演習）
 3. `python/chNN/` と `go/chNN/` を実行して手を動かす
-4. [付録D](docs/appendix-d.md) の過去問リストで AtCoder 本番問題に挑戦
+4. 第11章まで読んだら、[付録G](docs/appendix-g.md) の通し演習で Intro HC 問題A を最後まで解く
+5. [付録D](docs/appendix-d.md) の過去問リストで AtCoder 本番問題に挑戦
 
 ## 参考リンク
 

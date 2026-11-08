@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="340" viewBox="0 0 720 340" role="img">
+<title>第27章: 論文から AHC へ — 読む順と、転用する前の玩具での検証</title>
+<rect x="0" y="0" width="720" height="340" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第27章: 論文から AHC へ — 読む順と、転用する前の玩具での検証</text>
+<rect x="20.0" y="60.0" width="112.0" height="50.0" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="76.0" y="81.6" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="bold">Abstract</text>
+<text x="76.0" y="97.6" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="normal">何を解くか</text>
+<line x1="134.0" y1="85.0" x2="156.0" y2="85.0" stroke="#9ca3af" stroke-width="1.5"/>
+<line x1="156.0" y1="85.0" x2="149.1" y2="89.1" stroke="#9ca3af" stroke-width="1.5"/>
+<line x1="156.0" y1="85.0" x2="149.1" y2="80.9" stroke="#9ca3af" stroke-width="1.5"/>
+<rect x="158.0" y="60.0" width="112.0" height="50.0" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="214.0" y="81.6" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="bold">Figure</text>
+<text x="214.0" y="97.6" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="normal">何と比べたか</text>
+<line x1="272.0" y1="85.0" x2="294.0" y2="85.0" stroke="#9ca3af" stroke-width="1.5"/>
+<line x1="294.0" y1="85.0" x2="287.1" y2="89.1" stroke="#9ca3af" stroke-width="1.5"/>
+<line x1="294.0" y1="85.0" x2="287.1" y2="80.9" stroke="#9ca3af" stroke-width="1.5"/>
+<rect x="296.0" y="60.0" width="112.0" height="50.0" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="352.0" y="81.6" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="bold">Algorithm</text>
+<text x="352.0" y="97.6" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="normal">手順そのもの</text>
+<line x1="410.0" y1="85.0" x2="432.0" y2="85.0" stroke="#9ca3af" stroke-width="1.5"/>
+<line x1="432.0" y1="85.0" x2="425.1" y2="89.1" stroke="#9ca3af" stroke-width="1.5"/>
+<line x1="432.0" y1="85.0" x2="425.1" y2="80.9" stroke="#9ca3af" stroke-width="1.5"/>
+<rect x="434.0" y="60.0" width="112.0" height="50.0" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="490.0" y="81.6" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="bold">限界</text>
+<text x="490.0" y="97.6" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="normal">効かない条件</text>
+<line x1="548.0" y1="85.0" x2="570.0" y2="85.0" stroke="#9ca3af" stroke-width="1.5"/>
+<line x1="570.0" y1="85.0" x2="563.1" y2="89.1" stroke="#9ca3af" stroke-width="1.5"/>
+<line x1="570.0" y1="85.0" x2="563.1" y2="80.9" stroke="#9ca3af" stroke-width="1.5"/>
+<rect x="572.0" y="60.0" width="112.0" height="50.0" rx="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+<text x="628.0" y="81.6" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#ea580c" text-anchor="middle" font-weight="bold">転用メモ</text>
+<text x="628.0" y="97.6" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="middle" font-weight="normal">自分の言葉で</text>
+<line x1="642.0" y1="112.0" x2="560.0" y2="150.0" stroke="#ea580c" stroke-width="1.5"/>
+<line x1="560.0" y1="150.0" x2="564.5" y2="143.4" stroke="#ea580c" stroke-width="1.5"/>
+<line x1="560.0" y1="150.0" x2="568.0" y2="150.9" stroke="#ea580c" stroke-width="1.5"/>
+<text x="20.0" y="150.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="bold">玩具検証（paper_notes.yaml の toy_verify）</text>
+<polygon points="60.0,175.0 210.0,175.0 60.0,275.0 210.0,275.0" fill="none" stroke="#9ca3af" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="60.0" cy="175.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="210.0" cy="175.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="60.0" cy="275.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="210.0" cy="275.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="135.0" y="299.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#9ca3af" text-anchor="middle" font-weight="bold">前: 13.21</text>
+<polygon points="290.0,175.0 290.0,275.0 440.0,275.0 440.0,175.0" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="290.0" cy="175.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="290.0" cy="275.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="440.0" cy="275.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<circle cx="440.0" cy="175.0" r="5" fill="#111827" stroke="none" stroke-width="1.0"/>
+<text x="365.0" y="299.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#16a34a" text-anchor="middle" font-weight="bold">2-opt 後: 10.00</text>
+<line x1="240.0" y1="225.0" x2="280.0" y2="225.0" stroke="#111827" stroke-width="2"/>
+<line x1="280.0" y1="225.0" x2="273.1" y2="229.1" stroke="#111827" stroke-width="2"/>
+<line x1="280.0" y1="225.0" x2="273.1" y2="220.9" stroke="#111827" stroke-width="2"/>
+<text x="520.0" y="190.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">全部を実装する前に、</text>
+<text x="520.0" y="208.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">核になる操作だけを</text>
+<text x="520.0" y="226.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">数点の例で動かして、</text>
+<text x="520.0" y="244.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">効くことを確かめる</text>
+<text x="20.0" y="330.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">交差した 4 点の巡回が、2-opt の 1 回で交差のない巡回になる。これが確かめられてから本番の問題へ持ち込む</text>
+</svg>

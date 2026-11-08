@@ -9,14 +9,8 @@ func ratingBand(r int) string {
 		name  string
 	}
 	bands := []band{
-		{400, "Gray"},
-		{800, "Brown"},
-		{1200, "Green"},
-		{1600, "Cyan"},
-		{2000, "Blue"},
-		{2400, "Yellow"},
-		{2800, "Orange"},
-		{1e9, "Red"},
+		{400, "Gray"}, {800, "Brown"}, {1200, "Green"}, {1600, "Cyan"},
+		{2000, "Blue"}, {2400, "Yellow"}, {2800, "Orange"}, {1e9, "Red"},
 	}
 	for _, b := range bands {
 		if r < b.limit {

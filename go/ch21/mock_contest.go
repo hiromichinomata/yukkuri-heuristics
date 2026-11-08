@@ -104,6 +104,35 @@ func finalSat(p ProblemInput, types []int) int {
 	return satisfaction
 }
 
+// typePenalty はタイプ t の減衰ペナルティ合計 c_t * Σ L(L-1)/2。O(D)（第9章 9.4）
+func typePenalty(p ProblemInput, types []int, t int) int {
+	total, prev := 0, 0
+	for i, x := range types {
+		if x == t {
+			gap := i + 1 - prev
+			total += gap * (gap - 1) / 2
+			prev = i + 1
+		}
+	}
+	gap := p.Days + 1 - prev
+	total += gap * (gap - 1) / 2
+	return p.Decay[t-1] * total
+}
+
+// deltaChange は types[day] を newType に変えたときの (10^6 + 満足度) の変化量。O(D)（第9章 9.4）
+func deltaChange(p ProblemInput, types []int, day, newType int) int {
+	oldType := types[day]
+	if oldType == newType {
+		return 0
+	}
+	before := typePenalty(p, types, oldType) + typePenalty(p, types, newType)
+	types[day] = newType
+	after := typePenalty(p, types, oldType) + typePenalty(p, types, newType)
+	types[day] = oldType
+	gain := p.Gain[day][newType-1] - p.Gain[day][oldType-1]
+	return gain - (after - before)
+}
+
 func greedySchedule(p ProblemInput) ScheduleState {
 	schedule := make([]int, 0, p.Days)
 	for day := 1; day <= p.Days; day++ {
@@ -123,27 +152,33 @@ func greedySchedule(p ProblemInput) ScheduleState {
 
 func briefSA(p ProblemInput, state ScheduleState, deadline time.Time, rng *rand.Rand) ScheduleState {
 	current := append([]int{}, state.Types...)
-	score := scoreSchedule(p, ScheduleState{current})
+	score := 1000000 + finalSat(p, current) // 0 で切らない値で比べる
 	best := append([]int{}, current...)
 	bestScore := score
-	temperature := 5000.0
-	alpha := 0.995
+	const t0, t1 = 5000.0, 10.0
+	start := time.Now()
+	span := deadline.Sub(start)
 
-	for time.Now().Before(deadline) {
+	for {
+		now := time.Now()
+		if !now.Before(deadline) {
+			break
+		}
+		temperature := t0 * math.Pow(t1/t0, float64(now.Sub(start))/float64(span)) // 第9章と同じ時間ベース冷却
 		day := rng.Intn(p.Days)
-		trial := append([]int{}, current...)
-		trial[day] = 1 + rng.Intn(26)
-		trialScore := scoreSchedule(p, ScheduleState{trial})
-		delta := trialScore - score
+		newType := 1 + rng.Intn(26)
+		delta := deltaChange(p, current, day, newType) // 差分だけ計算（第9章 9.4）
 		if delta >= 0 || rng.Float64() < math.Exp(float64(delta)/temperature) {
-			current = trial
-			score = trialScore
+			current[day] = newType
+			score += delta
 			if score > bestScore {
 				best = append([]int{}, current...)
 				bestScore = score
 			}
 		}
-		temperature *= alpha
+	}
+	if score != 1000000+finalSat(p, current) {
+		panic("差分と全再計算が一致しない")
 	}
 	return ScheduleState{best}
 }
@@ -201,16 +236,18 @@ func (c *MockContest) run() ScheduleState {
 	c.bestScore = scoreSchedule(c.problem, c.state)
 	c.emit("implement", "submit", c.bestScore, "initial solution")
 
-	c.waitPhase("improve", c.phaseMin[2])
+	// improve フェーズの時間はまるごと SA に使う（待ってから SA、ではない）
 	improveDur := c.phaseMin[2] * 60.0
 	if c.fast {
 		improveDur = c.phaseMin[2]
 	}
+	c.emit("improve", "start", c.bestScore, fmt.Sprintf("duration=%.1fs", improveDur))
 	deadline := time.Now().Add(time.Duration(improveDur * float64(time.Second)))
 	c.emit("improve", "work", c.bestScore, "brief SA")
 	c.state = briefSA(c.problem, c.state, deadline, c.rng)
 	c.bestScore = scoreSchedule(c.problem, c.state)
 	c.emit("improve", "submit", c.bestScore, "improved solution")
+	c.emit("improve", "end", c.bestScore, "phase complete")
 
 	c.waitPhase("submit", c.phaseMin[3])
 	c.emit("submit", "final", c.bestScore, "stdout schedule")
@@ -218,7 +255,7 @@ func (c *MockContest) run() ScheduleState {
 }
 
 func defaultInput() string {
-	for _, rel := range []string{"data/ch23/sample.txt", "data/ch08/sample.txt"} {
+	for _, rel := range []string{"data/ch23/sample.txt", "data/ch09/sample.txt"} {
 		if _, err := os.Stat(rel); err == nil {
 			return rel
 		}
@@ -256,7 +293,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	phaseMin := []float64{30, 60, 90, 30}
+	phaseMin := []float64{30, 60, 120, 30}
 	if fast {
 		phaseMin = []float64{0.3, 0.5, 0.8, 0.2}
 	}

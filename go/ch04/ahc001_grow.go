@@ -99,8 +99,13 @@ func growRect(c Company, others []Rect) Rect {
 
 func solve(companies []Company) []Rect {
 	rects := make([]Rect, 0, len(companies))
-	for _, c := range companies {
-		rects = append(rects, growRect(c, rects))
+	for i, c := range companies {
+		// まだ置いていない社の 1×1 マスも障害物にする（覆うと、その社の矩形と必ず重なる）
+		others := append([]Rect{}, rects...)
+		for _, p := range companies[i+1:] {
+			others = append(others, Rect{p.X, p.Y, p.X + 1, p.Y + 1})
+		}
+		rects = append(rects, growRect(c, others))
 	}
 	return rects
 }

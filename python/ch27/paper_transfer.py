@@ -1,12 +1,12 @@
 # python/ch27/paper_transfer.py
-"""論文メモ YAML から AHC 転用アイデアを抽出し、玩具検証を実行（第27章）."""
+"""論文メモ YAML（または JSON）から AHC 転用アイデアを抽出し、玩具検証を実行（第27章）."""
 from __future__ import annotations
 
 import json
 import math
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Sequence, Tuple  # noqa: F401 used in minimal loader
+from typing import Any, Dict, List, Sequence, Tuple
 
 try:
     import yaml  # type: ignore
@@ -19,87 +19,162 @@ def default_notes_path() -> Path:
 
 
 def load_notes(path: Path) -> Dict[str, Any]:
-    if yaml is not None and path.suffix in (".yaml", ".yml"):
-        data = yaml.safe_load(path.read_text(encoding="utf-8"))
-        return data if isinstance(data, dict) else {}
-    json_path = path.with_suffix(".json")
-    if json_path.is_file():
-        with json_path.open(encoding="utf-8") as f:
-            return json.load(f)
-    return _load_notes_minimal(path.read_text(encoding="utf-8"))
+    text = path.read_text(encoding="utf-8")
+    if path.suffix == ".json":
+        data = json.loads(text)
+    elif yaml is not None:
+        data = yaml.safe_load(text)
+    else:
+        data = load_yaml_subset(text)
+    return data if isinstance(data, dict) else {}
 
 
-def _load_notes_minimal(text: str) -> Dict[str, Any]:
-    """PyYAML なしでも data/ch27/paper_notes.yaml を読む."""
-    root: Dict[str, Any] = {}
-    stack: List[Tuple[int, Any]] = [(-1, root)]
+# --- PyYAML がなくても paper_notes.yaml 程度の YAML を読む簡易ローダー ---
+# 対応: インデントによる入れ子の map / list、"- key: value" 形式の list of map、
+#       [a, b] のフロー list、"|" のブロック文字列、引用符付き文字列、整数・小数・真偽値。
+# アンカーや複数行のフロー記法などは非対応（必要なら pip install pyyaml）。
 
-    def container() -> Any:
-        return stack[-1][1]
 
-    def pop_to(indent: int) -> None:
-        while len(stack) > 1 and stack[-1][0] >= indent:
-            stack.pop()
+def _indent_of(line: str) -> int:
+    return len(line) - len(line.lstrip(" "))
 
-    for raw in text.splitlines():
-        if not raw.strip() or raw.lstrip().startswith("#"):
-            continue
-        indent = len(raw) - len(raw.lstrip(" "))
-        line = raw.strip()
-        pop_to(indent)
 
-        if line.startswith("- "):
-            rest = line[2:].strip()
-            parent = container()
-            if not isinstance(parent, list):
-                continue
-            if rest.startswith("[") and rest.endswith("]"):
-                a, b = rest[1:-1].split(",")
-                parent.append([int(a.strip()), int(b.strip())])
-            elif ":" in rest:
-                k, v = rest.split(":", 1)
-                parent.append({k.strip(): v.strip().strip('"')})
+def _is_skippable(line: str) -> bool:
+    stripped = line.strip()
+    return stripped == "" or stripped.startswith("#")
+
+
+def _parse_scalar(raw: str) -> Any:
+    val = raw.strip()
+    if val.startswith('"') and val.endswith('"') and len(val) >= 2:
+        return json.loads(val)
+    if val.startswith("'") and val.endswith("'") and len(val) >= 2:
+        return val[1:-1].replace("''", "'")
+    if " #" in val:  # 行末コメント
+        val = val.split(" #", 1)[0].rstrip()
+    if val.startswith("[") and val.endswith("]"):
+        inner = val[1:-1].strip()
+        return [_parse_scalar(x) for x in inner.split(",")] if inner else []
+    if val in ("", "~", "null"):
+        return None
+    if val in ("true", "false"):
+        return val == "true"
+    try:
+        return int(val)
+    except ValueError:
+        pass
+    try:
+        return float(val)
+    except ValueError:
+        return val
+
+
+class _YamlSubsetParser:
+    def __init__(self, text: str) -> None:
+        self.lines = text.splitlines()
+        self.i = 0
+
+    def _skip(self) -> None:
+        while self.i < len(self.lines) and _is_skippable(self.lines[self.i]):
+            self.i += 1
+
+    def parse(self) -> Any:
+        self._skip()
+        if self.i >= len(self.lines):
+            return {}
+        return self._block(_indent_of(self.lines[self.i]))
+
+    def _block(self, indent: int) -> Any:
+        if self.lines[self.i].strip().startswith("- ") or self.lines[self.i].strip() == "-":
+            return self._list(indent)
+        return self._map(indent)
+
+    def _list(self, indent: int) -> List[Any]:
+        out: List[Any] = []
+        while True:
+            self._skip()
+            if self.i >= len(self.lines):
+                return out
+            line = self.lines[self.i]
+            item = line.strip()
+            if _indent_of(line) != indent or not (item.startswith("- ") or item == "-"):
+                return out
+            rest = item[1:].strip()
+            if rest == "":
+                self.i += 1
+                self._skip()
+                out.append(self._block(_indent_of(self.lines[self.i])))
+            elif _split_key(rest) is not None:
+                # "- key: value" は、ダッシュの次の位置から始まる map とみなす
+                child_indent = indent + (len(item) - len(rest))
+                self.lines[self.i] = " " * child_indent + rest
+                out.append(self._map(child_indent))
             else:
-                parent.append(rest.strip('"'))
-            continue
+                out.append(_parse_scalar(rest))
+                self.i += 1
 
-        if ":" not in line:
-            continue
-        key, val = line.split(":", 1)
-        key, val = key.strip(), val.strip()
-        parent = container()
+    def _map(self, indent: int) -> Dict[str, Any]:
+        out: Dict[str, Any] = {}
+        while True:
+            self._skip()
+            if self.i >= len(self.lines):
+                return out
+            line = self.lines[self.i]
+            if _indent_of(line) != indent or line.strip().startswith("- "):
+                return out
+            kv = _split_key(line.strip())
+            if kv is None:
+                raise ValueError(f"YAML line {self.i + 1}: expected 'key: value': {line!r}")
+            key, val = kv
+            self.i += 1
+            if val in ("|", "|-"):
+                out[key] = self._block_scalar(indent, keep_newline=(val == "|"))
+            elif val == "":
+                self._skip()
+                if self.i < len(self.lines) and _indent_of(self.lines[self.i]) > indent:
+                    out[key] = self._block(_indent_of(self.lines[self.i]))
+                elif self.i < len(self.lines) and _indent_of(self.lines[self.i]) == indent and self.lines[self.i].strip().startswith("- "):
+                    out[key] = self._list(indent)  # インデントなしの list
+                else:
+                    out[key] = None
+            else:
+                out[key] = _parse_scalar(val)
 
-        if val == "":
-            child: Any = []
-            if isinstance(parent, dict):
-                parent[key] = child
-            stack.append((indent, child))
-            continue
-        if val == "|":
-            block: List[str] = []
-            if isinstance(parent, dict):
-                parent[key] = "\n".join(block)
-            stack.append((indent, block))
-            continue
+    def _block_scalar(self, parent_indent: int, keep_newline: bool) -> str:
+        body: List[str] = []
+        block_indent = None
+        while self.i < len(self.lines):
+            line = self.lines[self.i]
+            if line.strip() == "":
+                body.append("")
+                self.i += 1
+                continue
+            ind = _indent_of(line)
+            if ind <= parent_indent:
+                break
+            if block_indent is None:
+                block_indent = ind
+            body.append(line[block_indent:])
+            self.i += 1
+        while body and body[-1] == "":
+            body.pop()
+        return "\n".join(body) + ("\n" if keep_newline and body else "")
 
-        if isinstance(stack[-1][1], list) and not line.startswith("- "):
-            # multiline block content
-            stack[-1][1].append(raw.strip())
-            continue
 
-        cleaned = val.strip('"')
-        if isinstance(parent, dict):
-            parent[key] = cleaned
-        elif isinstance(parent, list) and parent and isinstance(parent[-1], dict):
-            parent[-1][key] = cleaned
+def _split_key(text: str) -> Any:
+    """'key: value' / 'key:' を (key, value) に分ける。そうでなければ None."""
+    if text.startswith(('"', "'", "[")):
+        return None
+    if text.endswith(":"):
+        return text[:-1].strip(), ""
+    if ": " in text:
+        key, val = text.split(": ", 1)
+        return key.strip(), val.strip()
+    return None
 
-    # リスト項目の続きキー (summary など) をマージ
-    notes = root
-    for section in ("key_ideas", "transfer_candidates"):
-        items = notes.get(section, [])
-        if items and all(isinstance(x, dict) for x in items):
-            continue
-    return notes
+
+def load_yaml_subset(text: str) -> Any:
+    return _YamlSubsetParser(text).parse()
 
 
 def tour_length(points: Sequence[Sequence[int]]) -> float:
@@ -118,19 +193,15 @@ def two_opt_once(points: List[List[int]]) -> Tuple[List[List[int]], float]:
     n = len(points)
     best = [list(p) for p in points]
     best_len = tour_length(best)
-    improved = False
-    for i in range(n):
-        for k in range(i + 2, n + (0 if i == 0 else 1)):
-            j = k % n
-            if j == i or (j + 1) % n == i:
-                continue
+    # 辺 (i, i+1) と (j, j+1) を張り替える。i=0 のとき j=n-1 は辺 (n-1, 0) が隣接するので除く
+    for i in range(n - 1):
+        for j in range(i + 2, n if i > 0 else n - 1):
             new = best[: i + 1] + best[i + 1 : j + 1][::-1] + best[j + 1 :]
             new_len = tour_length(new)
             if new_len + 1e-9 < best_len:
                 best = new
                 best_len = new_len
-                improved = True
-    return best, best_len if improved else best_len
+    return best, best_len
 
 
 def run_toy_verify(spec: Dict[str, Any]) -> None:
@@ -185,11 +256,7 @@ def print_transfer_ideas(notes: Dict[str, Any]) -> None:
 def main() -> None:
     path = Path(sys.argv[1]) if len(sys.argv) > 1 else default_notes_path()
     if yaml is None and path.suffix in (".yaml", ".yml"):
-        print(
-            "note: loaded data/ch27/paper_notes.json "
-            "(pip install pyyaml to parse .yaml directly)",
-            file=sys.stderr,
-        )
+        print("note: PyYAML なしのため簡易ローダーで読みます（pip install pyyaml 推奨）", file=sys.stderr)
     notes = load_notes(path)
     print_transfer_ideas(notes)
     print()

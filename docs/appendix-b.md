@@ -76,7 +76,7 @@ def main():
 ```
 
 ```go
-// Go も同様に read → score → main
+// 骨格: Go も同様に read → score → main
 func scoreSchedule(problem ProblemInput, state ScheduleState) ScoreResult
 ```
 
@@ -86,48 +86,52 @@ func scoreSchedule(problem ProblemInput, state ScheduleState) ScoreResult
 
 | ファイル | 用途 |
 |---------|------|
-| `python/templates/sa_template.py` | SA 骨格（T0=100, ALPHA=0.995） |
+| `python/templates/sa_template.py` | SA 骨格（T0=100 → T1=0.1、時間ベース冷却） |
 | `go/templates/sa_template.go` | 同上 |
-| `python/ch08/sa_intro_hc.py` | Intro HC 向け本番例 |
-| `python/ch18/sa_multi_neighborhood.py` | 複数近傍 + 再ヒート |
+| `python/ch09/sa_intro_hc.py` | Intro HC 向け本番例 |
+| `python/ch16/sa_multi_neighborhood.py` | 複数近傍 + 再ヒート |
 
 ```python
 # python/templates/sa_template.py — 定数
-T0 = 100.0
-ALPHA = 0.995
+T0 = 100.0  # 開始温度
+T1 = 0.1    # 終了温度
+
+# 毎ループ: 経過割合で温度を決める
+temperature = T0 * (T1 / T0) ** progress  # progress = elapsed / time_limit_sec
 
 # 受理
-if delta >= 0 or rng.random() < math.exp(delta / T):
+if delta >= 0 or rng.random() < math.exp(delta / temperature):
     state = new_state
     score = new_score
-T *= ALPHA
 ```
 
 ```go
 // go/templates/sa_template.go
 const (
-    T0    = 100.0
-    Alpha = 0.995
+    T0 = 100.0 // 開始温度
+    T1 = 0.1   // 終了温度
 )
+
+T := T0 * math.Pow(T1/T0, progress) // progress = elapsed / limit
 ```
 
 | パラメータ | 触り方 |
 |-----------|--------|
 | T0 | 大きいほど悪化受理が増える |
-| ALPHA | 1に近いほど冷却が遅い |
+| T1 | 小さいほど終盤が山登りに近づく |
 | 近傍 | 問題ごとに差し替え |
 
 ---
 
 ## B.4 ビームサーチテンプレート
 
-公式 `templates/` にはビーム用ファイルがない。**第9章** を参照。
+公式 `templates/` にはビーム用ファイルがない。**第10章** を参照。
 
 | ファイル | 用途 |
 |---------|------|
-| `python/ch09/beam_fill.py` | グリッド埋め（簡略 AHC002） |
-| `go/ch09/beam_fill.go` | 同上 |
-| `python/ch14/slide_beam.py` | スライドパズル + ヒューリスティック |
+| `python/ch10/beam_fill.py` | グリッド埋め（簡略 AHC002） |
+| `go/ch10/beam_fill.go` | 同上 |
+| `python/ch15/slide_beam.py` | スライドパズル + ヒューリスティック |
 
 ```python
 # ビームサーチの骨格
@@ -143,7 +147,7 @@ for step in range(max_steps):
 
 ```go
 // 優先度付きキュー + ビーム幅で枝刈り
-// go/ch09/beam_fill.go を参照
+// go/ch10/beam_fill.go を参照
 ```
 
 ---
@@ -155,7 +159,7 @@ for step in range(max_steps):
 | `python/templates/timer.py` | `Timer` クラス |
 | `go/templates/timer.go` | `NewTimer`, `Expired()` |
 | `python/ch02/ahc_main.py` | main + Timer 統合例 |
-| `python/ch10/pipeline.py` | フェーズ別時間配分 |
+| `python/ch11/pipeline.py` | フェーズ別時間配分 |
 
 ```python
 # python/templates/timer.py
@@ -165,7 +169,7 @@ class Timer:
 ```
 
 ```python
-# 最良解の保持（提出用）
+# 骨格: 最良解の保持（提出用）
 best_state, best_score = state, score
 while not timer.expired():
     ...
@@ -183,7 +187,7 @@ func (t *Timer) Expired() bool {
 
 | 本番の注意 | 内容 |
 |-----------|------|
-| 提出間隔 | 同一問題は **5分** |
+| 提出間隔 | コンテストごと（例: 短期 **5分**・長期 **30分**） |
 | TLE | 最良解を **必ず** 出力 |
 | stderr | スコアログは stderr へ |
 
@@ -197,10 +201,10 @@ func (t *Timer) Expired() bool {
 | スコアだけ | `ch03/score_module.py` |
 | 貪欲 | `ch05/greedy_delivery.py` |
 | 2-opt | `ch06/two_opt.py` |
-| SA | `templates/sa_template.py` → `ch08/` |
-| ビーム | `ch09/beam_fill.py` |
-| パイプライン | `ch10/pipeline.py` |
-| 並列 SA | `ch20/parallel_sa.py` |
+| SA | `templates/sa_template.py` → `ch09/` |
+| ビーム | `ch10/beam_fill.py` |
+| パイプライン | `ch11/pipeline.py` |
+| multi-start SA（逐次 / --parallel） | `ch18/multi_start_sa.py` |
 
 **霊夢**: コピー元が一覧にあると探しやすいのだ。
 

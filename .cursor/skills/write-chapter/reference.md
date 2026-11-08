@@ -9,31 +9,31 @@
 | `docs/02.md` | 2 | 開発環境とコンテスト参加の準備 | Gray |
 | `docs/03.md` | 3 | 問題文の読み方と設計の第一歩 | Gray |
 | `docs/04.md` | 4 | シミュレーションと素朴な解法 | Gray |
-| `docs/05.md` | 5 | 貪欲法 | Brown |
-| `docs/06.md` | 6 | 山登り法 | Brown |
+| `docs/05.md` | 5 | 貪欲法 — ヒューリスティックの基本 | Brown |
+| `docs/06.md` | 6 | 山登り法（Hill Climbing） | Brown |
 | `docs/07.md` | 7 | 問題の粗視化と分割 | Brown |
-| `docs/08.md` | 8 | 焼きなまし法 | Green |
-| `docs/09.md` | 9 | ビームサーチ | Green |
-| `docs/10.md` | 10 | 多段パイプライン | Green |
-| `docs/11.md` | 11 | インタラクティブ問題 | Cyan |
-| `docs/12.md` | 12 | タブーサーチと反復局所探索 | Cyan |
-| `docs/13.md` | 13 | データ構造で速くする | Cyan |
-| `docs/14.md` | 14 | パズル・構造問題 | Cyan |
-| `docs/15.md` | 15 | 整数計画と緩和 | Blue |
-| `docs/16.md` | 16 | 遺伝的アルゴリズム | Blue |
+| `docs/08.md` | 8 | ビジュアライザ駆動開発 | Brown |
+| `docs/09.md` | 9 | 焼きなまし法（Simulated Annealing） | Green |
+| `docs/10.md` | 10 | ビームサーチ（Beam Search） | Green |
+| `docs/11.md` | 11 | 多段パイプライン | Green |
+| `docs/12.md` | 12 | インタラクティブ問題 | Cyan |
+| `docs/13.md` | 13 | タブーサーチと反復局所探索 | Cyan |
+| `docs/14.md` | 14 | データ構造で速くする | Cyan |
+| `docs/15.md` | 15 | パズル・構造問題 | Cyan |
+| `docs/16.md` | 16 | 高度な焼きなましテクニック | Cyan |
 | `docs/17.md` | 17 | マルチエージェント問題 | Blue |
-| `docs/18.md` | 18 | 高度な焼きなまし | Blue |
-| `docs/19.md` | 19 | MCTS | Yellow |
-| `docs/20.md` | 20 | 並列探索と多開始 | Yellow |
+| `docs/18.md` | 18 | 多点スタートと並列探索 | Blue |
+| `docs/19.md` | 19 | 大近傍探索（Large Neighborhood Search） | Blue |
+| `docs/20.md` | 20 | モンテカルロ木探索（MCTS） | Yellow |
 | `docs/21.md` | 21 | コンテスト戦略 | Yellow |
 | `docs/22.md` | 22 | 過去問の徹底復習 | Yellow |
 | `docs/23.md` | 23 | 問題固有解法の設計 | Orange |
-| `docs/24.md` | 24 | 大近傍探索 (LNS) | Orange |
-| `docs/25.md` | 25 | 高度なインタラクティブ | Orange |
-| `docs/26.md` | 26 | ビジュアライザ駆動開発 | Orange |
+| `docs/24.md` | 24 | 高度なインタラクティブ・オンライン | Orange |
+| `docs/25.md` | 25 | 整数計画と緩和 | Orange |
+| `docs/26.md` | 26 | 遺伝的アルゴリズムと母集団探索 | Orange |
 | `docs/27.md` | 27 | 最新研究と AHC 解法 | Red |
 | `docs/28.md` | 28 | 超高速実装 | Red |
-| `docs/29.md` | 29 | チーム戦・マラソン | Red |
+| `docs/29.md` | 29 | チーム戦・マラソン形式 | Red |
 | `docs/30.md` | 30 | コンテスト後の成長 | Red |
 
 Source of truth for subsection bullets: `docs/00-toc.md`.

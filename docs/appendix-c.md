@@ -26,8 +26,8 @@
 | キーワード | 矩形、衝突、面積、占有、パック |
 | 状態 | 各オブジェクトの位置・向き |
 | Move | swap, shift, rotate, サイズ変更 |
-| 例題 | [AHC001](https://atcoder.jp/contests/ahc001), AHC015, AHC016 |
-| 本書 | 第4章（AHC001 玩具）、第16章（GA） |
+| 例題 | [AHC001](https://atcoder.jp/contests/ahc001), AHC014 |
+| 本書 | 第4章（AHC001 玩具）、第26章（GA） |
 
 **最初に確認すること**
 
@@ -36,7 +36,7 @@
 3. 初期解: 点周りの小矩形 → 拡大
 
 ```python
-# 典型 Move: 矩形を1辺だけ伸ばす
+# 擬似コード: 典型 Move — 矩形を1辺だけ伸ばす
 def grow_one_side(rect, direction):
     ...
 ```
@@ -50,8 +50,8 @@ def grow_one_side(rect, direction):
 | キーワード | TSP, 巡回, 訪問順, 距離 |
 | 状態 | 頂点の訪問順序 |
 | Move | 2-opt, swap, LNS 破壊区間 |
-| 例題 | [AHC005](https://atcoder.jp/contests/ahc005), AHC002 |
-| 本書 | 第5章（貪欲配達）、第6章（2-opt）、第24章（LNS） |
+| 例題 | [AHC005](https://atcoder.jp/contests/ahc005), AHC002, AHC006 |
+| 本書 | 第5章（貪欲配達）、第6章（2-opt）、第19章（LNS） |
 
 **最初に確認すること**
 
@@ -60,7 +60,7 @@ def grow_one_side(rect, direction):
 3. 対称性（逆向き OK か）
 
 ```python
-# 2-opt: 区間 [i+1, j] を反転
+# 擬似コード: 2-opt — 区間 [i+1, j] を反転
 def two_opt(tour, i, j):
     return tour[: i + 1] + tour[i + 1 : j + 1][::-1] + tour[j + 1 :]
 ```
@@ -74,8 +74,8 @@ def two_opt(tour, i, j):
 | キーワード | 日程, decay, 満足度, 割当 |
 | 状態 | 時間軸上の割当（種類・順序） |
 | Move | 1日変更、swap 2日、種類変更 |
-| 例題 | [Intro HC](https://atcoder.jp/contests/intro-heuristics), AHC011 |
-| 本書 | 第1章、第3章、第8章、第10章 |
+| 例題 | [Intro HC](https://atcoder.jp/contests/intro-heuristics) |
+| 本書 | 第1章、第3章、第9章、第11章 |
 
 **最初に確認すること**
 
@@ -92,8 +92,8 @@ def two_opt(tour, i, j):
 | キーワード | スライド, 連結, 操作列, 合法手 |
 | 状態 | 盤面 + 空白位置 |
 | Move | 上下左右、ピース移動 |
-| 例題 | AHC010, AHC014 |
-| 本書 | 第4章（シミュレーション）、第9章、第14章 |
+| 例題 | AHC010, AHC011 |
+| 本書 | 第4章（シミュレーション）、第10章、第15章 |
 
 **最初に確認すること**
 
@@ -102,7 +102,7 @@ def two_opt(tour, i, j):
 3. ビジュアライザ必須か
 
 ```python
-# ヒューリスティック例: 各タイルの目標マンハッタン和
+# 擬似コード: ヒューリスティック例 — 各タイルの目標マンハッタン和
 def h(state, goal):
     return sum(manhattan(state.pos[t], goal.pos[t]) for t in tiles)
 ```
@@ -116,8 +116,8 @@ def h(state, goal):
 | キーワード | クエリ, フィードバック, 推定, 真の重み |
 | 状態 | 隠れパラメータの推定値 |
 | Move | クエリ先選択、重み更新 |
-| 例題 | [AHC003](https://atcoder.jp/contests/ahc003) |
-| 本書 | 第11章、第25章 |
+| 例題 | [AHC003](https://atcoder.jp/contests/ahc003), [AHC015](https://atcoder.jp/contests/ahc015)（1手ごとに入力が届くオンライン）, [AHC016](https://atcoder.jp/contests/ahc016)（ノイズ付きの推定） |
+| 本書 | 第12章、第24章 |
 
 **最初に確認すること**
 

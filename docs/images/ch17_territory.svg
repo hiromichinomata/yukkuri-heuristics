@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="370" viewBox="0 0 640 370" role="img">
+<title>第17章: 2 人が交互に、隣の空きマスで一番大きい値を取る（data/ch17/sample.txt）</title>
+<rect x="0" y="0" width="640" height="370" fill="#ffffff"/>
+<text x="20.0" y="24.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#111827" text-anchor="start" font-weight="bold">第17章: 2 人が交互に、隣の空きマスで一番大きい値を取る（data/ch17/sample.txt）</text>
+<rect x="40.0" y="50.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="46.0" y="65.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">3</text>
+<rect x="86.0" y="50.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="92.0" y="65.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">1</text>
+<rect x="132.0" y="50.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="138.0" y="65.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">4</text>
+<rect x="178.0" y="50.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="184.0" y="65.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">2</text>
+<rect x="224.0" y="50.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="230.0" y="65.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">5</text>
+<rect x="270.0" y="50.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="276.0" y="65.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">0</text>
+<rect x="40.0" y="96.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="46.0" y="111.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">2</text>
+<rect x="86.0" y="96.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="92.0" y="111.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">6</text>
+<rect x="132.0" y="96.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="138.0" y="111.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">3</text>
+<rect x="178.0" y="96.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="184.0" y="111.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">1</text>
+<rect x="224.0" y="96.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="230.0" y="111.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">4</text>
+<rect x="270.0" y="96.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="276.0" y="111.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">2</text>
+<rect x="40.0" y="142.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="46.0" y="157.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">1</text>
+<rect x="86.0" y="142.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="92.0" y="157.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">3</text>
+<rect x="132.0" y="142.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="138.0" y="157.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">5</text>
+<rect x="178.0" y="142.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="184.0" y="157.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">2</text>
+<rect x="224.0" y="142.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="230.0" y="157.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">4</text>
+<rect x="270.0" y="142.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="276.0" y="157.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">1</text>
+<rect x="40.0" y="188.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="46.0" y="203.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">4</text>
+<rect x="86.0" y="188.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="92.0" y="203.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">2</text>
+<rect x="132.0" y="188.0" width="46.0" height="46.0" fill="#ffedd5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="138.0" y="203.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">1</text>
+<rect x="178.0" y="188.0" width="46.0" height="46.0" fill="#ffedd5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="184.0" y="203.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">6</text>
+<rect x="224.0" y="188.0" width="46.0" height="46.0" fill="#ffedd5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="230.0" y="203.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">3</text>
+<rect x="270.0" y="188.0" width="46.0" height="46.0" fill="#ffedd5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="276.0" y="203.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">5</text>
+<rect x="40.0" y="234.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="46.0" y="249.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">5</text>
+<rect x="86.0" y="234.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="92.0" y="249.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">4</text>
+<rect x="132.0" y="234.0" width="46.0" height="46.0" fill="#ffedd5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="138.0" y="249.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">2</text>
+<rect x="178.0" y="234.0" width="46.0" height="46.0" fill="#ffedd5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="184.0" y="249.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">3</text>
+<rect x="224.0" y="234.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="230.0" y="249.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">1</text>
+<rect x="270.0" y="234.0" width="46.0" height="46.0" fill="#ffedd5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="276.0" y="249.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">6</text>
+<rect x="40.0" y="280.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="46.0" y="295.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">0</text>
+<rect x="86.0" y="280.0" width="46.0" height="46.0" fill="#dbeafe" stroke="#e5e7eb" stroke-width="1"/>
+<text x="92.0" y="295.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">1</text>
+<rect x="132.0" y="280.0" width="46.0" height="46.0" fill="#ffedd5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="138.0" y="295.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">3</text>
+<rect x="178.0" y="280.0" width="46.0" height="46.0" fill="#ffedd5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="184.0" y="295.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">4</text>
+<rect x="224.0" y="280.0" width="46.0" height="46.0" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="230.0" y="295.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">2</text>
+<rect x="270.0" y="280.0" width="46.0" height="46.0" fill="#ffedd5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="276.0" y="295.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">5</text>
+<polyline points="63.0,73.0 63.0,119.0 109.0,119.0 155.0,119.0 155.0,165.0 109.0,165.0 109.0,211.0 63.0,211.0 63.0,257.0 109.0,257.0 109.0,303.0 63.0,303.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="63.0" cy="73.0" r="9" fill="#2563eb" stroke="#2563eb" stroke-width="1.5"/>
+<text x="63.0" y="77.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ffffff" text-anchor="middle" font-weight="bold">S</text>
+<circle cx="63.0" cy="119.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="63.0" y="123.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">1</text>
+<circle cx="109.0" cy="119.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="109.0" y="123.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">2</text>
+<circle cx="155.0" cy="119.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="155.0" y="123.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">3</text>
+<circle cx="155.0" cy="165.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="155.0" y="169.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">4</text>
+<circle cx="109.0" cy="165.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="109.0" y="169.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">5</text>
+<circle cx="109.0" cy="211.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="109.0" y="215.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">6</text>
+<circle cx="63.0" cy="211.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="63.0" y="215.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">7</text>
+<circle cx="63.0" cy="257.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="63.0" y="261.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">8</text>
+<circle cx="109.0" cy="257.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="109.0" y="261.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">9</text>
+<circle cx="109.0" cy="303.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="109.0" y="307.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">10</text>
+<circle cx="63.0" cy="303.0" r="7" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="63.0" y="307.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#2563eb" text-anchor="middle" font-weight="bold">11</text>
+<polyline points="293.0,303.0 293.0,257.0 293.0,211.0 247.0,211.0 201.0,211.0 201.0,257.0 201.0,303.0 155.0,303.0 155.0,257.0 155.0,211.0" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="293.0" cy="303.0" r="9" fill="#ea580c" stroke="#ea580c" stroke-width="1.5"/>
+<text x="293.0" y="307.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ffffff" text-anchor="middle" font-weight="bold">S</text>
+<circle cx="293.0" cy="257.0" r="7" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+<text x="293.0" y="261.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="bold">1</text>
+<circle cx="293.0" cy="211.0" r="7" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+<text x="293.0" y="215.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="bold">2</text>
+<circle cx="247.0" cy="211.0" r="7" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+<text x="247.0" y="215.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="bold">3</text>
+<circle cx="201.0" cy="211.0" r="7" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+<text x="201.0" y="215.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="bold">4</text>
+<circle cx="201.0" cy="257.0" r="7" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+<text x="201.0" y="261.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="bold">5</text>
+<circle cx="201.0" cy="303.0" r="7" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+<text x="201.0" y="307.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="bold">6</text>
+<circle cx="155.0" cy="303.0" r="7" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+<text x="155.0" y="307.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="bold">7</text>
+<circle cx="155.0" cy="257.0" r="7" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+<text x="155.0" y="261.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="bold">8</text>
+<circle cx="155.0" cy="211.0" r="7" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+<text x="155.0" y="215.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="bold">9</text>
+<text x="346.0" y="80.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#2563eb" text-anchor="start" font-weight="bold">エージェント 0: 38 点</text>
+<text x="346.0" y="98.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">12 マス</text>
+<text x="346.0" y="130.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="13" fill="#ea580c" text-anchor="start" font-weight="bold">エージェント 1: 38 点</text>
+<text x="346.0" y="148.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="normal">10 マス</text>
+<text x="346.0" y="200.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#9ca3af" text-anchor="start" font-weight="normal">左上の小さい数字 = マスの値</text>
+<text x="346.0" y="218.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="12" fill="#9ca3af" text-anchor="start" font-weight="normal">丸の数字 = 何手目に取ったか</text>
+<text x="20.0" y="360.0" font-family="Hiragino Sans, Noto Sans CJK JP, Meiryo, sans-serif" font-size="11" fill="#9ca3af" text-anchor="start" font-weight="normal">どちらも目の前の値だけで動くので、相手の通り道をふさいだり、ふさがれたりしても気にしない</text>
+</svg>

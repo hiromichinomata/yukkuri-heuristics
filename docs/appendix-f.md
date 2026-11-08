@@ -22,14 +22,14 @@
 
 | タイトル | URL | 本書での位置 |
 |---------|-----|-------------|
-| Introduction to Heuristics Contest | https://atcoder.jp/contests/intro-heuristics | 第1・3・8章 |
+| Introduction to Heuristics Contest | https://atcoder.jp/contests/intro-heuristics | 第1・3・9章 |
 | Intro HC 問題A（スケジューリング） | https://atcoder.jp/contests/intro-heuristics/tasks/intro_heuristics_a | 第1・5章 |
 | Intro HC 問題B（Scoring） | https://atcoder.jp/contests/intro-heuristics/tasks/intro_heuristics_b | 第1・3章 |
-| Intro HC 問題C | https://atcoder.jp/contests/intro-heuristics/tasks/intro_heuristics_c | 第8章 |
+| Intro HC 問題C | https://atcoder.jp/contests/intro-heuristics/tasks/intro_heuristics_c | 第9章 |
 | Intro HC tools | https://img.atcoder.jp/intro-heuristics/tools.zip | 第2章 |
 | AHC001 AtCoder Ad | https://atcoder.jp/contests/ahc001/tasks/ahc001_a | 第4章 |
-| AHC002 Walking on Tiles | https://atcoder.jp/contests/ahc002/tasks/ahc002_a | 第9章 |
-| AHC003 Shortest Path Queries | https://atcoder.jp/contests/ahc003/tasks/ahc003_a | 第11章 |
+| AHC002 Walking on Tiles | https://atcoder.jp/contests/ahc002/tasks/ahc002_a | 第10章 |
+| AHC003 Shortest Path Queries | https://atcoder.jp/contests/ahc003/tasks/ahc003_a | 第12章 |
 | AHC005 Patrolling | https://atcoder.jp/contests/ahc005/tasks/ahc005_a | 第6章 |
 | AHC008 Territory | https://atcoder.jp/contests/ahc008/tasks/ahc008_a | 第17章 |
 
@@ -69,7 +69,6 @@
 | `data/ch22/pattern_catalog.json` | 問題パターン JSON |
 | `tools/local_test.sh` | ローカル評価 |
 | `tools/check_env.sh` | 環境確認 |
-| `.cursor/skills/write-chapter/` | 章執筆スキル |
 
 ---
 
@@ -78,8 +77,8 @@
 ```text
 1. 本書 第0–3章 + Intro HC 問題B
 2. 付録D の灰色帯問題
-3. 第4–10章 + 該当 AHC 過去問
-4. 付録C でパターン判定 → 水色〜青の章
+3. 第4–11章 + 該当 AHC 過去問
+4. 付録C でパターン判定 → 水色〜青の章（第12–19章）
 5. 第21–22章（戦略・復習）
 6. 付録F の外部記事で深掘り
 ```
@@ -97,15 +96,8 @@
 
 **霊夢**: リンクが1か所にまとまってると助かるのだ。
 
-**魔理沙**: URL は変更されることがある。**開けないときは AtCoder トップからコンテスト名で検索** しろ。本書のコードはローカルで動くから、Web がなくても第0–10章は進められるぜ。
+**魔理沙**: URL は変更されることがある。**開けないときは AtCoder トップからコンテスト名で検索** しろ。本書のコードはローカルで動くから、Web がなくても第0–11章は進められるぜ。
 
 ---
-
-## 更新メモ
-
-| 日付 | 内容 |
-|------|------|
-| 2025 | AHC レーティング v2（時間減衰）— 第1章・付録F 参照 |
-| 本書執筆時 | Intro HC / AHC001–020 を章・付録D にマッピング |
 
 > **注**: 最新 AHC の問題 URL は `https://atcoder.jp/contests/ahcNNN` 形式。NNN はコンテスト番号。

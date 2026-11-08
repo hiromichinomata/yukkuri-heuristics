@@ -53,7 +53,7 @@ func nearestNeighbor(depot Point, orders []Point) ([]int, float64) {
 		bestD := math.MaxFloat64
 		for i := range unvisited {
 			d := dist(cur, orders[i])
-			if d < bestD {
+			if best == -1 || d < bestD || (d == bestD && i < best) { // 同じ距離なら番号の小さいほう（map の順番に頼らない）
 				bestD = d
 				best = i
 			}

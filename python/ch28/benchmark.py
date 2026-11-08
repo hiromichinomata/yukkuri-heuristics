@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import List, Tuple
 
 GRID_N = 50
-REPEAT = 400
+REPEAT = 40
 INF = 10**9
 
 
@@ -18,7 +18,7 @@ def build_grid(n: int) -> List[List[int]]:
     grid = [[0] * n for _ in range(n)]
     for r in range(n):
         for c in range(n):
-            if (r + c) % 7 == 0:
+            if (r + c) % 7 == 0 and r % 3 != 0:  # 斜めの壁。3 行に 1 つ隙間を空け、どこからでもゴールに届くようにする
                 grid[r][c] = 1
     grid[0][0] = 0
     grid[n - 1][n - 1] = 0
@@ -60,7 +60,7 @@ def run_benchmark() -> Tuple[float, int]:
             for sc in range(0, GRID_N, 5):
                 if grid[sr][sc] == 1:
                     continue
-                checksum ^= dijkstra(grid, sr, sc, tr, tc)
+                checksum += dijkstra(grid, sr, sc, tr, tc)  # 距離の合計（XOR だと偶数回のくり返しで 0 に消える）
     elapsed = time.perf_counter() - start
     return elapsed, checksum
 
@@ -73,10 +73,7 @@ def run_go_timing() -> Tuple[float, int]:
     go_file = repo_root() / "go" / "ch28" / "benchmark.go"
     proc = subprocess.run(
         ["go", "run", str(go_file), "--timing-only"],
-        cwd=repo_root(),
-        capture_output=True,
-        text=True,
-        check=False,
+        cwd=repo_root(), capture_output=True, text=True,
     )
     if proc.returncode != 0:
         print(proc.stderr, file=sys.stderr)
